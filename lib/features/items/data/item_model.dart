@@ -10,6 +10,7 @@ class ItemModel {
   final String standardUnit; // 'kg', 'liter', 'piece'
   final List<LocalUnitInfo> supportedLocalUnits;
   final String? iconName;
+  final String? imageUrl;
   final double? listingPrice;
   final String? listingSource;
   final String? listingNote;
@@ -24,6 +25,7 @@ class ItemModel {
     required this.standardUnit,
     this.supportedLocalUnits = const [],
     this.iconName,
+    this.imageUrl,
     this.listingPrice,
     this.listingSource,
     this.listingNote,
@@ -33,7 +35,7 @@ class ItemModel {
   ItemModel withCatalogOnly(bool value) => ItemModel(
     id: id, nameEn: nameEn, nameAm: nameAm, category: category,
     standardUnit: standardUnit, supportedLocalUnits: supportedLocalUnits,
-    iconName: iconName, listingPrice: listingPrice,
+    iconName: iconName, imageUrl: imageUrl, listingPrice: listingPrice,
     listingSource: listingSource, listingNote: listingNote, catalogOnly: value,
   );
 
@@ -114,6 +116,7 @@ class ItemModel {
       standardUnit: json['standard_unit'] ?? 'kg',
       supportedLocalUnits: localUnits,
       iconName: json['icon_name'],
+      imageUrl: json['image_url'],
       listingPrice: (json['listing_price'] as num?)?.toDouble(),
       listingSource: json['listing_source'],
       listingNote: json['listing_note'],
