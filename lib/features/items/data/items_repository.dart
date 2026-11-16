@@ -1,3 +1,4 @@
+import '../../../core/constants/bundled_catalog.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/config/supabase_config.dart';
 import '../../../core/constants/mock_data.dart';
@@ -18,7 +19,8 @@ class ItemsRepository {
             .from('markets')
             .select()
             .eq('is_active', true)
-            .order('name_en');
+            .order('name_en')
+            .timeout(const Duration(seconds: 8));
         return (res as List).map((m) => MarketModel.fromJson(m)).toList();
       } catch (_) {
         // Fallback to local
@@ -28,19 +30,36 @@ class ItemsRepository {
   }
 
   Future<List<ItemModel>> getItems() async {
+    final imported = bundledCatalog.map((row) => ItemModel.fromJson({
+      ...row,
+      'catalog_only': _supabase != null,
+    })).toList();
+    final baseline = [
+      ...MockData.items.map((item) =>
+          item.withCatalogOnly(_supabase != null)),
+      ...imported,
+    ];
     if (_supabase != null) {
       try {
         final res = await _supabase
             .from('items')
             .select()
             .eq('is_active', true)
-            .order('name_en');
-        return (res as List).map((i) => ItemModel.fromJson(i)).toList();
+            .order('name_en')
+            .timeout(const Duration(seconds: 8));
+        final backend = (res as List).map((i) => ItemModel.fromJson(i)).toList();
+        final existingIds = backend.map((item) => item.id).toSet();
+        final existingNames = backend.map((item) => item.nameEn.toLowerCase()).toSet();
+        return [
+          ...backend,
+          ...baseline.where((item) => !existingIds.contains(item.id) &&
+              (item.listingSource != null || !existingNames.contains(item.nameEn.toLowerCase()))),
+        ];
       } catch (_) {
         // Fallback to local
       }
     }
-    return MockData.items;
+    return baseline;
   }
 
   Future<Map<String, PriceAggregateModel>> getAggregatesForMarket(String marketId) async {
@@ -49,7 +68,8 @@ class ItemsRepository {
         final res = await _supabase
             .from('price_aggregates')
             .select()
-            .eq('market_id', marketId);
+            .eq('market_id', marketId)
+            .timeout(const Duration(seconds: 8));
         final map = <String, PriceAggregateModel>{};
         for (final row in (res as List)) {
           final agg = PriceAggregateModel.fromJson(row);
@@ -67,7 +87,8 @@ class ItemsRepository {
     // Generate realistic historical daily price curve for charts
     final now = DateTime.now();
     final points = <Map<String, dynamic>>[];
-    final basePrice = MockData.generateInitialAggregates(marketId)[itemId]?.medianPrice ?? 100.0;
+    final basePrice = MockData.generateInitialAggregates(marketId)[itemId]?.medianPrice;
+    if (basePrice == null) return [];
 
     for (int i = days; i >= 0; i -= 3) {
       final date = now.subtract(Duration(days: i));

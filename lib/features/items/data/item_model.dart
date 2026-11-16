@@ -10,6 +10,11 @@ class ItemModel {
   final String standardUnit; // 'kg', 'liter', 'piece'
   final List<LocalUnitInfo> supportedLocalUnits;
   final String? iconName;
+  final double? listingPrice;
+  final String? listingSource;
+  final String? listingNote;
+  // Bundled listing has not yet been imported into the configured backend.
+  final bool catalogOnly;
 
   const ItemModel({
     required this.id,
@@ -19,7 +24,18 @@ class ItemModel {
     required this.standardUnit,
     this.supportedLocalUnits = const [],
     this.iconName,
+    this.listingPrice,
+    this.listingSource,
+    this.listingNote,
+    this.catalogOnly = false,
   });
+
+  ItemModel withCatalogOnly(bool value) => ItemModel(
+    id: id, nameEn: nameEn, nameAm: nameAm, category: category,
+    standardUnit: standardUnit, supportedLocalUnits: supportedLocalUnits,
+    iconName: iconName, listingPrice: listingPrice,
+    listingSource: listingSource, listingNote: listingNote, catalogOnly: value,
+  );
 
   String localizedName(bool isAmharic) => isAmharic ? nameAm : nameEn;
 
@@ -32,6 +48,10 @@ class ItemModel {
           return 'ሊትር';
         case 'piece':
           return 'ፍሬ';
+        case 'pair':
+          return 'ጥንድ';
+        case 'set':
+          return 'ስብስብ';
         default:
           return standardUnit;
       }
@@ -94,6 +114,10 @@ class ItemModel {
       standardUnit: json['standard_unit'] ?? 'kg',
       supportedLocalUnits: localUnits,
       iconName: json['icon_name'],
+      listingPrice: (json['listing_price'] as num?)?.toDouble(),
+      listingSource: json['listing_source'],
+      listingNote: json['listing_note'],
+      catalogOnly: json['catalog_only'] == true,
     );
   }
 }

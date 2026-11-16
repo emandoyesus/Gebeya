@@ -37,3 +37,6 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true
+  assets:
+    - assets/data/public_listings.json
+    - assets/data/marketplace_catalog.json

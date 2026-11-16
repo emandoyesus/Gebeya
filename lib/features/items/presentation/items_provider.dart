@@ -19,7 +19,8 @@ final marketsProvider = FutureProvider<List<MarketModel>>((ref) async {
 // Selected Market Provider (Default: first market, e.g. Merkato)
 final selectedMarketProvider = StateProvider<MarketModel?>((ref) {
   final marketsAsync = ref.watch(marketsProvider);
-  return marketsAsync.valueOrNull?.first;
+  final markets = marketsAsync.valueOrNull;
+  return markets == null || markets.isEmpty ? null : markets.first;
 });
 
 // Selected Category Filter
@@ -60,7 +61,9 @@ final filteredItemsProvider = Provider<List<ItemModel>>((ref) {
         final matchesCategory = category == ItemCategory.all || item.category == category;
         final matchesQuery = query.isEmpty ||
             item.nameEn.toLowerCase().contains(query) ||
-            item.nameAm.contains(query);
+            item.nameAm.toLowerCase().contains(query) ||
+            item.category.labelEn.toLowerCase().contains(query) ||
+            item.category.labelAm.contains(query);
         return matchesCategory && matchesQuery;
       }).toList();
     },
