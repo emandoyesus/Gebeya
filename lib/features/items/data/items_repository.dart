@@ -87,16 +87,31 @@ class ItemsRepository {
     // Generate realistic historical daily price curve for charts
     final now = DateTime.now();
     final points = <Map<String, dynamic>>[];
-    final basePrice = MockData.generateInitialAggregates(marketId)[itemId]?.medianPrice;
+    final aggregates = await getAggregatesForMarket(marketId);
+    double? basePrice = aggregates[itemId]?.medianPrice;
+
+    if (basePrice == null) {
+      // Look up item in bundled catalog or MockData to see if it has a listing price
+      final allItems = await getItems();
+      final itemMatch = allItems.where((i) => i.id == itemId);
+      if (itemMatch.isNotEmpty) {
+        basePrice = itemMatch.first.listingPrice;
+      }
+    }
+
     if (basePrice == null) return [];
+
+    // Scale variation proportional to the item base price (1-3%)
+    final scale = (basePrice * 0.015).clamp(1.0, 50000.0);
 
     for (int i = days; i >= 0; i -= 3) {
       final date = now.subtract(Duration(days: i));
-      // Trend: realistic slight fluctuation (inflation/seasonality)
-      final variation = (i % 5 - 2) * 2.5;
+      // Trend: realistic slight fluctuation (inflation/seasonality/negotiation variance)
+      final variation = (i % 5 - 2) * scale;
+      final pointPrice = (basePrice + variation).clamp(basePrice * 0.7, basePrice * 1.4);
       points.add({
         'date': date,
-        'price': (basePrice + variation).clamp(10.0, 5000.0),
+        'price': pointPrice,
       });
     }
     return points;

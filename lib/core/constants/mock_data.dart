@@ -98,29 +98,45 @@ class MockData {
       id: 'i-t-shirt',
       nameEn: 'Cotton T-shirt',
       nameAm: 'የጥጥ ቲሸርት',
+      imageUrl: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=480&q=80',
       category: ItemCategory.clothing,
       standardUnit: 'piece',
+      listingPrice: 850,
+      listingSource: 'https://jiji.com.et/clothing/t-shirts',
+      listingNote: 'Jiji · Merkato · 100% combed cotton, breathable, all sizes available.',
     ),
     const ItemModel(
       id: 'i-jeans',
       nameEn: 'Denim Jeans',
       nameAm: 'ጂንስ ሱሪ',
+      imageUrl: 'https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=480&q=80',
       category: ItemCategory.clothing,
       standardUnit: 'piece',
+      listingPrice: 2200,
+      listingSource: 'https://jiji.com.et/clothing/jeans',
+      listingNote: 'Jiji · Bole · Stretch denim, durable stitch, slim and regular fit.',
     ),
     const ItemModel(
       id: 'i-jacket',
       nameEn: 'Lightweight Jacket',
       nameAm: 'ቀላል ጃኬት',
+      imageUrl: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=480&q=80',
       category: ItemCategory.clothing,
       standardUnit: 'piece',
+      listingPrice: 3500,
+      listingSource: 'https://jiji.com.et/clothing/jackets',
+      listingNote: 'Jiji · Piassa · Windproof lightweight jacket with hood, multiple colours.',
     ),
     const ItemModel(
       id: 'i-dress',
       nameEn: 'Cotton Dress',
       nameAm: 'የጥጥ ቀሚስ',
+      imageUrl: 'https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?auto=format&fit=crop&w=480&q=80',
       category: ItemCategory.clothing,
       standardUnit: 'piece',
+      listingPrice: 2800,
+      listingSource: 'https://jiji.com.et/clothing/dresses',
+      listingNote: 'Jiji · Bole · Floral cotton casual dress, comfortable summer wear.',
     ),
     // Grains & Flours
     const ItemModel(
@@ -335,6 +351,101 @@ class MockData {
       'i-cooking-oil': {'median': 195.0, 'min': 180.0, 'max': 215.0, 'count': 28},
       'i-sugar': {'median': 110.0, 'min': 100.0, 'max': 125.0, 'count': 19},
       'i-berbere': {'median': 450.0, 'min': 400.0, 'max': 520.0, 'count': 14},
+
+      // Electronics & Tech
+      'i-smartphone': {'median': 29500.0, 'min': 27000.0, 'max': 32000.0, 'count': 16}, // Samsung Galaxy A16
+      'i-laptop': {'median': 56000.0, 'min': 51000.0, 'max': 62000.0, 'count': 12}, // ThinkPad T480
+      'i-headphones': {'median': 4600.0, 'min': 4100.0, 'max': 5200.0, 'count': 20}, // Soundcore Earbuds
+      'i-charger': {'median': 1700.0, 'min': 1400.0, 'max': 2100.0, 'count': 25}, // Samsung 25W Charger
+      'ba5e2026-1116-4000-8000-000000000126': {'median': 118000.0, 'min': 110000.0, 'max': 128000.0, 'count': 18}, // iPhone 15
+      'ba5e2026-1116-4000-8000-000000000127': {'median': 105000.0, 'min': 98000.0, 'max': 115000.0, 'count': 14}, // Galaxy S24
+      'ba5e2026-1116-4000-8000-000000000128': {'median': 58000.0, 'min': 53000.0, 'max': 64000.0, 'count': 10}, // iPad 10th gen
+      'ba5e2026-1116-4000-8000-000000000129': {'median': 88000.0, 'min': 82000.0, 'max': 96000.0, 'count': 9}, // PS5 Slim
+      'ba5e2026-1116-4000-8000-000000000130': {'median': 52000.0, 'min': 47000.0, 'max': 57000.0, 'count': 7}, // Xbox Series S
+      'ba5e2026-1116-4000-8000-000000000131': {'median': 28000.0, 'min': 25000.0, 'max': 32000.0, 'count': 11}, // HP M110w printer
+      'ba5e2026-1116-4000-8000-000000000132': {'median': 8500.0, 'min': 7500.0, 'max': 9600.0, 'count': 15}, // TP-Link AX53 router
+      'ba5e2026-1116-4000-8000-000000000133': {'median': 18500.0, 'min': 16500.0, 'max': 21000.0, 'count': 13}, // Samsung T7 SSD
+      'ba5e2026-1116-4000-8000-000000000134': {'median': 1400.0, 'min': 1100.0, 'max': 1750.0, 'count': 28}, // Logitech M185
+      'ba5e2026-1116-4000-8000-000000000135': {'median': 1200.0, 'min': 950.0, 'max': 1500.0, 'count': 22}, // Logitech K120
+      'ba5e2026-1116-4000-8000-000000000136': {'median': 5800.0, 'min': 5000.0, 'max': 6700.0, 'count': 16}, // JBL Go 4
+      'ba5e2026-1116-4000-8000-000000000137': {'median': 26500.0, 'min': 24000.0, 'max': 29500.0, 'count': 19}, // Galaxy A15
+
+      // Clothing & Fashion
+      'i-t-shirt': {'median': 850.0, 'min': 650.0, 'max': 1100.0, 'count': 20}, // Cotton T-shirt
+      'i-jeans': {'median': 2200.0, 'min': 1800.0, 'max': 2700.0, 'count': 18}, // Denim Jeans
+      'i-jacket': {'median': 3500.0, 'min': 2900.0, 'max': 4200.0, 'count': 11}, // Lightweight Jacket
+      'i-dress': {'median': 2800.0, 'min': 2200.0, 'max': 3500.0, 'count': 14}, // Cotton Dress
+      'ba5e2026-1116-4000-8000-000000000032': {'median': 1200.0, 'min': 900.0, 'max': 1600.0, 'count': 15}, // Cotton shirt
+      'ba5e2026-1116-4000-8000-000000000033': {'median': 1800.0, 'min': 1400.0, 'max': 2300.0, 'count': 12}, // Hoodie
+      'ba5e2026-1116-4000-8000-000000000034': {'median': 1500.0, 'min': 1100.0, 'max': 2100.0, 'count': 10}, // Netela
+      'ba5e2026-1116-4000-8000-000000000035': {'median': 2600.0, 'min': 2100.0, 'max': 3200.0, 'count': 7}, // Uniform
+      'ba5e2026-1116-4000-8000-000000000151': {'median': 1400.0, 'min': 1100.0, 'max': 1800.0, 'count': 9}, // Trousers
+      'ba5e2026-1116-4000-8000-000000000152': {'median': 1600.0, 'min': 1250.0, 'max': 2000.0, 'count': 11}, // Sweater
+      'ba5e2026-1116-4000-8000-000000000153': {'median': 1200.0, 'min': 950.0, 'max': 1500.0, 'count': 8}, // Raincoat
+      'ba5e2026-1116-4000-8000-000000000154': {'median': 4500.0, 'min': 3500.0, 'max': 6500.0, 'count': 6}, // Habesha dress
+      'ba5e2026-1116-4000-8000-000000000155': {'median': 350.0, 'min': 280.0, 'max': 450.0, 'count': 14}, // Socks
+      '8a7c2026-1116-4000-8000-000000000020': {'median': 650.0, 'min': 500.0, 'max': 850.0, 'count': 25}, // Plain cotton T-shirt
+      '8a7c2026-1116-4000-8000-000000000021': {'median': 2000.0, 'min': 1600.0, 'max': 2400.0, 'count': 16}, // White cotton T-shirt
+      '8a7c2026-1116-4000-8000-000000000048': {'median': 16500.0, 'min': 13500.0, 'max': 21000.0, 'count': 10}, // Habesha Kemis
+      '8a7c2026-1116-4000-8000-000000000049': {'median': 9500.0, 'min': 8200.0, 'max': 12000.0, 'count': 8}, // 2-Piece Suit
+
+      // Electronics listings (Davi, AddisMobile, Jiji)
+      '8a7c2026-1116-4000-8000-000000000001': {'median': 31000.0, 'min': 28500.0, 'max': 34000.0, 'count': 15}, // Galaxy A16 6GB
+      '8a7c2026-1116-4000-8000-000000000002': {'median': 25000.0, 'min': 23000.0, 'max': 27500.0, 'count': 18}, // Galaxy A16 4GB
+      '8a7c2026-1116-4000-8000-000000000003': {'median': 17800.0, 'min': 16000.0, 'max': 19800.0, 'count': 12}, // Galaxy M07
+      '8a7c2026-1116-4000-8000-000000000004': {'median': 20000.0, 'min': 18000.0, 'max': 22500.0, 'count': 14}, // Galaxy A06 128GB
+      '8a7c2026-1116-4000-8000-000000000005': {'median': 20500.0, 'min': 18500.0, 'max': 23000.0, 'count': 11}, // Galaxy A06 64GB
+      '8a7c2026-1116-4000-8000-000000000006': {'median': 23000.0, 'min': 21000.0, 'max': 25500.0, 'count': 13}, // Galaxy A07 6GB
+      '8a7c2026-1116-4000-8000-000000000007': {'median': 20000.0, 'min': 18000.0, 'max': 22500.0, 'count': 12}, // Galaxy A07 4GB
+      '8a7c2026-1116-4000-8000-000000000008': {'median': 19500.0, 'min': 17500.0, 'max': 21800.0, 'count': 10}, // Galaxy A07 64GB
+      '8a7c2026-1116-4000-8000-000000000009': {'median': 16500.0, 'min': 15000.0, 'max': 18500.0, 'count': 17}, // Infinix Smart 10 128GB
+      '8a7c2026-1116-4000-8000-000000000010': {'median': 14500.0, 'min': 13000.0, 'max': 16200.0, 'count': 14}, // Infinix Smart 10 64GB
+      '8a7c2026-1116-4000-8000-000000000011': {'median': 14200.0, 'min': 12800.0, 'max': 15800.0, 'count': 15}, // Infinix Smart 10 2GB
+      '8a7c2026-1116-4000-8000-000000000012': {'median': 190000.0, 'min': 178000.0, 'max': 205000.0, 'count': 8}, // Galaxy S25 Ultra
+      '8a7c2026-1116-4000-8000-000000000013': {'median': 49900.0, 'min': 46000.0, 'max': 54000.0, 'count': 16}, // Galaxy A17 5G
+      '8a7c2026-1116-4000-8000-000000000014': {'median': 34500.0, 'min': 31500.0, 'max': 37800.0, 'count': 14}, // Galaxy A17 4GB
+      '8a7c2026-1116-4000-8000-000000000015': {'median': 36900.0, 'min': 33800.0, 'max': 40200.0, 'count': 15}, // Galaxy A17 6GB
+      '8a7c2026-1116-4000-8000-000000000016': {'median': 28500.0, 'min': 26000.0, 'max': 31500.0, 'count': 12}, // Galaxy A07 128GB
+      '8a7c2026-1116-4000-8000-000000000017': {'median': 84500.0, 'min': 79000.0, 'max': 91000.0, 'count': 9}, // Galaxy A57
+      '8a7c2026-1116-4000-8000-000000000018': {'median': 52000.0, 'min': 47500.0, 'max': 57000.0, 'count': 11}, // Galaxy Tab A11+
+      '8a7c2026-1116-4000-8000-000000000019': {'median': 520000.0, 'min': 490000.0, 'max': 555000.0, 'count': 6}, // MacBook Pro M5
+      '8a7c2026-1116-4000-8000-000000000027': {'median': 38000.0, 'min': 35000.0, 'max': 42000.0, 'count': 24}, // iPhone 11
+      '8a7c2026-1116-4000-8000-000000000028': {'median': 68000.0, 'min': 64000.0, 'max': 74000.0, 'count': 19}, // iPhone 13 Pro Max
+      '8a7c2026-1116-4000-8000-000000000029': {'median': 86000.0, 'min': 82000.0, 'max': 92000.0, 'count': 14}, // iPhone 14 Pro
+      '8a7c2026-1116-4000-8000-000000000030': {'median': 39500.0, 'min': 37000.0, 'max': 43000.0, 'count': 16}, // Redmi Note 13 Pro
+      '8a7c2026-1116-4000-8000-000000000031': {'median': 31000.0, 'min': 28500.0, 'max': 34000.0, 'count': 15}, // Tecno Camon 30
+      '8a7c2026-1116-4000-8000-000000000032': {'median': 54000.0, 'min': 49000.0, 'max': 60000.0, 'count': 11}, // HP EliteBook 840 G6
+      '8a7c2026-1116-4000-8000-000000000033': {'median': 48000.0, 'min': 44000.0, 'max': 54000.0, 'count': 10}, // Dell Latitude 7490
+      '8a7c2026-1116-4000-8000-000000000036': {'median': 5200.0, 'min': 4800.0, 'max': 5900.0, 'count': 17}, // Huawei MiFi
+
+      // Jiji Ethiopia Automotive & Vehicles
+      '8a7c2026-1116-4000-8000-000000000022': {'median': 1950000.0, 'min': 1750000.0, 'max': 2200000.0, 'count': 12}, // Toyota Vitz
+      '8a7c2026-1116-4000-8000-000000000023': {'median': 2850000.0, 'min': 2600000.0, 'max': 3200000.0, 'count': 15}, // Toyota Corolla
+      '8a7c2026-1116-4000-8000-000000000024': {'median': 3450000.0, 'min': 3200000.0, 'max': 3750000.0, 'count': 14}, // Suzuki Dzire
+      '8a7c2026-1116-4000-8000-000000000025': {'median': 5800000.0, 'min': 5400000.0, 'max': 6400000.0, 'count': 9}, // Toyota RAV4
+      '8a7c2026-1116-4000-8000-000000000026': {'median': 520000.0, 'min': 480000.0, 'max': 580000.0, 'count': 18}, // Bajaj RE 4S
+
+      // Jiji Ethiopia Furniture, Home & Appliances
+      '8a7c2026-1116-4000-8000-000000000034': {'median': 46000.0, 'min': 42000.0, 'max': 51000.0, 'count': 13}, // Samsung 43" 4K Smart TV
+      '8a7c2026-1116-4000-8000-000000000035': {'median': 98000.0, 'min': 92000.0, 'max': 110000.0, 'count': 8}, // Sony 55" Bravia TV
+      '8a7c2026-1116-4000-8000-000000000037': {'median': 62000.0, 'min': 55000.0, 'max': 72000.0, 'count': 10}, // L-Shape Sofa
+      '8a7c2026-1116-4000-8000-000000000038': {'median': 38000.0, 'min': 33000.0, 'max': 44000.0, 'count': 8}, // Queen Wood Bed
+      '8a7c2026-1116-4000-8000-000000000039': {'median': 24000.0, 'min': 21000.0, 'max': 28000.0, 'count': 14}, // Orthopedic Mattress
+      '8a7c2026-1116-4000-8000-000000000040': {'median': 36000.0, 'min': 31000.0, 'max': 42000.0, 'count': 9}, // 4-Door Wardrobe
+      '8a7c2026-1116-4000-8000-000000000041': {'median': 42000.0, 'min': 37000.0, 'max': 48000.0, 'count': 7}, // 6-Seater Dining Table
+      '8a7c2026-1116-4000-8000-000000000042': {'median': 22000.0, 'min': 19000.0, 'max': 26000.0, 'count': 11}, // TV Stand
+      '8a7c2026-1116-4000-8000-000000000043': {'median': 82000.0, 'min': 76000.0, 'max': 91000.0, 'count': 9}, // LG 8kg Washing Machine
+      '8a7c2026-1116-4000-8000-000000000044': {'median': 9500.0, 'min': 8400.0, 'max': 11000.0, 'count': 16}, // Digital Air Fryer
+      '8a7c2026-1116-4000-8000-000000000045': {'median': 14500.0, 'min': 13000.0, 'max': 16500.0, 'count': 21}, // Electric Mitad
+      '8a7c2026-1116-4000-8000-000000000046': {'median': 16500.0, 'min': 14800.0, 'max': 18900.0, 'count': 12}, // Granite Cookware
+      '8a7c2026-1116-4000-8000-000000000047': {'median': 8500.0, 'min': 7200.0, 'max': 9800.0, 'count': 15}, // Rekebot & Sini Set
+
+      // Shoes, Beauty & Tools
+      '8a7c2026-1116-4000-8000-000000000050': {'median': 5200.0, 'min': 4500.0, 'max': 6200.0, 'count': 19}, // Nike Air Force 1
+      '8a7c2026-1116-4000-8000-000000000051': {'median': 4200.0, 'min': 3600.0, 'max': 4900.0, 'count': 13}, // Men's Oxford Shoes
+      '8a7c2026-1116-4000-8000-000000000052': {'median': 1950.0, 'min': 1750.0, 'max': 2300.0, 'count': 22}, // Kirkland Minoxidil
+      '8a7c2026-1116-4000-8000-000000000053': {'median': 52000.0, 'min': 47000.0, 'max': 59000.0, 'count': 7}, // Petrol Generator 3.5 kVA
+      '8a7c2026-1116-4000-8000-000000000054': {'median': 16500.0, 'min': 14000.0, 'max': 21000.0, 'count': 18}, // Holiday Sheep/Ram
     };
 
     final result = <String, PriceAggregateModel>{};

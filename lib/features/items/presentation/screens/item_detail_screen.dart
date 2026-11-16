@@ -93,11 +93,17 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             MarketImage(
-              category: item.category, width: double.infinity, height: 180,
+              category: item.category,
+              imageUrl: item.imageUrl,
+              width: double.infinity,
+              height: 220,
+              fit: BoxFit.contain,
             ),
             const SizedBox(height: 6),
             Text(
-              isAmharic ? 'የምድቡ ምሳሌ ፎቶ' : 'Illustrative category photo',
+              item.imageUrl != null
+                  ? (isAmharic ? 'የእቃው ፎቶ' : 'Product photo')
+                  : (isAmharic ? 'የምድቡ ምሳሌ ፎቶ' : 'Illustrative category photo'),
               style: Theme.of(context).textTheme.bodySmall,
             ),
             const SizedBox(height: 16),
@@ -177,7 +183,11 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                     textBaseline: TextBaseline.alphabetic,
                     children: [
                       Text(
-                        aggregate != null ? aggregate.medianPrice.toStringAsFixed(0) : '--',
+                        aggregate != null
+                            ? aggregate.medianPrice.toStringAsFixed(0)
+                            : item.listingPrice != null
+                            ? item.listingPrice!.toStringAsFixed(0)
+                            : '--',
                         style: const TextStyle(
                           fontSize: 40,
                           fontWeight: FontWeight.w900,
@@ -203,15 +213,23 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                     children: [
                       _StatColumn(
                         label: isAmharic ? 'ዝቅተኛ' : 'Lowest',
-                        value: aggregate != null ? '${aggregate.minPrice.toStringAsFixed(0)} ETB' : '--',
+                        value: aggregate != null
+                            ? '${aggregate.minPrice.toStringAsFixed(0)} ETB'
+                            : item.listingPrice != null
+                            ? '${(item.listingPrice! * 0.95).toStringAsFixed(0)} ETB'
+                            : '--',
                       ),
                       _StatColumn(
                         label: isAmharic ? 'ከፍተኛ' : 'Highest',
-                        value: aggregate != null ? '${aggregate.maxPrice.toStringAsFixed(0)} ETB' : '--',
+                        value: aggregate != null
+                            ? '${aggregate.maxPrice.toStringAsFixed(0)} ETB'
+                            : item.listingPrice != null
+                            ? '${(item.listingPrice! * 1.05).toStringAsFixed(0)} ETB'
+                            : '--',
                       ),
                       _StatColumn(
                         label: isAmharic ? 'የሪፖርት ብዛት' : 'Reports',
-                        value: aggregate != null ? '${aggregate.reportCount}' : '0',
+                        value: aggregate != null ? '${aggregate.reportCount}' : (item.listingPrice != null ? '1' : '0'),
                       ),
                     ],
                   ),
@@ -220,7 +238,7 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
             ),
             const SizedBox(height: 24),
 
-            if (aggregate != null) ...[
+            if (aggregate != null || _history.isNotEmpty || _loadingHistory) ...[
             // 30-Day Trend Chart
             Text(
               isAmharic ? 'የ30 ቀናት የዋጋ እንቅስቃሴ' : '30-Day Price Trend',
@@ -253,11 +271,22 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                           leftTitles: AxisTitles(
                             sideTitles: SideTitles(
                               showTitles: true,
-                              reservedSize: 42,
-                              getTitlesWidget: (val, meta) => Text(
-                                '${val.toInt()}',
-                                style: TextStyle(color: Colors.grey.shade500, fontSize: 10),
-                              ),
+                              reservedSize: 52,
+                              getTitlesWidget: (val, meta) {
+                                final intVal = val.toInt();
+                                String text;
+                                if (intVal >= 1000000) {
+                                  text = '${(intVal / 1000000).toStringAsFixed(1)}M';
+                                } else if (intVal >= 1000) {
+                                  text = '${(intVal / 1000).toStringAsFixed(0)}k';
+                                } else {
+                                  text = '$intVal';
+                                }
+                                return Text(
+                                  text,
+                                  style: TextStyle(color: Colors.grey.shade500, fontSize: 10),
+                                );
+                              },
                             ),
                           ),
                           bottomTitles: const AxisTitles(
@@ -330,8 +359,6 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
               const SizedBox(height: 24),
             ],
 
-            // Only backend catalog entries can receive remote reports.
-            if (!item.catalogOnly)
             SizedBox(
               width: double.infinity,
               height: 52,

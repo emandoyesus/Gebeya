@@ -24,9 +24,9 @@ class PriceCard extends ConsumerWidget {
 
     final isListing = aggregate == null && item.listingPrice != null;
     final median = aggregate?.medianPrice ?? item.listingPrice;
-    final min = aggregate?.minPrice;
-    final max = aggregate?.maxPrice;
-    final count = aggregate?.reportCount ?? 0;
+    final min = aggregate?.minPrice ?? (isListing ? (item.listingPrice! * 0.95) : null);
+    final max = aggregate?.maxPrice ?? (isListing ? (item.listingPrice! * 1.05) : null);
+    final count = aggregate?.reportCount ?? (isListing ? 1 : 0);
     final unit = item.localizedStandardUnit(isAmharic);
 
     return InkWell(
@@ -43,7 +43,12 @@ class PriceCard extends ConsumerWidget {
         ),
         child: Row(
           children: [
-            MarketImage(category: item.category, width: 64, height: 76),
+            MarketImage(
+              category: item.category,
+              imageUrl: item.imageUrl,
+              width: 68,
+              height: 76,
+            ),
             const SizedBox(width: 14),
 
             // Item Name & Category
