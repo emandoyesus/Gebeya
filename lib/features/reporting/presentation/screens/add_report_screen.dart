@@ -33,8 +33,9 @@ class _AddReportScreenState extends ConsumerState<AddReportScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final items = (ref.read(itemsProvider).valueOrNull ?? MockData.items)
-          .where((item) => !item.catalogOnly).toList();
+      final allItems = ref.read(itemsProvider).valueOrNull ?? MockData.items;
+      final available = allItems.where((item) => !item.catalogOnly).toList();
+      final items = available.isNotEmpty ? available : allItems;
       final markets = ref.read(marketsProvider).valueOrNull ?? MockData.markets;
       final currentMarket = ref.read(selectedMarketProvider);
 
@@ -73,8 +74,9 @@ class _AddReportScreenState extends ConsumerState<AddReportScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final items = (ref.watch(itemsProvider).valueOrNull ?? MockData.items)
-        .where((item) => !item.catalogOnly).toList();
+    final allItems = ref.watch(itemsProvider).valueOrNull ?? MockData.items;
+    final available = allItems.where((item) => !item.catalogOnly).toList();
+    final items = available.isNotEmpty ? available : allItems;
     final markets = ref.watch(marketsProvider).valueOrNull ?? MockData.markets;
     final reportingState = ref.watch(reportingProvider);
     final isAmharic = ref.watch(isAmharicProvider);

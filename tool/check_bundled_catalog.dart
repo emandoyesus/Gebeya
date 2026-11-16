@@ -19,8 +19,8 @@ void main() {
     final category = row['category'] as String;
     counts.update(category, (value) => value + 1, ifAbsent: () => 1);
   }
-  if (counts.length != 26 || bundledCatalog.length != 181) {
+  if (counts.length != 26 || bundledCatalog.length != 214) {
     throw StateError('Incomplete bundled catalog: $counts');
   }
-  print('PASS: 181 unique entries; all 26 shopping categories populated.');
+  print('PASS: ${bundledCatalog.length} unique entries; all 26 shopping categories populated.');
 }

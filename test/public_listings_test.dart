@@ -10,7 +10,7 @@ void main() {
     final rows = jsonDecode(await rootBundle.loadString(
       'assets/data/public_listings.json',
     )) as List;
-    expect(rows.length, 21);
+    expect(rows.length, 54);
     final ids = <String>{};
     var telegramCount = 0;
     for (final row in rows) {
@@ -20,7 +20,7 @@ void main() {
         r'^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$',
       )));
       expect(item.listingPrice, greaterThan(0));
-      expect(item.standardUnit, 'piece');
+      expect(item.standardUnit, isIn(['piece', 'kg', 'liter', 'pair', 'set', 'bottle']));
       expect(item.listingNote, contains('2026-11-16'));
       final uri = Uri.parse(item.listingSource!);
       expect(uri.scheme, 'https');

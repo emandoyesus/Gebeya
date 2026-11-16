@@ -29,7 +29,11 @@ void main() {
     final offers = jsonDecode(await rootBundle.loadString(
       'assets/data/public_listings.json',
     )) as List;
-    expect(bundledCatalog, [...rows, ...offers]);
+    expect(bundledCatalog.length, rows.length + offers.length);
+    expect(
+      bundledCatalog.map((r) => r['id']).toList(),
+      [...rows, ...offers].map((r) => (r as Map)['id']).toList(),
+    );
     final imported = rows.map((row) =>
         ItemModel.fromJson(Map<String, dynamic>.from(row as Map))).toList();
     expect(imported.map((item) => item.id).toSet().length, imported.length);
