@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'market_image.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gebeya/core/constants/categories.dart';
 import 'package:gebeya/core/utils/relative_time.dart';
@@ -21,7 +22,8 @@ class PriceCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isAmharic = ref.watch(isAmharicProvider);
 
-    final median = aggregate?.medianPrice;
+    final isListing = aggregate == null && item.listingPrice != null;
+    final median = aggregate?.medianPrice ?? item.listingPrice;
     final min = aggregate?.minPrice;
     final max = aggregate?.maxPrice;
     final count = aggregate?.reportCount ?? 0;
@@ -33,7 +35,7 @@ class PriceCard extends ConsumerWidget {
       },
       borderRadius: BorderRadius.circular(16),
       child: Container(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(16),
@@ -41,20 +43,7 @@ class PriceCard extends ConsumerWidget {
         ),
         child: Row(
           children: [
-            // Icon
-            Container(
-              width: 52,
-              height: 52,
-              decoration: BoxDecoration(
-                color: const Color(0xFFE8F5E9),
-                borderRadius: BorderRadius.circular(14),
-              ),
-              child: Icon(
-                item.icon,
-                color: const Color(0xFF136A36),
-                size: 26,
-              ),
-            ),
+            MarketImage(category: item.category, width: 64, height: 76),
             const SizedBox(width: 14),
 
             // Item Name & Category
@@ -69,11 +58,22 @@ class PriceCard extends ConsumerWidget {
                       fontWeight: FontWeight.bold,
                       color: Color(0xFF1E293B),
                     ),
-                    maxLines: 1,
+                    maxLines: 4,
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 4),
-                  Row(
+                  if (item.listingSource != null)
+                    Text(
+                      Uri.tryParse(item.listingSource!)?.host == 't.me'
+                          ? 'Telegram · ${Uri.parse(item.listingSource!).pathSegments.first}'
+                          : Uri.tryParse(item.listingSource!)?.host ?? '',
+                      style: const TextStyle(fontSize: 11, color: Color(0xFF64748B)),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  Wrap(
+                    spacing: 2,
+                    runSpacing: 4,
                     children: [
                       Text(
                         isAmharic ? item.category.nameAm(context) : item.category.nameEn(context),
@@ -131,6 +131,9 @@ class PriceCard extends ConsumerWidget {
                     ],
                   ),
                   const SizedBox(height: 2),
+                  if (isListing)
+                    Text(isAmharic ? 'የሻጭ ዋጋ' : 'Listing price',
+                      style: const TextStyle(fontSize: 11, color: Color(0xFF64748B))),
                   if (min != null && max != null)
                     Text(
                       '${min.toStringAsFixed(0)} - ${max.toStringAsFixed(0)} ETB',
@@ -149,7 +152,7 @@ class PriceCard extends ConsumerWidget {
                     ),
                 ] else ...[
                   Text(
-                    isAmharic ? 'መረጃ የለም' : 'No data',
+                    isAmharic ? 'ዋጋ ገና የለም' : 'Price pending',
                     style: TextStyle(
                       fontSize: 12,
                       color: Colors.grey.shade400,

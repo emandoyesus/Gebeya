@@ -33,10 +33,12 @@ class _AddReportScreenState extends ConsumerState<AddReportScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final items = ref.read(itemsProvider).valueOrNull ?? MockData.items;
+      final items = (ref.read(itemsProvider).valueOrNull ?? MockData.items)
+          .where((item) => !item.catalogOnly).toList();
       final markets = ref.read(marketsProvider).valueOrNull ?? MockData.markets;
       final currentMarket = ref.read(selectedMarketProvider);
 
+      if (!mounted || items.isEmpty || markets.isEmpty) return;
       setState(() {
         if (widget.initialItemId != null) {
           _selectedItem = items.firstWhere(
@@ -71,7 +73,8 @@ class _AddReportScreenState extends ConsumerState<AddReportScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final items = ref.watch(itemsProvider).valueOrNull ?? MockData.items;
+    final items = (ref.watch(itemsProvider).valueOrNull ?? MockData.items)
+        .where((item) => !item.catalogOnly).toList();
     final markets = ref.watch(marketsProvider).valueOrNull ?? MockData.markets;
     final reportingState = ref.watch(reportingProvider);
     final isAmharic = ref.watch(isAmharicProvider);
@@ -124,12 +127,13 @@ class _AddReportScreenState extends ConsumerState<AddReportScreen> {
               ),
               const SizedBox(height: 6),
               DropdownButtonFormField<ItemModel>(
+                isExpanded: true,
                 value: _selectedItem,
                 decoration: _inputDecoration(),
                 items: items.map((item) {
                   return DropdownMenuItem<ItemModel>(
                     value: item,
-                    child: Text(item.localizedName(isAmharic)),
+                    child: Text(item.localizedName(isAmharic), maxLines: 2, overflow: TextOverflow.ellipsis),
                   );
                 }).toList(),
                 onChanged: (val) {

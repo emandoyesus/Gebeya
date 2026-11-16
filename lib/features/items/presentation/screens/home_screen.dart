@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gebeya/core/constants/categories.dart';
+import 'package:gebeya/features/items/data/price_aggregate_model.dart';
+import '../widgets/market_image.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gebeya/features/items/presentation/items_provider.dart';
 import 'package:gebeya/features/items/presentation/widgets/category_filter_chips.dart';
@@ -7,11 +10,35 @@ import 'package:gebeya/features/items/presentation/widgets/price_card.dart';
 import 'package:gebeya/features/settings/presentation/settings_provider.dart';
 import 'package:go_router/go_router.dart';
 
-class HomeScreen extends ConsumerWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  late final TextEditingController _searchController;
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController = TextEditingController(text: ref.read(searchQueryProvider));
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    ref.listen<String>(searchQueryProvider, (_, next) {
+      if (_searchController.text != next) _searchController.text = next;
+    });
+    final itemsAsync = ref.watch(itemsProvider);
+    final query = ref.watch(searchQueryProvider);
     final selectedMarket = ref.watch(selectedMarketProvider);
     final filteredItems = ref.watch(filteredItemsProvider);
     final aggregatesAsync = ref.watch(marketAggregatesProvider);
@@ -107,16 +134,64 @@ class HomeScreen extends ConsumerWidget {
           ref.invalidate(marketAggregatesProvider);
         },
         child: CustomScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
           slivers: [
+            SliverToBoxAdapter(
+              child: Container(
+                margin: const EdgeInsets.fromLTRB(16, 20, 16, 12),
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF153F2B),
+                  borderRadius: BorderRadius.circular(24),
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            isAmharic ? 'የገበያ ዋጋ መረጃ' : 'YOUR MARKET COMPANION',
+                            style: const TextStyle(color: Color(0xFFE8C978),
+                              fontSize: 11, fontWeight: FontWeight.w700, letterSpacing: 1),
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            isAmharic ? 'ዋጋ ያወዳድሩ። በእርግጠኝነት ይግዙ።' : 'Know the price.\nShop with confidence.',
+                            style: const TextStyle(color: Colors.white,
+                              fontSize: 24, height: 1.25, fontWeight: FontWeight.w800),
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            isAmharic ? 'በማህበረሰቡ የተጋሩ የአካባቢ ገበያ ዋጋዎች።' : 'Local prices, shared by your community.',
+                            style: const TextStyle(color: Color(0xFFD6E4DA), height: 1.5),
+                          ),
+                        ],
+                      ),
+                    ),
+                    if (MediaQuery.sizeOf(context).width > 440) ...[
+                      const SizedBox(width: 20),
+                      const MarketImage(width: 140, height: 160),
+                    ],
+                  ],
+                ),
+              ),
+            ),
             // Search Input
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
                 child: TextField(
+                  controller: _searchController,
                   decoration: InputDecoration(
-                    hintText: isAmharic ? 'የእቃውን ስም ይፈልጉ...' : 'Search items (e.g. Teff, Onion)...',
+                    hintText: isAmharic ? 'የእቃውን ስም ይፈልጉ...' : 'Search products or categories...',
                     hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 14),
                     prefixIcon: const Icon(Icons.search_rounded, color: Colors.grey),
+                    suffixIcon: query.isEmpty ? null : IconButton(
+                      tooltip: isAmharic ? 'ፍለጋ አጽዳ' : 'Clear search',
+                      icon: const Icon(Icons.close_rounded),
+                      onPressed: () => ref.read(searchQueryProvider.notifier).state = '',
+                    ),
                     filled: true,
                     fillColor: Colors.white,
                     contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
@@ -152,7 +227,7 @@ class HomeScreen extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      isAmharic ? 'የዛሬ የገበያ ዋጋዎች' : 'Current Market Prices',
+                      isAmharic ? 'እቃዎችና ዋጋዎች' : 'Products & prices',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
@@ -172,8 +247,9 @@ class HomeScreen extends ConsumerWidget {
             ),
 
             // Items List
-            aggregatesAsync.when(
-              data: (aggregates) {
+            itemsAsync.when(
+              data: (_) {
+                final aggregates = aggregatesAsync.valueOrNull ?? <String, PriceAggregateModel>{};
                 if (filteredItems.isEmpty) {
                   return SliverFillRemaining(
                     hasScrollBody: false,
@@ -184,8 +260,16 @@ class HomeScreen extends ConsumerWidget {
                           Icon(Icons.search_off_rounded, size: 54, color: Colors.grey.shade300),
                           const SizedBox(height: 12),
                           Text(
-                            isAmharic ? 'ምንም እቃ አልተገኘም' : 'No items found',
+                            isAmharic ? 'ከፍለጋዎ ጋር የሚዛመድ እቃ የለም' : 'No matches for your search',
                             style: TextStyle(color: Colors.grey.shade500, fontSize: 15),
+                          ),
+                          const SizedBox(height: 12),
+                          FilledButton(
+                            onPressed: () {
+                              ref.read(searchQueryProvider.notifier).state = '';
+                              ref.read(selectedCategoryProvider.notifier).state = ItemCategory.all;
+                            },
+                            child: Text(isAmharic ? 'ሁሉንም እቃዎች አሳይ' : 'Clear filters & show all'),
                           ),
                         ],
                       ),
@@ -217,7 +301,22 @@ class HomeScreen extends ConsumerWidget {
                 child: Center(child: CircularProgressIndicator()),
               ),
               error: (err, _) => SliverFillRemaining(
-                child: Center(child: Text(err.toString())),
+                child: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.cloud_off_rounded, size: 40),
+                      const SizedBox(height: 12),
+                      Text(isAmharic ? 'እቃዎችን መጫን አልተቻለም' : 'Could not load the catalog'),
+                      const SizedBox(height: 12),
+                      FilledButton.icon(
+                        onPressed: () => ref.invalidate(itemsProvider),
+                        icon: const Icon(Icons.refresh_rounded),
+                        label: Text(isAmharic ? 'እንደገና ሞክር' : 'Try again'),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
           ],

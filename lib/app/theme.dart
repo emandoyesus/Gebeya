@@ -6,7 +6,7 @@ class AppTheme {
   static const Color primaryGreen = Color(0xFF136A36);
   static const Color primaryGreenLight = Color(0xFF2E8540);
   static const Color accentGold = Color(0xFFD97706);
-  static const Color backgroundLight = Color(0xFFF8F9FA);
+  static const Color backgroundLight = Color(0xFFF7F6F0);
   static const Color surfaceWhite = Colors.white;
   static const Color textDark = Color(0xFF1E293B);
   static const Color textMuted = Color(0xFF64748B);
@@ -23,6 +23,22 @@ class AppTheme {
         surface: surfaceWhite,
       ),
       scaffoldBackgroundColor: backgroundLight,
+      dividerColor: borderLight,
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: surfaceWhite,
+        contentPadding: const EdgeInsets.all(18),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: const BorderSide(color: borderLight),
+        ),
+      ),
+      filledButtonTheme: FilledButtonThemeData(
+        style: FilledButton.styleFrom(
+          minimumSize: const Size(48, 52),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+        ),
+      ),
       textTheme: GoogleFonts.notoSansEthiopicTextTheme(base.textTheme).copyWith(
         titleLarge: GoogleFonts.notoSansEthiopic(
           fontWeight: FontWeight.bold,

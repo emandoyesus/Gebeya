@@ -1,7 +1,8 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import '../widgets/market_image.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gebeya/core/constants/mock_data.dart';
+import 'package:gebeya/features/items/data/item_model.dart';
 import 'package:gebeya/core/utils/relative_time.dart';
 import 'package:gebeya/features/items/presentation/items_provider.dart';
 import 'package:gebeya/features/settings/presentation/settings_provider.dart';
@@ -47,10 +48,10 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
     final selectedMarket = ref.watch(selectedMarketProvider);
     final isAmharic = ref.watch(isAmharicProvider);
 
-    final item = itemsAsync.valueOrNull?.firstWhere(
-      (i) => i.id == widget.itemId,
-      orElse: () => MockData.items.firstWhere((i) => i.id == widget.itemId),
-    );
+    final matches = itemsAsync.valueOrNull
+        ?.where((candidate) => candidate.id == widget.itemId);
+    final ItemModel? item =
+        matches == null || matches.isEmpty ? null : matches.first;
 
     if (item == null) {
       return Scaffold(
@@ -72,7 +73,11 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
-                    isAmharic
+                    aggregate == null && item.listingPrice == null
+                        ? (isAmharic ? 'የዋጋ መረጃ ገና የለም' : 'Price not reported yet')
+                        : item.listingPrice != null && aggregate == null
+                        ? '${item.nameEn}: ${item.listingPrice} ETB (seller listing)\n${item.listingSource ?? ""}'
+                        : isAmharic
                         ? '${item.nameAm} በ${selectedMarket?.nameAm ?? ''} አማካኝ ዋጋ፡ ${aggregate?.medianPrice ?? 0} ETB'
                         : '${item.nameEn} median price in ${selectedMarket?.nameEn ?? ''}: ${aggregate?.medianPrice ?? 0} ETB',
                   ),
@@ -87,6 +92,15 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            MarketImage(
+              category: item.category, width: double.infinity, height: 180,
+            ),
+            const SizedBox(height: 6),
+            Text(
+              isAmharic ? 'የምድቡ ምሳሌ ፎቶ' : 'Illustrative category photo',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+            const SizedBox(height: 16),
             // Market and Freshness badge
             Row(
               children: [
@@ -117,6 +131,31 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
             ),
             const SizedBox(height: 16),
 
+            if (item.listingPrice != null) ...[
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(item.localizedName(isAmharic),
+                        style: Theme.of(context).textTheme.titleLarge),
+                      const SizedBox(height: 8),
+                      Text('${item.listingPrice!.toStringAsFixed(0)} ETB / $unit',
+                        style: const TextStyle(fontSize: 28,
+                          fontWeight: FontWeight.bold, color: Color(0xFF136A36))),
+                      Text(isAmharic ? 'የሻጭ ዋጋ' : 'Seller listing price'),
+                      const SizedBox(height: 12),
+                      Text(item.listingNote ?? ''),
+                      const SizedBox(height: 8),
+                      SelectableText(item.listingSource ?? '',
+                        style: Theme.of(context).textTheme.bodySmall),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+            ],
             // Price Highlight Card
             Container(
               padding: const EdgeInsets.all(20),
@@ -181,6 +220,7 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
             ),
             const SizedBox(height: 24),
 
+            if (aggregate != null) ...[
             // 30-Day Trend Chart
             Text(
               isAmharic ? 'የ30 ቀናት የዋጋ እንቅስቃሴ' : '30-Day Price Trend',
@@ -248,6 +288,7 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
             ),
             const SizedBox(height: 24),
 
+            ],
             // Local Units Conversion Guide (e.g. Tassa, Quintal)
             if (item.supportedLocalUnits.isNotEmpty) ...[
               Text(
@@ -289,7 +330,8 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
               const SizedBox(height: 24),
             ],
 
-            // Submit Report CTA Button
+            // Only backend catalog entries can receive remote reports.
+            if (!item.catalogOnly)
             SizedBox(
               width: double.infinity,
               height: 52,
