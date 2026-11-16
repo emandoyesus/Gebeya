@@ -83,17 +83,17 @@ class _ScaffoldWithNavBar extends ConsumerWidget {
         destinations: [
           NavigationDestination(
             icon: const Icon(Icons.storefront_outlined),
-            selectedIcon: const Icon(Icons.storefront_rounded, color: Color(0xFF136A36)),
+            selectedIcon: const Icon(Icons.storefront_rounded, color: Color(0xFF00B53F)),
             label: isAmharic ? 'ዋጋዎች' : 'Prices',
           ),
           NavigationDestination(
             icon: const Icon(Icons.location_on_outlined),
-            selectedIcon: const Icon(Icons.location_on_rounded, color: Color(0xFF136A36)),
+            selectedIcon: const Icon(Icons.location_on_rounded, color: Color(0xFF00B53F)),
             label: isAmharic ? 'ገበያዎች' : 'Markets',
           ),
           NavigationDestination(
             icon: const Icon(Icons.settings_outlined),
-            selectedIcon: const Icon(Icons.settings_rounded, color: Color(0xFF136A36)),
+            selectedIcon: const Icon(Icons.settings_rounded, color: Color(0xFF00B53F)),
             label: isAmharic ? 'ማስተካከያ' : 'Settings',
           ),
         ],

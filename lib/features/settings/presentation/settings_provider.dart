@@ -40,3 +40,51 @@ final isAmharicProvider = Provider<bool>((ref) {
   final locale = ref.watch(localeProvider);
   return locale.languageCode == 'am';
 });
+
+enum ViewMode { grid, list }
+
+class ViewModeNotifier extends StateNotifier<ViewMode> {
+  ViewModeNotifier() : super(ViewMode.grid);
+
+  void toggle() {
+    state = state == ViewMode.grid ? ViewMode.list : ViewMode.grid;
+  }
+
+  void setMode(ViewMode mode) {
+    state = mode;
+  }
+}
+
+final viewModeProvider = StateNotifierProvider<ViewModeNotifier, ViewMode>((ref) {
+  return ViewModeNotifier();
+});
+
+class DataSaverNotifier extends StateNotifier<bool> {
+  DataSaverNotifier() : super(false);
+
+  void toggle() {
+    state = !state;
+  }
+}
+
+final dataSaverProvider = StateNotifierProvider<DataSaverNotifier, bool>((ref) {
+  return DataSaverNotifier();
+});
+
+class FavoritesNotifier extends StateNotifier<Set<String>> {
+  FavoritesNotifier() : super({});
+
+  void toggle(String itemId) {
+    if (state.contains(itemId)) {
+      state = {...state}..remove(itemId);
+    } else {
+      state = {...state, itemId};
+    }
+  }
+
+  bool isFavorite(String itemId) => state.contains(itemId);
+}
+
+final favoritesProvider = StateNotifierProvider<FavoritesNotifier, Set<String>>((ref) {
+  return FavoritesNotifier();
+});

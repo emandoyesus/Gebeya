@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'market_image.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gebeya/core/constants/categories.dart';
 import 'package:gebeya/features/items/presentation/items_provider.dart';
@@ -13,23 +12,26 @@ class CategoryFilterChips extends ConsumerWidget {
     final selected = ref.watch(selectedCategoryProvider);
     final isAmharic = ref.watch(isAmharicProvider);
     final categories = ItemCategory.values;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
           child: Row(
             children: [
               Expanded(
                 child: Text(
-                  isAmharic ? 'ምድቦች' : 'Shop by category',
-                  style: Theme.of(context).textTheme.titleMedium,
+                  isAmharic ? 'ምድቦች' : 'Categories',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF1E293B),
+                  ),
                 ),
               ),
-              TextButton.icon(
-                icon: const Icon(Icons.grid_view_rounded, size: 18),
-                label: Text(isAmharic ? 'ሁሉንም ይመልከቱ' : 'Browse all'),
-                onPressed: () => showModalBottomSheet<void>(
+              InkWell(
+                onTap: () => showModalBottomSheet<void>(
                   context: context,
                   isScrollControlled: true,
                   useSafeArea: true,
@@ -38,43 +40,147 @@ class CategoryFilterChips extends ConsumerWidget {
                     child: _CategoryPicker(),
                   ),
                 ),
+                borderRadius: BorderRadius.circular(8),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        isAmharic ? 'ሁሉንም' : 'See all',
+                        style: const TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF00B53F),
+                        ),
+                      ),
+                      const SizedBox(width: 2),
+                      const Icon(Icons.arrow_forward_ios_rounded, size: 12, color: Color(0xFF00B53F)),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),
         ),
+        const SizedBox(height: 6),
         SizedBox(
-          height: 52,
+          height: 94,
           child: ListView.separated(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             scrollDirection: Axis.horizontal,
             itemCount: categories.length,
-            separatorBuilder: (_, index) => const SizedBox(width: 8),
+            separatorBuilder: (_, index) => const SizedBox(width: 12),
             itemBuilder: (context, index) {
               final category = categories[index];
-              return ChoiceChip(
-                selected: category == selected,
-                label: Text(isAmharic ? category.labelAm : category.labelEn),
-                avatar: Icon(category.icon, size: 18),
-                onSelected: (_) {
+              final isSelected = category == selected;
+
+              return InkWell(
+                onTap: () {
                   ref.read(searchQueryProvider.notifier).state = '';
                   ref.read(selectedCategoryProvider.notifier).state = category;
                 },
+                borderRadius: BorderRadius.circular(16),
+                child: SizedBox(
+                  width: 68,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      AnimatedContainer(
+                        duration: const Duration(milliseconds: 200),
+                        width: 54,
+                        height: 54,
+                        decoration: BoxDecoration(
+                          color: isSelected
+                              ? const Color(0xFF00B53F)
+                              : Colors.white,
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(
+                            color: isSelected
+                                ? const Color(0xFF00B53F)
+                                : const Color(0xFFE5E7EB),
+                            width: isSelected ? 2 : 1,
+                          ),
+                          boxShadow: isSelected
+                              ? [
+                                  BoxShadow(
+                                    color: const Color(0xFF00B53F).withValues(alpha: 0.25),
+                                    blurRadius: 8,
+                                    offset: const Offset(0, 3),
+                                  ),
+                                ]
+                              : [
+                                  BoxShadow(
+                                    color: Colors.black.withValues(alpha: 0.03),
+                                    blurRadius: 4,
+                                    offset: const Offset(0, 2),
+                                  ),
+                                ],
+                        ),
+                        child: Center(
+                          child: Icon(
+                            category.icon,
+                            size: 26,
+                            color: isSelected
+                                ? Colors.white
+                                : const Color(0xFF0B7B39),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        isAmharic ? category.labelAm : category.labelEn,
+                        style: TextStyle(
+                          fontSize: 11,
+                          fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                          color: isSelected ? const Color(0xFF00B53F) : const Color(0xFF475569),
+                        ),
+                        maxLines: 2,
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
+                ),
               );
             },
           ),
         ),
         if (selected != ItemCategory.all)
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: TextButton.icon(
-              icon: const Icon(Icons.close_rounded, size: 16),
-              label: Text(isAmharic
-                  ? '${selected.labelAm} — ሁሉንም አሳይ'
-                  : '${selected.labelEn} — Show all items'),
-              onPressed: () {
-                ref.read(searchQueryProvider.notifier).state = '';
-                ref.read(selectedCategoryProvider.notifier).state = ItemCategory.all;
-              },
+            padding: const EdgeInsets.fromLTRB(16, 6, 16, 2),
+            child: Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFE8F5E9),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: const Color(0xFF00B53F).withValues(alpha: 0.3)),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        isAmharic ? selected.labelAm : selected.labelEn,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF0B7B39),
+                        ),
+                      ),
+                      const SizedBox(width: 4),
+                      InkWell(
+                        onTap: () {
+                          ref.read(searchQueryProvider.notifier).state = '';
+                          ref.read(selectedCategoryProvider.notifier).state = ItemCategory.all;
+                        },
+                        child: const Icon(Icons.close_rounded, size: 14, color: Color(0xFF0B7B39)),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
       ],
@@ -100,6 +206,7 @@ class _CategoryPickerState extends ConsumerState<_CategoryPicker> {
     final categories = ItemCategory.values.where((category) =>
         category.labelEn.toLowerCase().contains(_query) ||
         category.labelAm.contains(_query)).toList();
+
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.fromLTRB(
@@ -112,8 +219,8 @@ class _CategoryPickerState extends ConsumerState<_CategoryPicker> {
               children: [
                 Expanded(
                   child: Text(
-                    isAmharic ? 'ሁሉም ምድቦች' : 'All categories',
-                    style: Theme.of(context).textTheme.titleLarge,
+                    isAmharic ? 'ሁሉም ምድቦች' : 'All Categories',
+                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),
                 IconButton(
@@ -128,6 +235,7 @@ class _CategoryPickerState extends ConsumerState<_CategoryPicker> {
               decoration: InputDecoration(
                 hintText: isAmharic ? 'ምድቦችን ፈልግ' : 'Find a category',
                 prefixIcon: const Icon(Icons.search_rounded),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               ),
               onChanged: (value) => setState(() {
                 _query = value.trim().toLowerCase();
@@ -136,8 +244,12 @@ class _CategoryPickerState extends ConsumerState<_CategoryPicker> {
             const SizedBox(height: 12),
             Expanded(
               child: categories.isEmpty
-                  ? Center(child: Text(isAmharic
-                      ? 'ምንም ምድብ አልተገኘም' : 'No matching categories'))
+                  ? Center(
+                      child: Text(
+                        isAmharic ? 'ምንም ምድብ አልተገኘም' : 'No matching categories',
+                        style: TextStyle(color: Colors.grey.shade500),
+                      ),
+                    )
                   : ListView.builder(
                       itemCount: categories.length,
                       itemBuilder: (context, index) {
@@ -145,15 +257,37 @@ class _CategoryPickerState extends ConsumerState<_CategoryPicker> {
                         final count = items?.where((item) =>
                             category == ItemCategory.all ||
                             item.category == category).length;
+                        final isSelected = selected == category;
+
                         return ListTile(
-                          leading: MarketImage(category: category, width: 48, height: 48),
-                          title: Text(isAmharic ? category.labelAm : category.labelEn),
+                          leading: Container(
+                            width: 42,
+                            height: 42,
+                            decoration: BoxDecoration(
+                              color: isSelected ? const Color(0xFF00B53F) : const Color(0xFFF1F5F9),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Icon(
+                              category.icon,
+                              color: isSelected ? Colors.white : const Color(0xFF0B7B39),
+                              size: 22,
+                            ),
+                          ),
+                          title: Text(
+                            isAmharic ? category.labelAm : category.labelEn,
+                            style: TextStyle(
+                              fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                              color: isSelected ? const Color(0xFF00B53F) : const Color(0xFF1E293B),
+                            ),
+                          ),
                           subtitle: count == null ? null : Text(
                             isAmharic ? '$count እቃዎች' : '$count items',
+                            style: TextStyle(fontSize: 12, color: Colors.grey.shade500),
                           ),
-                          selected: selected == category,
-                          trailing: selected == category
-                              ? const Icon(Icons.check_circle_rounded) : null,
+                          selected: isSelected,
+                          trailing: isSelected
+                              ? const Icon(Icons.check_circle_rounded, color: Color(0xFF00B53F))
+                              : null,
                           onTap: () {
                             ref.read(searchQueryProvider.notifier).state = '';
                             ref.read(selectedCategoryProvider.notifier).state = category;

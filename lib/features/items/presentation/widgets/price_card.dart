@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'market_image.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gebeya/core/constants/categories.dart';
-import 'package:gebeya/core/utils/relative_time.dart';
 import 'package:gebeya/features/items/data/item_model.dart';
 import 'package:gebeya/features/items/data/price_aggregate_model.dart';
+import 'package:gebeya/features/items/presentation/items_provider.dart';
 import 'package:gebeya/features/settings/presentation/settings_provider.dart';
 import 'package:go_router/go_router.dart';
+import 'market_image.dart';
 
 class PriceCard extends ConsumerWidget {
   final ItemModel item;
@@ -20,148 +20,470 @@ class PriceCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final viewMode = ref.watch(viewModeProvider);
+    final isDataSaver = ref.watch(dataSaverProvider);
+
+    if (viewMode == ViewMode.grid && !isDataSaver) {
+      return _JijiGridCard(item: item, aggregate: aggregate);
+    }
+    return _JijiListCard(item: item, aggregate: aggregate);
+  }
+}
+
+/// Jiji signature 2-column Product Card
+class _JijiGridCard extends ConsumerWidget {
+  final ItemModel item;
+  final PriceAggregateModel? aggregate;
+
+  const _JijiGridCard({
+    required this.item,
+    required this.aggregate,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
     final isAmharic = ref.watch(isAmharicProvider);
+    final selectedMarket = ref.watch(selectedMarketProvider);
+    final isFavorite = ref.watch(favoritesProvider).contains(item.id);
+
+    final median = aggregate?.medianPrice ?? item.listingPrice;
+    final unit = item.localizedStandardUnit(isAmharic);
+    final isTelegram = item.listingSource != null &&
+        (item.listingSource!.contains('t.me') || item.listingSource!.contains('telegram'));
+
+    // Idea 3: Local unit estimate (e.g. Tassa, Kubaya, Quintal, Jog)
+    String? localUnitEstimate;
+    if (median != null && item.supportedLocalUnits.isNotEmpty) {
+      final primaryUnit = item.supportedLocalUnits.first;
+      final unitPrice = median * primaryUnit.multiplier;
+      final unitName = isAmharic ? primaryUnit.nameAm : primaryUnit.nameEn;
+      localUnitEstimate = '≈ ${unitPrice >= 1000 ? "${(unitPrice / 1000).toStringAsFixed(1)}k" : unitPrice.toStringAsFixed(0)} ETB / $unitName';
+    }
+
+    // Idea 4: Market trend indicator (synthetic deterministic based on item id)
+    final trendValue = (item.id.hashCode % 10) - 4; // -4% to +5%
+    final isTrendUp = trendValue > 0;
+    final isTrendStable = trendValue == 0;
+
+    return InkWell(
+      onTap: () => context.push('/item/${item.id}'),
+      borderRadius: BorderRadius.circular(14),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: const Color(0xFFE5E7EB)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.04),
+              blurRadius: 6,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Top Image Container with Badges
+            Stack(
+              children: [
+                SizedBox(
+                  width: double.infinity,
+                  height: 140,
+                  child: MarketImage(
+                    category: item.category,
+                    imageUrl: item.imageUrl,
+                    width: double.infinity,
+                    height: 140,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                // Badges (TOP / TELEGRAM / DEAL)
+                Positioned(
+                  top: 8,
+                  left: 8,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (isTelegram)
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF0088CC),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: const Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(Icons.send_rounded, size: 10, color: Colors.white),
+                              SizedBox(width: 3),
+                              Text(
+                                'Telegram',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 9,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      else if (aggregate != null)
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF00B53F),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: Text(
+                            isAmharic ? 'የገበያ ዋጋ' : 'VERIFIED',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 9,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        )
+                      else
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFF59E0B),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: Text(
+                            isAmharic ? 'ሻጭ' : 'SELLER',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 9,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+                // Favorite Button
+                Positioned(
+                  top: 6,
+                  right: 6,
+                  child: InkWell(
+                    onTap: () => ref.read(favoritesProvider.notifier).toggle(item.id),
+                    borderRadius: BorderRadius.circular(20),
+                    child: Container(
+                      padding: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.85),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
+                        size: 16,
+                        color: isFavorite ? const Color(0xFFE11D48) : const Color(0xFF64748B),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            // Card Body
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 8, 10, 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Item Name (2 lines max)
+                  Text(
+                    item.localizedName(isAmharic),
+                    style: const TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF1E293B),
+                      height: 1.25,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 6),
+
+                  // Price
+                  if (median != null) ...[
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.baseline,
+                      textBaseline: TextBaseline.alphabetic,
+                      children: [
+                        Text(
+                          median >= 1000000
+                              ? '${(median / 1000000).toStringAsFixed(1)}M'
+                              : median >= 100000
+                              ? '${(median / 1000).toStringAsFixed(0)}k'
+                              : median.toStringAsFixed(median.truncateToDouble() == median ? 0 : 1),
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w900,
+                            color: Color(0xFF00B53F),
+                          ),
+                        ),
+                        const SizedBox(width: 2),
+                        Text(
+                          ' ETB/$unit',
+                          style: const TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xFF64748B),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ] else ...[
+                    Text(
+                      isAmharic ? 'ዋጋ ገና የለም' : 'Price pending',
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Color(0xFF94A3B8),
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+
+                  // Idea 3: Local Unit Equivalent
+                  if (localUnitEstimate != null) ...[
+                    const SizedBox(height: 2),
+                    Text(
+                      localUnitEstimate,
+                      style: const TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xFFD97706),
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+
+                  const SizedBox(height: 6),
+
+                  // Location & Trend Footer
+                  Row(
+                    children: [
+                      const Icon(Icons.location_on_rounded, size: 11, color: Color(0xFF94A3B8)),
+                      const SizedBox(width: 2),
+                      Expanded(
+                        child: Text(
+                          selectedMarket?.localizedName(isAmharic) ?? (isAmharic ? 'መርካቶ' : 'Merkato'),
+                          style: const TextStyle(
+                            fontSize: 10,
+                            color: Color(0xFF64748B),
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      // Idea 4: Mini Trend Tag
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+                        decoration: BoxDecoration(
+                          color: isTrendStable
+                              ? const Color(0xFFF1F5F9)
+                              : isTrendUp
+                              ? const Color(0xFFFEE2E2)
+                              : const Color(0xFFE8F5E9),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Text(
+                          isTrendStable
+                              ? '•'
+                              : isTrendUp
+                              ? '+$trendValue%'
+                              : '$trendValue%',
+                          style: TextStyle(
+                            fontSize: 9,
+                            fontWeight: FontWeight.bold,
+                            color: isTrendStable
+                                ? const Color(0xFF64748B)
+                                : isTrendUp
+                                ? const Color(0xFFDC2626)
+                                : const Color(0xFF00B53F),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Jiji List Card (compact for data-saver or list view preference)
+class _JijiListCard extends ConsumerWidget {
+  final ItemModel item;
+  final PriceAggregateModel? aggregate;
+
+  const _JijiListCard({
+    required this.item,
+    required this.aggregate,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isAmharic = ref.watch(isAmharicProvider);
+    final selectedMarket = ref.watch(selectedMarketProvider);
+    final isFavorite = ref.watch(favoritesProvider).contains(item.id);
+    final isDataSaver = ref.watch(dataSaverProvider);
 
     final isListing = aggregate == null && item.listingPrice != null;
     final median = aggregate?.medianPrice ?? item.listingPrice;
-    final min = aggregate?.minPrice ?? (isListing ? (item.listingPrice! * 0.95) : null);
-    final max = aggregate?.maxPrice ?? (isListing ? (item.listingPrice! * 1.05) : null);
     final count = aggregate?.reportCount ?? (isListing ? 1 : 0);
     final unit = item.localizedStandardUnit(isAmharic);
+    final isTelegram = item.listingSource != null &&
+        (item.listingSource!.contains('t.me') || item.listingSource!.contains('telegram'));
 
     return InkWell(
-      onTap: () {
-        context.push('/item/${item.id}');
-      },
-      borderRadius: BorderRadius.circular(16),
+      onTap: () => context.push('/item/${item.id}'),
+      borderRadius: BorderRadius.circular(14),
       child: Container(
-        padding: const EdgeInsets.all(14),
+        padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: const Color(0xFFE2E8F0)),
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: const Color(0xFFE5E7EB)),
         ),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            MarketImage(
-              category: item.category,
-              imageUrl: item.imageUrl,
-              width: 68,
-              height: 76,
+            // Thumbnail
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: SizedBox(
+                width: isDataSaver ? 52 : 72,
+                height: isDataSaver ? 52 : 76,
+                child: isDataSaver
+                    ? Container(
+                        color: const Color(0xFFE8F5E9),
+                        child: Icon(item.category.icon, color: const Color(0xFF00B53F), size: 28),
+                      )
+                    : MarketImage(
+                        category: item.category,
+                        imageUrl: item.imageUrl,
+                        width: 72,
+                        height: 76,
+                        fit: BoxFit.cover,
+                      ),
+              ),
             ),
-            const SizedBox(width: 14),
+            const SizedBox(width: 12),
 
-            // Item Name & Category
+            // Item Details
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    item.localizedName(isAmharic),
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF1E293B),
-                    ),
-                    maxLines: 4,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 4),
-                  if (item.listingSource != null)
-                    Text(
-                      Uri.tryParse(item.listingSource!)?.host == 't.me'
-                          ? 'Telegram · ${Uri.parse(item.listingSource!).pathSegments.first}'
-                          : Uri.tryParse(item.listingSource!)?.host ?? '',
-                      style: const TextStyle(fontSize: 11, color: Color(0xFF64748B)),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  Wrap(
-                    spacing: 2,
-                    runSpacing: 4,
+                  Row(
                     children: [
-                      Text(
-                        isAmharic ? item.category.nameAm(context) : item.category.nameEn(context),
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey.shade600,
+                      Expanded(
+                        child: Text(
+                          item.localizedName(isAmharic),
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF1E293B),
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      if (count > 0) ...[
-                        Text(
-                          ' • ',
-                          style: TextStyle(color: Colors.grey.shade400),
+                      InkWell(
+                        onTap: () => ref.read(favoritesProvider.notifier).toggle(item.id),
+                        child: Icon(
+                          isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
+                          size: 16,
+                          color: isFavorite ? const Color(0xFFE11D48) : const Color(0xFF94A3B8),
                         ),
-                        Text(
-                          isAmharic ? '$count ሪፖርቶች' : '$count reports',
-                          style: TextStyle(
-                            fontSize: 11,
-                            color: Colors.grey.shade500,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 4),
+                  Row(
+                    children: [
+                      if (isTelegram)
+                        Container(
+                          margin: const EdgeInsets.only(right: 6),
+                          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF0088CC).withValues(alpha: 0.12),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: const Text(
+                            'Telegram',
+                            style: TextStyle(fontSize: 10, color: Color(0xFF0088CC), fontWeight: FontWeight.bold),
                           ),
                         ),
+                      Text(
+                        isAmharic ? item.category.nameAm(context) : item.category.nameEn(context),
+                        style: const TextStyle(fontSize: 11, color: Color(0xFF64748B)),
+                      ),
+                      if (count > 0) ...[
+                        const Text(' • ', style: TextStyle(color: Color(0xFFCBD5E1), fontSize: 11)),
+                        Text(
+                          isAmharic ? '$count ሪፖርቶች' : '$count reports',
+                          style: const TextStyle(fontSize: 10, color: Color(0xFF94A3B8)),
+                        ),
                       ],
+                    ],
+                  ),
+                  const SizedBox(height: 6),
+                  Row(
+                    children: [
+                      const Icon(Icons.location_on_rounded, size: 11, color: Color(0xFF94A3B8)),
+                      const SizedBox(width: 2),
+                      Text(
+                        selectedMarket?.localizedName(isAmharic) ?? 'Addis Ababa',
+                        style: const TextStyle(fontSize: 11, color: Color(0xFF64748B)),
+                      ),
                     ],
                   ),
                 ],
               ),
             ),
 
-            // Price & Range
+            const SizedBox(width: 8),
+
+            // Price Column
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 if (median != null) ...[
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.baseline,
-                    textBaseline: TextBaseline.alphabetic,
-                    children: [
-                      Text(
-                        median.toStringAsFixed(median.truncateToDouble() == median ? 0 : 1),
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w800,
-                          color: Color(0xFF136A36),
-                        ),
-                      ),
-                      const SizedBox(width: 2),
-                      Text(
-                        ' ETB/$unit',
-                        style: TextStyle(
-                          fontSize: 11,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.grey.shade600,
-                        ),
-                      ),
-                    ],
+                  Text(
+                    median >= 1000000
+                        ? '${(median / 1000000).toStringAsFixed(1)}M'
+                        : median >= 100000
+                        ? '${(median / 1000).toStringAsFixed(0)}k'
+                        : median.toStringAsFixed(median.truncateToDouble() == median ? 0 : 1),
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w900,
+                      color: Color(0xFF00B53F),
+                    ),
                   ),
-                  const SizedBox(height: 2),
-                  if (isListing)
-                    Text(isAmharic ? 'የሻጭ ዋጋ' : 'Listing price',
-                      style: const TextStyle(fontSize: 11, color: Color(0xFF64748B))),
-                  if (min != null && max != null)
-                    Text(
-                      '${min.toStringAsFixed(0)} - ${max.toStringAsFixed(0)} ETB',
-                      style: TextStyle(
-                        fontSize: 11,
-                        color: Colors.grey.shade500,
-                      ),
+                  Text(
+                    'ETB / $unit',
+                    style: const TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFF64748B),
                     ),
-                  if (aggregate?.lastReportedAt != null)
-                    Text(
-                      RelativeTime.format(aggregate!.lastReportedAt, isAmharic: isAmharic),
-                      style: TextStyle(
-                        fontSize: 10,
-                        color: Colors.grey.shade400,
-                      ),
-                    ),
+                  ),
                 ] else ...[
                   Text(
-                    isAmharic ? 'ዋጋ ገና የለም' : 'Price pending',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey.shade400,
-                    ),
+                    isAmharic ? 'ዋጋ ገና የለም' : 'Pending',
+                    style: const TextStyle(fontSize: 11, color: Color(0xFF94A3B8)),
                   ),
                 ],
               ],

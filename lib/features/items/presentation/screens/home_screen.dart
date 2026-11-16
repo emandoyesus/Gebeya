@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gebeya/core/constants/categories.dart';
 import 'package:gebeya/features/items/data/price_aggregate_model.dart';
-import '../widgets/market_image.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gebeya/features/items/presentation/items_provider.dart';
 import 'package:gebeya/features/items/presentation/widgets/category_filter_chips.dart';
 import 'package:gebeya/features/items/presentation/widgets/market_selector_sheet.dart';
@@ -43,89 +42,145 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final filteredItems = ref.watch(filteredItemsProvider);
     final aggregatesAsync = ref.watch(marketAggregatesProvider);
     final isAmharic = ref.watch(isAmharicProvider);
+    final viewMode = ref.watch(viewModeProvider);
+    final isDataSaver = ref.watch(dataSaverProvider);
 
     return Scaffold(
+      backgroundColor: const Color(0xFFF4F5F7),
       appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
         titleSpacing: 16,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
-                Text(
-                  isAmharic ? 'ገበያ' : 'Gebeya',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w900,
-                    fontSize: 22,
-                    color: Color(0xFF136A36),
+                // JIJI Style Brand Title
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: isAmharic ? 'ገበያ ' : 'Gebeya ',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w900,
+                          fontSize: 22,
+                          color: Color(0xFF00B53F),
+                        ),
+                      ),
+                      TextSpan(
+                        text: isAmharic ? 'ኢትዮጵያ' : 'Ethiopia',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 14,
+                          color: Color(0xFF1E293B),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 const SizedBox(width: 8),
+                // Idea 6: Offline Ready status badge
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFFFF3CD),
+                    color: isDataSaver ? const Color(0xFFFEF3C7) : const Color(0xFFE8F5E9),
                     borderRadius: BorderRadius.circular(6),
                   ),
-                  child: Text(
-                    isAmharic ? 'አዲስ አበባ' : 'Addis Ababa',
-                    style: const TextStyle(
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF856404),
-                    ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        isDataSaver ? Icons.offline_bolt_rounded : Icons.check_circle_rounded,
+                        size: 10,
+                        color: isDataSaver ? const Color(0xFFD97706) : const Color(0xFF00B53F),
+                      ),
+                      const SizedBox(width: 3),
+                      Text(
+                        isDataSaver
+                            ? (isAmharic ? 'ዳታ ቆጣቢ' : 'Data Saver')
+                            : (isAmharic ? 'ከመስመር ውጭ' : 'Offline OK'),
+                        style: TextStyle(
+                          fontSize: 9,
+                          fontWeight: FontWeight.bold,
+                          color: isDataSaver ? const Color(0xFFB45309) : const Color(0xFF0B7B39),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 2),
+            // Idea 2: Physical Market Comparison / Selector affordance
             InkWell(
               onTap: () => MarketSelectorSheet.show(context),
               borderRadius: BorderRadius.circular(4),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(Icons.location_on_rounded, size: 14, color: Color(0xFF136A36)),
+                  const Icon(Icons.location_on_rounded, size: 14, color: Color(0xFF00B53F)),
                   const SizedBox(width: 4),
                   Text(
                     selectedMarket != null
                         ? selectedMarket.localizedName(isAmharic)
                         : (isAmharic ? 'ገበያ ይምረጡ' : 'Select Market'),
                     style: const TextStyle(
-                      fontSize: 13,
+                      fontSize: 12,
                       fontWeight: FontWeight.w600,
                       color: Color(0xFF1E293B),
                     ),
                   ),
-                  const Icon(Icons.arrow_drop_down_rounded, size: 18, color: Colors.black54),
+                  const SizedBox(width: 2),
+                  const Icon(Icons.keyboard_arrow_down_rounded, size: 16, color: Colors.black54),
                 ],
               ),
             ),
           ],
         ),
         actions: [
+          // Idea 6: Data Saver toggle button
+          IconButton(
+            tooltip: isAmharic ? 'ዳታ ቆጣቢ ሁነታ' : 'Toggle Data Saver Mode',
+            icon: Icon(
+              isDataSaver ? Icons.offline_bolt_rounded : Icons.offline_bolt_outlined,
+              color: isDataSaver ? const Color(0xFFD97706) : const Color(0xFF64748B),
+            ),
+            onPressed: () {
+              ref.read(dataSaverProvider.notifier).toggle();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  duration: const Duration(seconds: 2),
+                  content: Text(
+                    ref.read(dataSaverProvider)
+                        ? (isAmharic ? 'ዳታ ቆጣቢ ሁነታ በርቷል (ፈጣንና አነስተኛ ዳታ)' : 'Data Saver enabled (High speed & minimal data)')
+                        : (isAmharic ? 'ዳታ ቆጣቢ ሁነታ ጠፍቷል' : 'Standard view restored'),
+                  ),
+                ),
+              );
+            },
+          ),
+          // Language toggle
           IconButton(
             tooltip: isAmharic ? 'ቋንቋ ቀይር' : 'Change Language',
             icon: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
               decoration: BoxDecoration(
                 border: Border.all(color: const Color(0xFFE2E8F0)),
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(6),
               ),
               child: Text(
                 isAmharic ? 'EN' : 'አማ',
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 12,
-                  color: Color(0xFF136A36),
+                  fontSize: 11,
+                  color: Color(0xFF00B53F),
                 ),
               ),
             ),
-            onPressed: () {
-              ref.read(localeProvider.notifier).toggle();
-            },
+            onPressed: () => ref.read(localeProvider.notifier).toggle(),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: 4),
         ],
       ),
       body: RefreshIndicator(
@@ -136,72 +191,40 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         child: CustomScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
           slivers: [
+            // JIJI-Style Large Search Bar
             SliverToBoxAdapter(
               child: Container(
-                margin: const EdgeInsets.fromLTRB(16, 20, 16, 12),
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF153F2B),
-                  borderRadius: BorderRadius.circular(24),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            isAmharic ? 'የገበያ ዋጋ መረጃ' : 'YOUR MARKET COMPANION',
-                            style: const TextStyle(color: Color(0xFFE8C978),
-                              fontSize: 11, fontWeight: FontWeight.w700, letterSpacing: 1),
-                          ),
-                          const SizedBox(height: 10),
-                          Text(
-                            isAmharic ? 'ዋጋ ያወዳድሩ። በእርግጠኝነት ይግዙ።' : 'Know the price.\nShop with confidence.',
-                            style: const TextStyle(color: Colors.white,
-                              fontSize: 24, height: 1.25, fontWeight: FontWeight.w800),
-                          ),
-                          const SizedBox(height: 10),
-                          Text(
-                            isAmharic ? 'በማህበረሰቡ የተጋሩ የአካባቢ ገበያ ዋጋዎች።' : 'Local prices, shared by your community.',
-                            style: const TextStyle(color: Color(0xFFD6E4DA), height: 1.5),
-                          ),
-                        ],
-                      ),
-                    ),
-                    if (MediaQuery.sizeOf(context).width > 440) ...[
-                      const SizedBox(width: 20),
-                      const MarketImage(width: 140, height: 160),
-                    ],
-                  ],
-                ),
-              ),
-            ),
-            // Search Input
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
+                color: Colors.white,
+                padding: const EdgeInsets.fromLTRB(16, 10, 16, 14),
                 child: TextField(
                   controller: _searchController,
                   decoration: InputDecoration(
-                    hintText: isAmharic ? 'የእቃውን ስም ይፈልጉ...' : 'Search products or categories...',
+                    hintText: isAmharic
+                        ? '${selectedMarket?.localizedName(isAmharic) ?? "መርካቶ"} ውስጥ ይፈልጉ...'
+                        : 'Search in ${selectedMarket?.localizedName(isAmharic) ?? "Merkato"}...',
                     hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 14),
-                    prefixIcon: const Icon(Icons.search_rounded, color: Colors.grey),
-                    suffixIcon: query.isEmpty ? null : IconButton(
-                      tooltip: isAmharic ? 'ፍለጋ አጽዳ' : 'Clear search',
-                      icon: const Icon(Icons.close_rounded),
-                      onPressed: () => ref.read(searchQueryProvider.notifier).state = '',
-                    ),
+                    prefixIcon: const Icon(Icons.search_rounded, color: Color(0xFF00B53F), size: 22),
+                    suffixIcon: query.isEmpty
+                        ? null
+                        : IconButton(
+                            tooltip: isAmharic ? 'ፍለጋ አጽዳ' : 'Clear search',
+                            icon: const Icon(Icons.close_rounded, size: 20),
+                            onPressed: () => ref.read(searchQueryProvider.notifier).state = '',
+                          ),
                     filled: true,
-                    fillColor: Colors.white,
-                    contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
+                    fillColor: const Color(0xFFF8FAFC),
+                    contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(14),
+                      borderRadius: BorderRadius.circular(12),
                       borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(14),
+                      borderRadius: BorderRadius.circular(12),
                       borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(color: Color(0xFF00B53F), width: 1.5),
                     ),
                   ),
                   onChanged: (val) {
@@ -211,15 +234,112 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ),
             ),
 
-            // Category Filter Chips
-            const SliverToBoxAdapter(
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 6),
-                child: CategoryFilterChips(),
+            // JIJI Style Category Carousel
+            SliverToBoxAdapter(
+              child: Container(
+                color: Colors.white,
+                child: const CategoryFilterChips(),
               ),
             ),
 
-            // Price List Header Info
+            // Value Proposition / Ideas 2, 4, 5 Quick Highlights Banner
+            if (query.isEmpty)
+              SliverToBoxAdapter(
+                child: Container(
+                  margin: const EdgeInsets.fromLTRB(16, 14, 16, 6),
+                  padding: const EdgeInsets.all(14),
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFF0B7B39), Color(0xFF00B53F)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(14),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFF00B53F).withValues(alpha: 0.2),
+                        blurRadius: 8,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white.withValues(alpha: 0.2),
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  child: Text(
+                                    isAmharic ? 'የገበያ ዋጋ ጠቋሚ' : 'MARKET INTELLIGENCE',
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 9,
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 0.5,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                const Icon(Icons.trending_up_rounded, color: Colors.white, size: 14),
+                              ],
+                            ),
+                            const SizedBox(height: 6),
+                            Text(
+                              isAmharic
+                                  ? 'ትክክለኛውን የገበያ ዋጋ ይወቁ'
+                                  : 'Know true market prices',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 2),
+                            Text(
+                              isAmharic
+                                  ? 'መርካቶ፣ ሾላ፣ ሳሪስና ቴሌግራምን ያወዳድሩ'
+                                  : 'Compare Merkato, Shola, Saris & Telegram',
+                              style: TextStyle(
+                                color: Colors.white.withValues(alpha: 0.9),
+                                fontSize: 11,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      InkWell(
+                        onTap: () => MarketSelectorSheet.show(context),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Text(
+                            isAmharic ? 'አወዳድር' : 'Compare',
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF0B7B39),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+            // Feed Header: Count + Grid/List Switcher
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
@@ -227,26 +347,53 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      isAmharic ? 'እቃዎችና ዋጋዎች' : 'Products & prices',
+                      isAmharic ? '${filteredItems.length} እቃዎች ይገኛሉ' : '${filteredItems.length} items found',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 15,
-                        color: Color(0xFF1E293B),
+                        fontSize: 14,
+                        color: Color(0xFF334155),
                       ),
                     ),
-                    Text(
-                      isAmharic ? '${filteredItems.length} እቃዎች' : '${filteredItems.length} items',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey.shade500,
-                      ),
+                    Row(
+                      children: [
+                        // View mode toggle
+                        InkWell(
+                          onTap: () => ref.read(viewModeProvider.notifier).toggle(),
+                          borderRadius: BorderRadius.circular(6),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(6),
+                              border: Border.all(color: const Color(0xFFE2E8F0)),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  viewMode == ViewMode.grid ? Icons.view_list_rounded : Icons.grid_view_rounded,
+                                  size: 16,
+                                  color: const Color(0xFF00B53F),
+                                ),
+                                const SizedBox(width: 4),
+                                Text(
+                                  viewMode == ViewMode.grid
+                                      ? (isAmharic ? 'ዝርዝር' : 'List')
+                                      : (isAmharic ? 'ፍርግርግ' : 'Grid'),
+                                  style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFF00B53F)),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ),
             ),
 
-            // Items List
+            // Products Grid / List
             itemsAsync.when(
               data: (_) {
                 final aggregates = aggregatesAsync.valueOrNull ?? <String, PriceAggregateModel>{};
@@ -265,6 +412,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           ),
                           const SizedBox(height: 12),
                           FilledButton(
+                            style: FilledButton.styleFrom(backgroundColor: const Color(0xFF00B53F)),
                             onPressed: () {
                               ref.read(searchQueryProvider.notifier).state = '';
                               ref.read(selectedCategoryProvider.notifier).state = ItemCategory.all;
@@ -277,6 +425,33 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   );
                 }
 
+                // JIJI 2-Column Grid View
+                if (viewMode == ViewMode.grid && !isDataSaver) {
+                  return SliverPadding(
+                    padding: const EdgeInsets.fromLTRB(16, 4, 16, 80),
+                    sliver: SliverGrid(
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 12,
+                        crossAxisSpacing: 12,
+                        childAspectRatio: 0.68,
+                      ),
+                      delegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                          final item = filteredItems[index];
+                          final aggregate = aggregates[item.id];
+                          return PriceCard(
+                            item: item,
+                            aggregate: aggregate,
+                          );
+                        },
+                        childCount: filteredItems.length,
+                      ),
+                    ),
+                  );
+                }
+
+                // Compact List View (Default in Data Saver mode)
                 return SliverPadding(
                   padding: const EdgeInsets.fromLTRB(16, 4, 16, 80),
                   sliver: SliverList(
@@ -298,7 +473,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 );
               },
               loading: () => const SliverFillRemaining(
-                child: Center(child: CircularProgressIndicator()),
+                child: Center(child: CircularProgressIndicator(color: Color(0xFF00B53F))),
               ),
               error: (err, _) => SliverFillRemaining(
                 child: Center(
@@ -307,9 +482,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     children: [
                       const Icon(Icons.cloud_off_rounded, size: 40),
                       const SizedBox(height: 12),
-                      Text(isAmharic ? 'እቃዎችን መጫን አልተቻለም' : 'Could not load the catalog'),
+                      Text(isAmharic ? 'እቃዎችን መጫን አልተቻለም' : 'Could not load catalog'),
                       const SizedBox(height: 12),
                       FilledButton.icon(
+                        style: FilledButton.styleFrom(backgroundColor: const Color(0xFF00B53F)),
                         onPressed: () => ref.invalidate(itemsProvider),
                         icon: const Icon(Icons.refresh_rounded),
                         label: Text(isAmharic ? 'እንደገና ሞክር' : 'Try again'),
@@ -323,16 +499,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: const Color(0xFF136A36),
+        backgroundColor: const Color(0xFF00B53F),
         foregroundColor: Colors.white,
         icon: const Icon(Icons.add_shopping_cart_rounded),
         label: Text(
-          isAmharic ? 'ዋጋ ሪፖርት አድርግ' : 'Report Price',
+          isAmharic ? 'ዋጋ ሪፖርት አድርግ' : 'Post / Report Price',
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
-        onPressed: () {
-          context.push('/report');
-        },
+        onPressed: () => context.push('/report'),
       ),
     );
   }

@@ -70,3 +70,9 @@ final filteredItemsProvider = Provider<List<ItemModel>>((ref) {
     orElse: () => [],
   );
 });
+
+// Cross-market price comparison for an item (Idea 2)
+final marketComparisonProvider = FutureProvider.family<Map<String, double>, String>((ref, itemId) async {
+  final repo = ref.watch(itemsRepositoryProvider);
+  return repo.getMarketComparison(itemId);
+});
