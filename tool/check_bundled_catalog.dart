@@ -22,5 +22,12 @@ void main() {
   if (counts.length != 26 || bundledCatalog.length != 214) {
     throw StateError('Incomplete bundled catalog: $counts');
   }
-  print('PASS: ${bundledCatalog.length} unique entries; all 26 shopping categories populated.');
+  int missingPrice = 0;
+  int missingImage = 0;
+  for (final row in bundledCatalog) {
+    if (row['listing_price'] == null) missingPrice++;
+    final imageUrl = row['image_url'];
+    if (imageUrl == null || (imageUrl as String).isEmpty) missingImage++;
+  }
+  print('PASS: ${bundledCatalog.length} unique entries; all 26 shopping categories populated. Items without listing_price: $missingPrice, without image_url: $missingImage');
 }

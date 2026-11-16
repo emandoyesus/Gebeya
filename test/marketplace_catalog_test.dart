@@ -21,7 +21,7 @@ void main() {
         ItemCategory.vegetablesProduce);
   });
 
-  test('expanded catalog covers every category without invented prices', () async {
+  test('expanded catalog covers every category with verified market prices', () async {
     final rows = jsonDecode(await rootBundle.loadString(
       'assets/data/marketplace_catalog.json',
     )) as List;
@@ -41,7 +41,10 @@ void main() {
       expect(item.category, isNot(ItemCategory.all));
       expect(item.nameEn, isNotEmpty);
       expect(item.nameAm, isNotEmpty);
-      expect(item.listingPrice, isNull);
+      expect(item.listingPrice, isNotNull);
+      expect(item.listingPrice, greaterThan(0));
+      expect(item.listingSource, isNotNull);
+      expect(item.imageUrl, isNotNull);
       expect(item.standardUnit, isIn(['piece', 'kg', 'liter', 'pair', 'set']));
     }
     final catalog = [...MockData.items, ...imported];

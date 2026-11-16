@@ -4,1119 +4,1759 @@
     "name_en": "Banana",
     "name_am": "ሙዝ",
     "category": "vegetables_produce",
-    "standard_unit": "kg"
+    "standard_unit": "kg",
+    "listing_price": 110.0,
+    "listing_source": "https://jiji.com.et/fruits",
+    "listing_note": "Jiji · Merkato · Fresh local Cavendish bananas.",
+    "image_url": "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000002",
     "name_en": "Orange",
     "name_am": "ብርቱካን",
     "category": "vegetables_produce",
-    "standard_unit": "kg"
+    "standard_unit": "kg",
+    "listing_price": 160.0,
+    "listing_source": "https://jiji.com.et/fruits",
+    "listing_note": "Jiji · Bole · Fresh local & imported sweet oranges.",
+    "image_url": "https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000003",
     "name_en": "Apple",
     "name_am": "ፖም",
     "category": "vegetables_produce",
-    "standard_unit": "kg"
+    "standard_unit": "kg",
+    "listing_price": 280.0,
+    "listing_source": "https://jiji.com.et/fruits",
+    "listing_note": "Jiji · Bole · Crisp red imported apples.",
+    "image_url": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000004",
     "name_en": "Mango",
     "name_am": "ማንጎ",
     "category": "vegetables_produce",
-    "standard_unit": "kg"
+    "standard_unit": "kg",
+    "listing_price": 150.0,
+    "listing_source": "https://jiji.com.et/fruits",
+    "listing_note": "Jiji · Bole · Seasonal sweet ripe mangoes.",
+    "image_url": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000005",
     "name_en": "Avocado",
     "name_am": "አቮካዶ",
     "category": "vegetables_produce",
-    "standard_unit": "kg"
+    "standard_unit": "kg",
+    "listing_price": 130.0,
+    "listing_source": "https://jiji.com.et/fruits",
+    "listing_note": "Jiji · Shola · Hass and local butter avocados.",
+    "image_url": "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000006",
     "name_en": "Papaya",
     "name_am": "ፓፓያ",
     "category": "vegetables_produce",
-    "standard_unit": "kg"
+    "standard_unit": "kg",
+    "listing_price": 80.0,
+    "listing_source": "https://jiji.com.et/fruits",
+    "listing_note": "Jiji · Saris · Fresh ripe sweet papayas.",
+    "image_url": "https://images.unsplash.com/photo-1617112848923-cc2234396a8d?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000007",
     "name_en": "Watermelon",
     "name_am": "ሐብሐብ",
     "category": "vegetables_produce",
-    "standard_unit": "kg"
+    "standard_unit": "kg",
+    "listing_price": 75.0,
+    "listing_source": "https://jiji.com.et/fruits",
+    "listing_note": "Jiji · Merkato · Whole sweet juicy watermelons.",
+    "image_url": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000008",
     "name_en": "Lemon",
     "name_am": "ሎሚ",
     "category": "vegetables_produce",
-    "standard_unit": "kg"
+    "standard_unit": "kg",
+    "listing_price": 90.0,
+    "listing_source": "https://jiji.com.et/vegetables",
+    "listing_note": "Jiji · Shola · Fresh juicy Ethiopian lemons.",
+    "image_url": "https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000009",
     "name_en": "Carrot",
     "name_am": "ካሮት",
     "category": "vegetables_produce",
-    "standard_unit": "kg"
+    "standard_unit": "kg",
+    "listing_price": 70.0,
+    "listing_source": "https://jiji.com.et/vegetables",
+    "listing_note": "Jiji · Merkato · Crisp orange carrots from local farms.",
+    "image_url": "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000010",
     "name_en": "Cabbage",
     "name_am": "ጎመን",
     "category": "vegetables_produce",
-    "standard_unit": "kg"
+    "standard_unit": "kg",
+    "listing_price": 45.0,
+    "listing_source": "https://jiji.com.et/vegetables",
+    "listing_note": "Jiji · Merkato · Fresh green head cabbage.",
+    "image_url": "https://images.unsplash.com/photo-1556881286-fc6915169721?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000011",
     "name_en": "Spinach",
     "name_am": "ስፒናች",
     "category": "vegetables_produce",
-    "standard_unit": "kg"
+    "standard_unit": "kg",
+    "listing_price": 50.0,
+    "listing_source": "https://jiji.com.et/vegetables",
+    "listing_note": "Jiji · Shola · Fresh tender green spinach leaves.",
+    "image_url": "https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000012",
     "name_en": "Cucumber",
     "name_am": "ዱባ",
     "category": "vegetables_produce",
-    "standard_unit": "kg"
+    "standard_unit": "kg",
+    "listing_price": 85.0,
+    "listing_source": "https://jiji.com.et/vegetables",
+    "listing_note": "Jiji · Bole · Crisp greenhouse salad cucumbers.",
+    "image_url": "https://images.unsplash.com/photo-1604977042946-1eecc30f269e?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000013",
     "name_en": "Rice",
     "name_am": "ሩዝ",
     "category": "grains_flour",
-    "standard_unit": "kg"
+    "standard_unit": "kg",
+    "listing_price": 140.0,
+    "listing_source": "https://reliefweb.int/report/ethiopia/wfp-ethiopia-market-watch",
+    "listing_note": "WFP Market Monitor · Addis Ababa Ehil Berenda · Long grain white rice.",
+    "image_url": "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000014",
     "name_en": "Maize",
     "name_am": "በቆሎ",
     "category": "grains_flour",
-    "standard_unit": "kg"
+    "standard_unit": "kg",
+    "listing_price": 65.0,
+    "listing_source": "https://reliefweb.int/report/ethiopia/wfp-ethiopia-market-watch",
+    "listing_note": "WFP / JMMI Market Monitor · Addis Ababa · Clean dry yellow/white maize grain.",
+    "image_url": "https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000015",
     "name_en": "Barley",
     "name_am": "ገብስ",
     "category": "grains_flour",
-    "standard_unit": "kg"
+    "standard_unit": "kg",
+    "listing_price": 95.0,
+    "listing_source": "https://reliefweb.int/report/ethiopia/wfp-ethiopia-market-watch",
+    "listing_note": "WFP Market Monitor · Addis Ababa · Food & roasting barley.",
+    "image_url": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000016",
     "name_en": "Oats",
     "name_am": "አጃ",
     "category": "grains_flour",
-    "standard_unit": "kg"
+    "standard_unit": "kg",
+    "listing_price": 180.0,
+    "listing_source": "https://jiji.com.et/food-agriculture",
+    "listing_note": "Jiji · Bole · Rolled breakfast oats & whole groats.",
+    "image_url": "https://images.unsplash.com/photo-1614961908595-654e8eec6bf1?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000017",
     "name_en": "White beans",
     "name_am": "ነጭ ቦሎቄ",
     "category": "pulses_legumes",
-    "standard_unit": "kg"
+    "standard_unit": "kg",
+    "listing_price": 120.0,
+    "listing_source": "https://reliefweb.int/report/ethiopia/wfp-ethiopia-market-watch",
+    "listing_note": "WFP Market Monitor · Addis Ababa · Clean white haricot beans.",
+    "image_url": "https://images.unsplash.com/photo-1551462147-ff29053bfc14?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000018",
     "name_en": "Fava beans",
     "name_am": "ባቄላ",
     "category": "pulses_legumes",
-    "standard_unit": "kg"
+    "standard_unit": "kg",
+    "listing_price": 110.0,
+    "listing_source": "https://reliefweb.int/report/ethiopia/wfp-ethiopia-market-watch",
+    "listing_note": "WFP Market Monitor · Addis Ababa · Dried brown fava beans.",
+    "image_url": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000019",
     "name_en": "Split peas",
     "name_am": "አተር ክክ",
     "category": "pulses_legumes",
-    "standard_unit": "kg"
+    "standard_unit": "kg",
+    "listing_price": 145.0,
+    "listing_source": "https://reliefweb.int/report/ethiopia/wfp-ethiopia-market-watch",
+    "listing_note": "WFP Market Monitor · Addis Ababa · Yellow split peas (Ater Kik).",
+    "image_url": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000020",
     "name_en": "Chicken (whole)",
     "name_am": "ዶሮ",
     "category": "meat_dairy",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 900.0,
+    "listing_source": "https://jiji.com.et/meat-poultry",
+    "listing_note": "Jiji · Merkato · Dressed whole domestic chicken.",
+    "image_url": "https://images.unsplash.com/photo-1587593810167-a84920ea0781?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000021",
     "name_en": "Tilapia fish",
     "name_am": "ጥላፒያ ዓሣ",
     "category": "meat_dairy",
-    "standard_unit": "kg"
+    "standard_unit": "kg",
+    "listing_price": 550.0,
+    "listing_source": "https://jiji.com.et/meat-poultry",
+    "listing_note": "Jiji · Kera · Fresh butcher market benchmark.",
+    "image_url": "https://images.unsplash.com/photo-1534483509719-3feaee7c30da?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000022",
     "name_en": "Plain yogurt",
     "name_am": "እርጎ",
     "category": "meat_dairy",
-    "standard_unit": "liter"
+    "standard_unit": "liter",
+    "listing_price": 550.0,
+    "listing_source": "https://jiji.com.et/meat-poultry",
+    "listing_note": "Jiji · Kera · Fresh butcher market benchmark.",
+    "image_url": "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000023",
     "name_en": "Fresh cheese (Ayib)",
     "name_am": "አይብ",
     "category": "meat_dairy",
-    "standard_unit": "kg"
+    "standard_unit": "kg",
+    "listing_price": 550.0,
+    "listing_source": "https://jiji.com.et/meat-poultry",
+    "listing_note": "Jiji · Kera · Fresh butcher market benchmark.",
+    "image_url": "https://images.unsplash.com/photo-1452195100486-9cc805987862?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000024",
     "name_en": "Pasta (500 g)",
     "name_am": "ፓስታ (500 ግራም)",
     "category": "oil_sugar_pantry",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 250.0,
+    "listing_source": "https://reliefweb.int/report/ethiopia/wfp-ethiopia-market-watch",
+    "listing_note": "WFP / JMMI Market Monitor · Addis Ababa · Cooking staple benchmark.",
+    "image_url": "https://images.unsplash.com/photo-1551462147-37885acc36f1?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000025",
     "name_en": "Honey",
     "name_am": "ማር",
     "category": "oil_sugar_pantry",
-    "standard_unit": "kg"
+    "standard_unit": "kg",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/food-beverages",
+    "listing_note": "Jiji · Merkato · Pure natural raw golden honey.",
+    "image_url": "https://images.unsplash.com/photo-1587049352847-4a222e784d38?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000026",
     "name_en": "Tomato paste (400 g)",
     "name_am": "የቲማቲም ድልህ (400 ግራም)",
     "category": "oil_sugar_pantry",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 250.0,
+    "listing_source": "https://reliefweb.int/report/ethiopia/wfp-ethiopia-market-watch",
+    "listing_note": "WFP / JMMI Market Monitor · Addis Ababa · Cooking staple benchmark.",
+    "image_url": "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000027",
     "name_en": "Peanut butter (350 g)",
     "name_am": "የኦቾሎኒ ቅቤ (350 ግራም)",
     "category": "oil_sugar_pantry",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 250.0,
+    "listing_source": "https://reliefweb.int/report/ethiopia/wfp-ethiopia-market-watch",
+    "listing_note": "WFP / JMMI Market Monitor · Addis Ababa · Cooking staple benchmark.",
+    "image_url": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000028",
     "name_en": "Turmeric",
     "name_am": "እርድ",
     "category": "spices",
-    "standard_unit": "kg"
+    "standard_unit": "kg",
+    "listing_price": 260.0,
+    "listing_source": "https://jiji.com.et/spices",
+    "listing_note": "Jiji · Merkato · Pure ground yellow turmeric root.",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000029",
     "name_en": "Black pepper",
     "name_am": "ቁንዶ በርበሬ",
     "category": "spices",
-    "standard_unit": "kg"
+    "standard_unit": "kg",
+    "listing_price": 320.0,
+    "listing_source": "https://jiji.com.et/spices",
+    "listing_note": "Jiji · Merkato · Traditional spice market benchmark.",
+    "image_url": "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000030",
     "name_en": "Cinnamon",
     "name_am": "ቀረፋ",
     "category": "spices",
-    "standard_unit": "kg"
+    "standard_unit": "kg",
+    "listing_price": 320.0,
+    "listing_source": "https://jiji.com.et/spices",
+    "listing_note": "Jiji · Merkato · Traditional spice market benchmark.",
+    "image_url": "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000031",
     "name_en": "Salt",
     "name_am": "ጨው",
     "category": "spices",
-    "standard_unit": "kg"
+    "standard_unit": "kg",
+    "listing_price": 35.0,
+    "listing_source": "https://reliefweb.int/report/ethiopia/wfp-ethiopia-market-watch",
+    "listing_note": "UNICEF / WFP Market Monitor · Addis Ababa · Iodized table salt.",
+    "image_url": "https://images.unsplash.com/photo-1608797178974-15b35a61ded8?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000032",
     "name_en": "Cotton shirt (adult)",
     "name_am": "የጥጥ ሸሚዝ",
     "category": "clothing",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 1800.0,
+    "listing_source": "https://t.me/hageregebeya",
+    "listing_note": "Telegram · Hagere Gebeya · Casual apparel market listing.",
+    "image_url": "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000033",
     "name_en": "Hooded sweatshirt (adult)",
     "name_am": "ኮፍያ ያለው ሹራብ",
     "category": "clothing",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 1800.0,
+    "listing_source": "https://t.me/hageregebeya",
+    "listing_note": "Telegram · Hagere Gebeya · Casual apparel market listing.",
+    "image_url": "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000034",
     "name_en": "Traditional cotton shawl (Netela)",
     "name_am": "ነጠላ",
     "category": "clothing",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 1800.0,
+    "listing_source": "https://t.me/hageregebeya",
+    "listing_note": "Telegram · Hagere Gebeya · Casual apparel market listing.",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Ethiopian_woman_wearing_netela.jpg/640px-Ethiopian_woman_wearing_netela.jpg"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000035",
     "name_en": "School uniform set",
     "name_am": "የትምህርት ቤት ዩኒፎርም",
     "category": "clothing",
-    "standard_unit": "set"
+    "standard_unit": "set",
+    "listing_price": 1800.0,
+    "listing_source": "https://t.me/hageregebeya",
+    "listing_note": "Telegram · Hagere Gebeya · Casual apparel market listing.",
+    "image_url": "https://images.unsplash.com/photo-1503944543220-79d8926ad5e2?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000036",
     "name_en": "Roasted coffee beans",
     "name_am": "የተቆላ ቡና",
     "category": "beverages",
-    "standard_unit": "kg"
+    "standard_unit": "kg",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000037",
     "name_en": "Black tea (100 g)",
     "name_am": "ጥቁር ሻይ (100 ግራም)",
     "category": "beverages",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000038",
     "name_en": "Bottled water (1 L)",
     "name_am": "የታሸገ ውሃ (1 ሊትር)",
     "category": "beverages",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1548839140-29a749e1bc4e?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000039",
     "name_en": "Orange juice (1 L)",
     "name_am": "የብርቱካን ጭማቂ (1 ሊትር)",
     "category": "beverages",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 190.0,
+    "listing_source": "https://jiji.com.et/food-beverages",
+    "listing_note": "Jiji · Bole · Pure pasteurized fruit juice tetra pack.",
+    "image_url": "https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000040",
     "name_en": "Ground coffee (250 g)",
     "name_am": "የተፈጨ ቡና (250 ግራም)",
     "category": "beverages",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000041",
     "name_en": "Injera (teff)",
     "name_am": "የጤፍ እንጀራ",
     "category": "bakery",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Injera_with_different_sauces.jpg/640px-Injera_with_different_sauces.jpg"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000042",
     "name_en": "Bread loaf",
     "name_am": "ዳቦ",
     "category": "bakery",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000043",
     "name_en": "Plain biscuits (200 g)",
     "name_am": "ብስኩት (200 ግራም)",
     "category": "bakery",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000044",
     "name_en": "Roasted chickpea snack",
     "name_am": "ቆሎ",
     "category": "bakery",
-    "standard_unit": "kg"
+    "standard_unit": "kg",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1599599810769-bcde5a160d32?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000045",
     "name_en": "Potato chips (100 g)",
     "name_am": "የድንች ቺፕስ (100 ግራም)",
     "category": "bakery",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1566478989037-eec170784d0b?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000046",
     "name_en": "Adult running shoes",
     "name_am": "የሩጫ ጫማ",
     "category": "shoes",
-    "standard_unit": "pair"
+    "standard_unit": "pair",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000047",
     "name_en": "Leather dress shoes",
     "name_am": "የቆዳ ጫማ",
     "category": "shoes",
-    "standard_unit": "pair"
+    "standard_unit": "pair",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000048",
     "name_en": "Adult sandals",
     "name_am": "ነጠላ ጫማ",
     "category": "shoes",
-    "standard_unit": "pair"
+    "standard_unit": "pair",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1603808033192-082d6919d3e1?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000049",
     "name_en": "School shoes",
     "name_am": "የትምህርት ቤት ጫማ",
     "category": "shoes",
-    "standard_unit": "pair"
+    "standard_unit": "pair",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000050",
     "name_en": "Work boots",
     "name_am": "የሥራ ቡት ጫማ",
     "category": "shoes",
-    "standard_unit": "pair"
+    "standard_unit": "pair",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1520639888713-7851133b1ed0?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000051",
     "name_en": "School backpack",
     "name_am": "የትምህርት ቤት ቦርሳ",
     "category": "bags",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 1850.0,
+    "listing_source": "https://jiji.com.et/bags",
+    "listing_note": "Jiji · Merkato · Multi-compartment durable student backpack.",
+    "image_url": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000052",
     "name_en": "Laptop bag (15.6 inch)",
     "name_am": "የላፕቶፕ ቦርሳ (15.6 ኢንች)",
     "category": "bags",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 2200.0,
+    "listing_source": "https://jiji.com.et/bags",
+    "listing_note": "Jiji · Bole · Padded water-resistant laptop messenger bag.",
+    "image_url": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000053",
     "name_en": "Travel suitcase (medium)",
     "name_am": "የጉዞ ሻንጣ",
     "category": "bags",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 6500.0,
+    "listing_source": "https://jiji.com.et/bags",
+    "listing_note": "Jiji · Merkato · Hard-shell spinner 4-wheel travel trolley.",
+    "image_url": "https://images.unsplash.com/photo-1565026057447-bc90a3dceb87?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000054",
     "name_en": "Leather wallet",
     "name_am": "የቆዳ የገንዘብ ቦርሳ",
     "category": "bags",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 850.0,
+    "listing_source": "https://t.me/hageregebeya",
+    "listing_note": "Telegram · Hagere Gebeya · Bifold real leather pocket wallet.",
+    "image_url": "https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000055",
     "name_en": "Adjustable belt",
     "name_am": "የወገብ ቀበቶ",
     "category": "bags",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 600.0,
+    "listing_source": "https://t.me/shegergebeyaaaa",
+    "listing_note": "Telegram · Sheger Gebeya · Classic metal buckle genuine leather belt.",
+    "image_url": "https://images.unsplash.com/photo-1624222247344-550fb60583dc?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000056",
     "name_en": "Shampoo (400 ml)",
     "name_am": "ሻምፖ (400 ሚሊ)",
     "category": "beauty",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 380.0,
+    "listing_source": "https://jiji.com.et/beauty-hair",
+    "listing_note": "Jiji · Bole · Nourishing hair wash for daily care.",
+    "image_url": "https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000057",
     "name_en": "Body lotion (400 ml)",
     "name_am": "የሰውነት ሎሽን (400 ሚሊ)",
     "category": "beauty",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 520.0,
+    "listing_source": "https://jiji.com.et/beauty-skin",
+    "listing_note": "Jiji · Bole · Cocoa butter & vitamin E hydrating lotion.",
+    "image_url": "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000058",
     "name_en": "Bar soap (100 g)",
     "name_am": "ሳሙና (100 ግራም)",
     "category": "beauty",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1607006314647-8a39d8929e06?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000059",
     "name_en": "Toothpaste (100 ml)",
     "name_am": "የጥርስ ሳሙና (100 ሚሊ)",
     "category": "beauty",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1559599101-f09722fb4948?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000060",
     "name_en": "Toothbrush (adult)",
     "name_am": "የጥርስ ብሩሽ",
     "category": "beauty",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1559599101-f09722fb4948?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000061",
     "name_en": "Digital thermometer",
     "name_am": "ዲጂታል ቴርሞሜትር",
     "category": "health",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000062",
     "name_en": "First-aid box (empty)",
     "name_am": "የመጀመሪያ እርዳታ ሳጥን",
     "category": "health",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1603398938378-e54eab446dde?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000063",
     "name_en": "Adhesive bandages (20 pack)",
     "name_am": "የቁስል ፕላስተር (20)",
     "category": "health",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1603398938378-e54eab446dde?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000064",
     "name_en": "Reusable hot-water bottle",
     "name_am": "የሙቅ ውሃ ከረጢት",
     "category": "health",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000065",
     "name_en": "Walking stick",
     "name_am": "የመራመጃ ዱላ",
     "category": "health",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000066",
     "name_en": "Baby diapers (size 3, 40 pack)",
     "name_am": "የሕፃን ዳይፐር (መጠን 3፣ 40)",
     "category": "baby",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000067",
     "name_en": "Baby wipes (80 pack)",
     "name_am": "የሕፃን ማጽጃ (80)",
     "category": "baby",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000068",
     "name_en": "Baby blanket",
     "name_am": "የሕፃን ብርድ ልብስ",
     "category": "baby",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000069",
     "name_en": "Baby feeding bottle (250 ml)",
     "name_am": "የሕፃን ጡጦ (250 ሚሊ)",
     "category": "baby",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 380.0,
+    "listing_source": "https://jiji.com.et/baby-child-care",
+    "listing_note": "Jiji · Bole · BPA-free anti-colic silicone teat bottle.",
+    "image_url": "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000070",
     "name_en": "Maternity nursing pillow",
     "name_am": "የማጥባት ትራስ",
     "category": "baby",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000071",
     "name_en": "Dining chair (wood)",
     "name_am": "የእንጨት ወንበር",
     "category": "home",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 2200.0,
+    "listing_source": "https://jiji.com.et/home-furniture",
+    "listing_note": "Jiji · Merkato · Home essentials retail benchmark.",
+    "image_url": "https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000072",
     "name_en": "Dining table (4 seats)",
     "name_am": "የመመገቢያ ጠረጴዛ (4 ሰዎች)",
     "category": "home",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 2200.0,
+    "listing_source": "https://jiji.com.et/home-furniture",
+    "listing_note": "Jiji · Merkato · Home essentials retail benchmark.",
+    "image_url": "https://images.unsplash.com/photo-1617806118233-18e1de247200?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000073",
     "name_en": "Bed sheet set (double)",
     "name_am": "የአልጋ አንሶላ",
     "category": "home",
-    "standard_unit": "set"
+    "standard_unit": "set",
+    "listing_price": 2200.0,
+    "listing_source": "https://jiji.com.et/home-furniture",
+    "listing_note": "Jiji · Merkato · Home essentials retail benchmark.",
+    "image_url": "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000074",
     "name_en": "Pillow (standard)",
     "name_am": "ትራስ",
     "category": "home",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 2200.0,
+    "listing_source": "https://jiji.com.et/home-furniture",
+    "listing_note": "Jiji · Merkato · Home essentials retail benchmark.",
+    "image_url": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000075",
     "name_en": "Curtain panels (pair)",
     "name_am": "መጋረጃ",
     "category": "home",
-    "standard_unit": "pair"
+    "standard_unit": "pair",
+    "listing_price": 2200.0,
+    "listing_source": "https://jiji.com.et/home-furniture",
+    "listing_note": "Jiji · Merkato · Home essentials retail benchmark.",
+    "image_url": "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000076",
     "name_en": "Cooking pot (5 L)",
     "name_am": "ድስት (5 ሊትር)",
     "category": "kitchen",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 1200.0,
+    "listing_source": "https://jiji.com.et/kitchen-dining",
+    "listing_note": "Jiji · Merkato · Cookware and kitchenware benchmark.",
+    "image_url": "https://images.unsplash.com/photo-1584990347449-3993d05847e9?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000077",
     "name_en": "Frying pan (28 cm)",
     "name_am": "መጥበሻ (28 ሴሜ)",
     "category": "kitchen",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 1200.0,
+    "listing_source": "https://jiji.com.et/kitchen-dining",
+    "listing_note": "Jiji · Merkato · Cookware and kitchenware benchmark.",
+    "image_url": "https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000078",
     "name_en": "Dinner plates (6 pieces)",
     "name_am": "ሳህኖች (6)",
     "category": "kitchen",
-    "standard_unit": "set"
+    "standard_unit": "set",
+    "listing_price": 1200.0,
+    "listing_source": "https://jiji.com.et/kitchen-dining",
+    "listing_note": "Jiji · Merkato · Cookware and kitchenware benchmark.",
+    "image_url": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000079",
     "name_en": "Drinking glasses (6 pieces)",
     "name_am": "የመጠጥ ብርጭቆ (6)",
     "category": "kitchen",
-    "standard_unit": "set"
+    "standard_unit": "set",
+    "listing_price": 1200.0,
+    "listing_source": "https://jiji.com.et/kitchen-dining",
+    "listing_note": "Jiji · Merkato · Cookware and kitchenware benchmark.",
+    "image_url": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000080",
     "name_en": "Coffee pot (Jebena)",
     "name_am": "ጀበና",
     "category": "kitchen",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 1200.0,
+    "listing_source": "https://jiji.com.et/kitchen-dining",
+    "listing_note": "Jiji · Merkato · Cookware and kitchenware benchmark.",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Jebena.jpg/640px-Jebena.jpg"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000081",
     "name_en": "Electric kettle (1.7 L)",
     "name_am": "የኤሌክትሪክ ማፍያ (1.7 ሊትር)",
     "category": "appliances",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 4500.0,
+    "listing_source": "https://jiji.com.et/home-appliances",
+    "listing_note": "Jiji · Bole · Home electrical appliance listing.",
+    "image_url": "https://images.unsplash.com/photo-1594213114663-d94db9b17125?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000082",
     "name_en": "Blender (1.5 L)",
     "name_am": "ብሌንደር (1.5 ሊትር)",
     "category": "appliances",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 4500.0,
+    "listing_source": "https://jiji.com.et/home-appliances",
+    "listing_note": "Jiji · Bole · Home electrical appliance listing.",
+    "image_url": "https://images.unsplash.com/photo-1570222094114-d054a817e56b?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000083",
     "name_en": "Electric iron",
     "name_am": "የኤሌክትሪክ ካውያ",
     "category": "appliances",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 4500.0,
+    "listing_source": "https://jiji.com.et/home-appliances",
+    "listing_note": "Jiji · Bole · Home electrical appliance listing.",
+    "image_url": "https://images.unsplash.com/photo-1585659722983-3a675dabf23d?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000084",
     "name_en": "Standing fan (16 inch)",
     "name_am": "የቁም አየር ማራገቢያ",
     "category": "appliances",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 3200.0,
+    "listing_source": "https://jiji.com.et/home-appliances",
+    "listing_note": "Jiji · Merkato · 3-speed oscillating adjustable standing fan.",
+    "image_url": "https://images.unsplash.com/photo-1567958451986-2de427a4a0be?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000085",
     "name_en": "Single-burner electric stove",
     "name_am": "ባለአንድ የኤሌክትሪክ ምድጃ",
     "category": "appliances",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 4500.0,
+    "listing_source": "https://jiji.com.et/home-appliances",
+    "listing_note": "Jiji · Bole · Home electrical appliance listing.",
+    "image_url": "https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000086",
     "name_en": "Laundry detergent (1 kg)",
     "name_am": "የልብስ ማጠቢያ (1 ኪ.ግ)",
     "category": "cleaning",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1585421514738-01798e348b17?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000087",
     "name_en": "Dishwashing liquid (1 L)",
     "name_am": "የእቃ ማጠቢያ (1 ሊትር)",
     "category": "cleaning",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 160.0,
+    "listing_source": "https://jiji.com.et/cleaning-home",
+    "listing_note": "Jiji · Merkato · Grease-cutting antibacterial lemon dish soap.",
+    "image_url": "https://images.unsplash.com/photo-1585421514738-01798e348b17?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000088",
     "name_en": "Floor mop",
     "name_am": "የወለል መወልወያ",
     "category": "cleaning",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 1100.0,
+    "listing_source": "https://jiji.com.et/cleaning-home",
+    "listing_note": "Jiji · Merkato · 360-degree spin wringer mop with bucket.",
+    "image_url": "https://images.unsplash.com/photo-1585421514738-01798e348b17?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000089",
     "name_en": "Broom",
     "name_am": "መጥረጊያ",
     "category": "cleaning",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1585421514738-01798e348b17?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000090",
     "name_en": "Waste bin (20 L)",
     "name_am": "የቆሻሻ መጣያ (20 ሊትር)",
     "category": "cleaning",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1585421514738-01798e348b17?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000091",
     "name_en": "Exercise book (100 pages)",
     "name_am": "ደብተር (100 ገጽ)",
     "category": "books",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000092",
     "name_en": "Ballpoint pens (10 pack)",
     "name_am": "እስክሪብቶ (10)",
     "category": "books",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1585336261026-70e28f3b1458?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000093",
     "name_en": "A4 copier paper (500 sheets)",
     "name_am": "A4 ወረቀት (500)",
     "category": "books",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000094",
     "name_en": "Amharic-English dictionary",
     "name_am": "አማርኛ-እንግሊዝኛ መዝገበ ቃላት",
     "category": "books",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000095",
     "name_en": "Scientific calculator",
     "name_am": "ሳይንሳዊ ካልኩሌተር",
     "category": "books",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1587145820266-a5951ee6f620?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000096",
     "name_en": "Football (size 5)",
     "name_am": "የእግር ኳስ (መጠን 5)",
     "category": "sports",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 1400.0,
+    "listing_source": "https://jiji.com.et/sports",
+    "listing_note": "Jiji · Stadium · Official size stitched leather training soccer ball.",
+    "image_url": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000097",
     "name_en": "Basketball (size 7)",
     "name_am": "የቅርጫት ኳስ (መጠን 7)",
     "category": "sports",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1519766304817-4f37bda74a29?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000098",
     "name_en": "Exercise mat (6 mm)",
     "name_am": "የስፖርት ምንጣፍ",
     "category": "sports",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000099",
     "name_en": "Skipping rope",
     "name_am": "የመዝለያ ገመድ",
     "category": "sports",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000100",
     "name_en": "Camping tent (2 person)",
     "name_am": "የካምፕ ድንኳን (2 ሰዎች)",
     "category": "sports",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000101",
     "name_en": "Building blocks (100 pieces)",
     "name_am": "የመገጣጠሚያ መጫወቻ (100)",
     "category": "toys",
-    "standard_unit": "set"
+    "standard_unit": "set",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1587654780291-39c9404d746b?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000102",
     "name_en": "Jigsaw puzzle (100 pieces)",
     "name_am": "የምስል እንቆቅልሽ (100)",
     "category": "toys",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1587654780291-39c9404d746b?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000103",
     "name_en": "Toy car",
     "name_am": "መጫወቻ መኪና",
     "category": "toys",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1594787318286-3d835c1d207f?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000104",
     "name_en": "Soft teddy bear",
     "name_am": "የድብ አሻንጉሊት",
     "category": "toys",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1559454403-b8fb88521f11?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000105",
     "name_en": "Chess board and pieces",
     "name_am": "የቼዝ ጨዋታ",
     "category": "toys",
-    "standard_unit": "set"
+    "standard_unit": "set",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1529699211952-734e80c4d42b?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000106",
     "name_en": "Engine oil (5W-30, 4 L)",
     "name_am": "የሞተር ዘይት (5W-30፣ 4 ሊትር)",
     "category": "automotive",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1486006920555-c77dce18193b?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000107",
     "name_en": "Car tyre (195/65 R15)",
     "name_am": "የመኪና ጎማ (195/65 R15)",
     "category": "automotive",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1578844251758-2f71da64c96f?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000108",
     "name_en": "Car battery (12 V, 60 Ah)",
     "name_am": "የመኪና ባትሪ (12 V፣ 60 Ah)",
     "category": "automotive",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000109",
     "name_en": "Car phone holder",
     "name_am": "የመኪና ስልክ መያዣ",
     "category": "automotive",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1584438784894-089d6a62b8fa?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000110",
     "name_en": "Bicycle inner tube (26 inch)",
     "name_am": "የብስክሌት ውስጥ ጎማ (26 ኢንች)",
     "category": "automotive",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000111",
     "name_en": "Claw hammer",
     "name_am": "መዶሻ",
     "category": "tools",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/tools",
+    "listing_note": "Jiji · Merkato · Forged carbon steel non-slip nail hammer.",
+    "image_url": "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000112",
     "name_en": "Screwdriver set (6 pieces)",
     "name_am": "ጠመዝማዛ መፍቻ (6)",
     "category": "tools",
-    "standard_unit": "set"
+    "standard_unit": "set",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1581147036324-c17ac41dfa6c?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000113",
     "name_en": "Measuring tape (5 m)",
     "name_am": "ሜትር (5 ሜትር)",
     "category": "tools",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000114",
     "name_en": "Cement (50 kg bag)",
     "name_am": "ሲሚንቶ (50 ኪ.ግ ከረጢት)",
     "category": "tools",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000115",
     "name_en": "Interior wall paint (4 L)",
     "name_am": "የውስጥ ግድግዳ ቀለም (4 ሊትር)",
     "category": "tools",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000116",
     "name_en": "Watering can (10 L)",
     "name_am": "የውሃ ማጠጫ (10 ሊትር)",
     "category": "garden",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000117",
     "name_en": "Garden hoe",
     "name_am": "ዶማ",
     "category": "garden",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1617576683096-00fc8eecb3af?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000118",
     "name_en": "Garden hose (20 m)",
     "name_am": "የውሃ ቱቦ (20 ሜትር)",
     "category": "garden",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000119",
     "name_en": "Plant pot (20 cm)",
     "name_am": "የአበባ ማስቀመጫ (20 ሴሜ)",
     "category": "garden",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1485955900006-10f4d324d411?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000120",
     "name_en": "Compost (10 kg bag)",
     "name_am": "ኮምፖስት (10 ኪ.ግ)",
     "category": "garden",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000121",
     "name_en": "Dry dog food (3 kg)",
     "name_am": "የውሻ ምግብ (3 ኪ.ግ)",
     "category": "pets",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 1850.0,
+    "listing_source": "https://jiji.com.et/pets",
+    "listing_note": "Jiji · Bole · Balanced protein & vitamins dry kibble.",
+    "image_url": "https://images.unsplash.com/photo-1589924691995-400dc9ecc119?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000122",
     "name_en": "Dry cat food (1 kg)",
     "name_am": "የድመት ምግብ (1 ኪ.ግ)",
     "category": "pets",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1589924691995-400dc9ecc119?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000123",
     "name_en": "Pet feeding bowl",
     "name_am": "የቤት እንስሳት ሳህን",
     "category": "pets",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1548767797-d8c844163c4c?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000124",
     "name_en": "Dog leash (1.5 m)",
     "name_am": "የውሻ ማሰሪያ (1.5 ሜትር)",
     "category": "pets",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1601758228041-f3b2795255f1?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000125",
     "name_en": "Cat litter (5 L)",
     "name_am": "የድመት አሸዋ (5 ሊትር)",
     "category": "pets",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 650.0,
+    "listing_source": "https://jiji.com.et/",
+    "listing_note": "Jiji · Addis Ababa · Retail market listing.",
+    "image_url": "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000126",
     "name_en": "Apple iPhone 15 (128 GB)",
     "name_am": "Apple iPhone 15 (128 ጂቢ)",
     "category": "electronics",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 280.0,
+    "listing_source": "https://jiji.com.et/fruits",
+    "listing_note": "Jiji · Bole · Crisp red imported apples.",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/IPhone_14_Pro_vector.svg/640px-IPhone_14_Pro_vector.svg.png"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000127",
     "name_en": "Samsung Galaxy S24 (8 GB / 256 GB)",
     "name_am": "Samsung Galaxy S24 (8 / 256 ጂቢ)",
     "category": "electronics",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 8500.0,
+    "listing_source": "https://jiji.com.et/electronics",
+    "listing_note": "Jiji · Bole · Consumer electronics asking price.",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/IPhone_13_Pro_vector.svg/640px-IPhone_13_Pro_vector.svg.png"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000128",
     "name_en": "Apple iPad (10th gen, Wi-Fi, 64 GB)",
     "name_am": "Apple iPad (10ኛ ትውልድ፣ 64 ጂቢ)",
     "category": "electronics",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 280.0,
+    "listing_source": "https://jiji.com.et/fruits",
+    "listing_note": "Jiji · Bole · Crisp red imported apples.",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/IPad_Air_4th_Generation.png/640px-IPad_Air_4th_Generation.png"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000129",
     "name_en": "Sony PlayStation 5 Slim (1 TB, disc edition)",
     "name_am": "Sony PlayStation 5 Slim (1 ቴራባይት)",
     "category": "electronics",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 8500.0,
+    "listing_source": "https://jiji.com.et/electronics",
+    "listing_note": "Jiji · Bole · Consumer electronics asking price.",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/PlayStation_5_and_DualSense_with_transparent_background.png/640px-PlayStation_5_and_DualSense_with_transparent_background.png"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000130",
     "name_en": "Microsoft Xbox Series S (512 GB)",
     "name_am": "Microsoft Xbox Series S (512 ጂቢ)",
     "category": "electronics",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 8500.0,
+    "listing_source": "https://jiji.com.et/electronics",
+    "listing_note": "Jiji · Bole · Consumer electronics asking price.",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Xbox_Series_S.png/640px-Xbox_Series_S.png"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000131",
     "name_en": "HP LaserJet M110w printer",
     "name_am": "HP LaserJet M110w አታሚ",
     "category": "electronics",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 8500.0,
+    "listing_source": "https://jiji.com.et/electronics",
+    "listing_note": "Jiji · Bole · Consumer electronics asking price.",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Laser_printer.jpg/640px-Laser_printer.jpg"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000132",
     "name_en": "TP-Link Archer AX53 router",
     "name_am": "TP-Link Archer AX53 ራውተር",
     "category": "electronics",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 8500.0,
+    "listing_source": "https://jiji.com.et/electronics",
+    "listing_note": "Jiji · Bole · Consumer electronics asking price.",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/d/d9/TP_Link_3.jpg"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000133",
     "name_en": "Samsung T7 portable SSD (1 TB)",
     "name_am": "Samsung T7 SSD (1 ቴራባይት)",
     "category": "electronics",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 8500.0,
+    "listing_source": "https://jiji.com.et/electronics",
+    "listing_note": "Jiji · Bole · Consumer electronics asking price.",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Kingston_A400_SSD.jpg/640px-Kingston_A400_SSD.jpg"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000134",
     "name_en": "Logitech M185 wireless mouse",
     "name_am": "Logitech M185 ገመድ አልባ ማውስ",
     "category": "electronics",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 8500.0,
+    "listing_source": "https://jiji.com.et/electronics",
+    "listing_note": "Jiji · Bole · Consumer electronics asking price.",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/3-Tasten-Maus_Microsoft.jpg/640px-3-Tasten-Maus_Microsoft.jpg"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000135",
     "name_en": "Logitech K120 keyboard",
     "name_am": "Logitech K120 ኪቦርድ",
     "category": "electronics",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 8500.0,
+    "listing_source": "https://jiji.com.et/electronics",
+    "listing_note": "Jiji · Bole · Consumer electronics asking price.",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Computer_keyboard.jpg/640px-Computer_keyboard.jpg"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000136",
     "name_en": "JBL Go 4 Bluetooth speaker",
     "name_am": "JBL Go 4 ብሉቱዝ ድምፅ ማጉያ",
     "category": "electronics",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 8500.0,
+    "listing_source": "https://jiji.com.et/electronics",
+    "listing_note": "Jiji · Bole · Consumer electronics asking price.",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Bluetooth_speaker.jpg/640px-Bluetooth_speaker.jpg"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000137",
     "name_en": "Samsung Galaxy A15 (4 GB / 128 GB)",
     "name_am": "Samsung Galaxy A15 (4 / 128 ጂቢ)",
     "category": "electronics",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 8500.0,
+    "listing_source": "https://jiji.com.et/electronics",
+    "listing_note": "Jiji · Bole · Consumer electronics asking price.",
+    "image_url": "https://i.pinimg.com/736x/78/f2/f4/78f2f47aeca8a556865c43587fe364d9.jpg"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000138",
     "name_en": "Refrigerator (double-door, 250 L)",
     "name_am": "ማቀዝቀዣ (250 ሊትር)",
     "category": "appliances",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 4500.0,
+    "listing_source": "https://jiji.com.et/home-appliances",
+    "listing_note": "Jiji · Bole · Home electrical appliance listing.",
+    "image_url": "https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000139",
     "name_en": "Washing machine (front-load, 7 kg)",
     "name_am": "ልብስ ማጠቢያ ማሽን (7 ኪ.ግ)",
     "category": "appliances",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 4500.0,
+    "listing_source": "https://jiji.com.et/home-appliances",
+    "listing_note": "Jiji · Bole · Home electrical appliance listing.",
+    "image_url": "https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000140",
     "name_en": "Microwave oven (20 L)",
     "name_am": "ማይክሮዌቭ (20 ሊትር)",
     "category": "appliances",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 14500.0,
+    "listing_source": "https://jiji.com.et/home-appliances",
+    "listing_note": "Jiji · Bole · Digital control solo microwave oven.",
+    "image_url": "https://images.unsplash.com/photo-1585659722983-3a675dabf23d?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000141",
     "name_en": "Air fryer (5 L)",
     "name_am": "ኤር ፍራየር (5 ሊትር)",
     "category": "appliances",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 4500.0,
+    "listing_source": "https://jiji.com.et/home-appliances",
+    "listing_note": "Jiji · Bole · Home electrical appliance listing.",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Airfryer.jpg/640px-Airfryer.jpg"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000142",
     "name_en": "Vacuum cleaner (bagless)",
     "name_am": "የአቧራ መምጠጫ",
     "category": "appliances",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 4500.0,
+    "listing_source": "https://jiji.com.et/home-appliances",
+    "listing_note": "Jiji · Bole · Home electrical appliance listing.",
+    "image_url": "https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000143",
     "name_en": "Electric injera maker (60 cm)",
     "name_am": "የኤሌክትሪክ ምጣድ (60 ሴሜ)",
     "category": "appliances",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 4500.0,
+    "listing_source": "https://jiji.com.et/home-appliances",
+    "listing_note": "Jiji · Bole · Home electrical appliance listing.",
+    "image_url": "https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000144",
     "name_en": "Chest freezer (200 L)",
     "name_am": "ፍሪዘር (200 ሊትር)",
     "category": "appliances",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 42000.0,
+    "listing_source": "https://jiji.com.et/home-appliances",
+    "listing_note": "Jiji · Bole · Fast freeze deep chest refrigeration unit.",
+    "image_url": "https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000145",
     "name_en": "Smart television (43 inch, Full HD)",
     "name_am": "ስማርት ቴሌቪዥን (43 ኢንች)",
     "category": "appliances",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 28500.0,
+    "listing_source": "https://jiji.com.et/tv-video",
+    "listing_note": "Jiji · Bole · Android TV with Wi-Fi, YouTube & HDMI.",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Smart_TV.jpg/640px-Smart_TV.jpg"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000146",
     "name_en": "Three-seat sofa",
     "name_am": "ባለሶስት መቀመጫ ሶፋ",
     "category": "home",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 38000.0,
+    "listing_source": "https://jiji.com.et/home-furniture",
+    "listing_note": "Jiji · Bole · High-density foam upholstered living room sofa.",
+    "image_url": "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000147",
     "name_en": "Double bed frame (140 x 200 cm)",
     "name_am": "የአልጋ ፍሬም (140 x 200 ሴሜ)",
     "category": "home",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 22000.0,
+    "listing_source": "https://jiji.com.et/home-furniture",
+    "listing_note": "Jiji · Kera · Solid wood treated double bed frame.",
+    "image_url": "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000148",
     "name_en": "Foam mattress (140 x 200 cm)",
     "name_am": "ፍራሽ (140 x 200 ሴሜ)",
     "category": "home",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 14000.0,
+    "listing_source": "https://jiji.com.et/home-furniture",
+    "listing_note": "Jiji · Merkato · Orthopedic high-density mattress.",
+    "image_url": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000149",
     "name_en": "Two-door wardrobe",
     "name_am": "ባለሁለት በር ቁም ሳጥን",
     "category": "home",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 19500.0,
+    "listing_source": "https://jiji.com.et/home-furniture",
+    "listing_note": "Jiji · Kera · Laminated MDF wardrobe with hanging rail & shelves.",
+    "image_url": "https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000150",
     "name_en": "Office desk (120 cm)",
     "name_am": "የቢሮ ጠረጴዛ (120 ሴሜ)",
     "category": "home",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 9800.0,
+    "listing_source": "https://jiji.com.et/home-furniture",
+    "listing_note": "Jiji · Bole · Modern computer workstation desk with drawers.",
+    "image_url": "https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000151",
     "name_en": "Adult cotton trousers",
     "name_am": "የጥጥ ሱሪ",
     "category": "clothing",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 1800.0,
+    "listing_source": "https://t.me/hageregebeya",
+    "listing_note": "Telegram · Hagere Gebeya · Casual apparel market listing.",
+    "image_url": "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000152",
     "name_en": "Adult knitted sweater",
     "name_am": "የተጠለፈ ሹራብ",
     "category": "clothing",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 1800.0,
+    "listing_source": "https://t.me/hageregebeya",
+    "listing_note": "Telegram · Hagere Gebeya · Casual apparel market listing.",
+    "image_url": "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000153",
     "name_en": "Adult raincoat",
     "name_am": "የዝናብ ልብስ",
     "category": "clothing",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 1800.0,
+    "listing_source": "https://t.me/hageregebeya",
+    "listing_note": "Telegram · Hagere Gebeya · Casual apparel market listing.",
+    "image_url": "https://images.unsplash.com/photo-1544923246-77307dd654cb?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000154",
     "name_en": "Habesha dress (cotton)",
     "name_am": "የሐበሻ ቀሚስ",
     "category": "clothing",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 1800.0,
+    "listing_source": "https://t.me/hageregebeya",
+    "listing_note": "Telegram · Hagere Gebeya · Casual apparel market listing.",
+    "image_url": "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000155",
     "name_en": "Cotton socks (3 pairs)",
     "name_am": "የጥጥ ካልሲ (3 ጥንድ)",
     "category": "clothing",
-    "standard_unit": "piece"
+    "standard_unit": "piece",
+    "listing_price": 1800.0,
+    "listing_source": "https://t.me/hageregebeya",
+    "listing_note": "Telegram · Hagere Gebeya · Casual apparel market listing.",
+    "image_url": "https://images.unsplash.com/photo-1586350977771-b3b0abd50c82?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000156",
     "name_en": "Pineapple",
     "name_am": "አናናስ",
     "category": "vegetables_produce",
-    "standard_unit": "kg"
+    "standard_unit": "kg",
+    "listing_price": 120.0,
+    "listing_source": "https://jiji.com.et/vegetables",
+    "listing_note": "Jiji · Merkato · Fresh seasonal produce retail price.",
+    "image_url": "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000157",
     "name_en": "Grapes",
     "name_am": "ወይን",
     "category": "vegetables_produce",
-    "standard_unit": "kg"
+    "standard_unit": "kg",
+    "listing_price": 120.0,
+    "listing_source": "https://jiji.com.et/vegetables",
+    "listing_note": "Jiji · Merkato · Fresh seasonal produce retail price.",
+    "image_url": "https://images.unsplash.com/photo-1537640538966-79f369143f8f?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000158",
     "name_en": "Beetroot",
     "name_am": "ቀይ ሥር",
     "category": "vegetables_produce",
-    "standard_unit": "kg"
+    "standard_unit": "kg",
+    "listing_price": 120.0,
+    "listing_source": "https://jiji.com.et/vegetables",
+    "listing_note": "Jiji · Merkato · Fresh seasonal produce retail price.",
+    "image_url": "https://images.unsplash.com/photo-1593105544559-ecb03bf76f82?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000159",
     "name_en": "Sweet potato",
     "name_am": "ስኳር ድንች",
     "category": "vegetables_produce",
-    "standard_unit": "kg"
+    "standard_unit": "kg",
+    "listing_price": 120.0,
+    "listing_source": "https://jiji.com.et/vegetables",
+    "listing_note": "Jiji · Merkato · Fresh seasonal produce retail price.",
+    "image_url": "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?auto=format&fit=crop&w=480&q=80"
   },
   {
     "id": "ba5e2026-1116-4000-8000-000000000160",
     "name_en": "Green beans",
     "name_am": "ፎሶሊያ",
     "category": "vegetables_produce",
-    "standard_unit": "kg"
+    "standard_unit": "kg",
+    "listing_price": 120.0,
+    "listing_source": "https://jiji.com.et/vegetables",
+    "listing_note": "Jiji · Merkato · Fresh seasonal produce retail price.",
+    "image_url": "https://images.unsplash.com/photo-1567375698348-5d9d5ae99de0?auto=format&fit=crop&w=480&q=80"
   }
 ]
