@@ -63,12 +63,12 @@ class MarketImage extends StatelessWidget {
       ),
     );
 
-    // Reliable public CDNs used as safe fallbacks when Pinterest or external URLs return 403 / error
-    final safeFallbackPhoto = switch (category) {
-      ItemCategory.grainsFlour => 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=480&q=80',
+    // Individual item image mapping if item imageUrl is null, or safe fallback
+    final fallbackPhoto = switch (category) {
+      ItemCategory.grainsFlour => 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=480&q=80',
       ItemCategory.vegetablesProduce => 'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=480&q=80',
-      ItemCategory.pulsesLegumes => 'https://images.unsplash.com/photo-1515543904379-3d757afe72e4?auto=format&fit=crop&w=480&q=80',
-      ItemCategory.meatDairy => 'https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&w=480&q=80',
+      ItemCategory.pulsesLegumes => 'https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=480&q=80',
+      ItemCategory.meatDairy => 'https://images.unsplash.com/photo-1551028150-64b9f398f678?auto=format&fit=crop&w=480&q=80',
       ItemCategory.oilSugarPantry => 'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=480&q=80',
       ItemCategory.spices => 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=480&q=80',
       ItemCategory.electronics => 'https://images.unsplash.com/photo-1498049794561-7780e7231661?auto=format&fit=crop&w=480&q=80',
@@ -98,12 +98,6 @@ class MarketImage extends StatelessWidget {
         ? photo
         : 'https://images.unsplash.com/$photo?auto=format&fit=crop&w=480&q=80';
 
-    final networkHeaders = {
-      'User-Agent': 'Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36',
-      'Referer': 'https://www.pinterest.com/',
-      'Accept': 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
-    };
-
     return ClipRRect(
       borderRadius: BorderRadius.circular(16),
       child: SizedBox(
@@ -111,15 +105,14 @@ class MarketImage extends StatelessWidget {
         height: height,
         child: Image.network(
           resolvedUrl,
-          headers: networkHeaders,
           webHtmlElementStrategy: WebHtmlElementStrategy.fallback,
           fit: fit,
           excludeFromSemantics: true,
           errorBuilder: (_, error, stack) => Image.network(
-            safeFallbackPhoto,
+            fallbackPhoto,
             fit: fit,
             excludeFromSemantics: true,
-            errorBuilder: (_, __, ___) => fallback,
+            errorBuilder: (_, _, _) => fallback,
             loadingBuilder: (_, child, progress) =>
                 progress == null ? child : fallback,
           ),
