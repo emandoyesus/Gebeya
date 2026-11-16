@@ -13,7 +13,27 @@ CREATE TYPE item_category AS ENUM (
     'pulses_legumes',
     'meat_dairy',
     'oil_sugar_pantry',
-    'spices'
+    'spices',
+    'electronics',
+    'clothing',
+    'beverages',
+    'bakery',
+    'shoes',
+    'bags',
+    'beauty',
+    'health',
+    'baby',
+    'home',
+    'kitchen',
+    'appliances',
+    'cleaning',
+    'books',
+    'sports',
+    'toys',
+    'automotive',
+    'tools',
+    'garden',
+    'pets'
 );
 
 CREATE TYPE report_source AS ENUM (

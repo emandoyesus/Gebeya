@@ -1,0 +1,27 @@
+-- Existing database: run and COMMIT before supabase_seed_marketplace.sql.
+ALTER TYPE item_category ADD VALUE IF NOT EXISTS 'electronics';
+ALTER TYPE item_category ADD VALUE IF NOT EXISTS 'clothing';
+ALTER TYPE item_category ADD VALUE IF NOT EXISTS 'vegetables_produce';
+ALTER TYPE item_category ADD VALUE IF NOT EXISTS 'grains_flour';
+ALTER TYPE item_category ADD VALUE IF NOT EXISTS 'pulses_legumes';
+ALTER TYPE item_category ADD VALUE IF NOT EXISTS 'meat_dairy';
+ALTER TYPE item_category ADD VALUE IF NOT EXISTS 'oil_sugar_pantry';
+ALTER TYPE item_category ADD VALUE IF NOT EXISTS 'spices';
+ALTER TYPE item_category ADD VALUE IF NOT EXISTS 'beverages';
+ALTER TYPE item_category ADD VALUE IF NOT EXISTS 'bakery';
+ALTER TYPE item_category ADD VALUE IF NOT EXISTS 'shoes';
+ALTER TYPE item_category ADD VALUE IF NOT EXISTS 'bags';
+ALTER TYPE item_category ADD VALUE IF NOT EXISTS 'beauty';
+ALTER TYPE item_category ADD VALUE IF NOT EXISTS 'health';
+ALTER TYPE item_category ADD VALUE IF NOT EXISTS 'baby';
+ALTER TYPE item_category ADD VALUE IF NOT EXISTS 'home';
+ALTER TYPE item_category ADD VALUE IF NOT EXISTS 'kitchen';
+ALTER TYPE item_category ADD VALUE IF NOT EXISTS 'appliances';
+ALTER TYPE item_category ADD VALUE IF NOT EXISTS 'cleaning';
+ALTER TYPE item_category ADD VALUE IF NOT EXISTS 'books';
+ALTER TYPE item_category ADD VALUE IF NOT EXISTS 'sports';
+ALTER TYPE item_category ADD VALUE IF NOT EXISTS 'toys';
+ALTER TYPE item_category ADD VALUE IF NOT EXISTS 'automotive';
+ALTER TYPE item_category ADD VALUE IF NOT EXISTS 'tools';
+ALTER TYPE item_category ADD VALUE IF NOT EXISTS 'garden';
+ALTER TYPE item_category ADD VALUE IF NOT EXISTS 'pets';
