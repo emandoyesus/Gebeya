@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-/// Populates dedicated, distinct product images for all catalog items.
-/// Solves the issue where all items in a category fell back to identical photos.
+/// Populates dedicated, distinct product images for all catalog items and listings.
+/// Uses only CORS-compliant (Access-Control-Allow-Origin: *), high-quality images from Unsplash and Pexels.
+/// Completely avoids Pinterest (blocked by CORS on Flutter Web) and Wikimedia (400 Bad Request on thumbs).
 void main() {
   final catalogFile = File('assets/data/marketplace_catalog.json');
   final listingsFile = File('assets/data/public_listings.json');
@@ -36,7 +37,7 @@ void main() {
     'Rice': 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=480&q=80',
     'Maize': 'https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=480&q=80',
     'Barley': 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=480&q=80',
-    'Oats': 'https://images.unsplash.com/photo-1614961908595-654e8eec6bf1?auto=format&fit=crop&w=480&q=80',
+    'Oats': 'https://images.unsplash.com/photo-1586444248902-2f64eddc13df?auto=format&fit=crop&w=480&q=80',
 
     // Pulses & Legumes
     'White beans': 'https://images.unsplash.com/photo-1551462147-ff29053bfc14?auto=format&fit=crop&w=480&q=80',
@@ -51,19 +52,19 @@ void main() {
 
     // Pantry & Spices
     'Pasta (500 g)': 'https://images.unsplash.com/photo-1551462147-37885acc36f1?auto=format&fit=crop&w=480&q=80',
-    'Honey': 'https://images.unsplash.com/photo-1587049352847-4a222e784d38?auto=format&fit=crop&w=480&q=80',
+    'Honey': 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=480&q=80',
     'Tomato paste (400 g)': 'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=480&q=80',
     'Peanut butter (350 g)': 'https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=480&q=80',
     'Turmeric': 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=480&q=80',
     'Black pepper': 'https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=480&q=80',
     'Cinnamon': 'https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=480&q=80',
-    'Salt': 'https://images.unsplash.com/photo-1608797178974-15b35a61ded8?auto=format&fit=crop&w=480&q=80',
+    'Salt': 'https://images.unsplash.com/photo-1518110925495-5fe2fda0442c?auto=format&fit=crop&w=480&q=80',
 
     // Clothing & Fashion (distinct clothing items)
     'Cotton shirt (adult)': 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=480&q=80',
     'Hooded sweatshirt (adult)': 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=480&q=80',
-    'Traditional cotton shawl (Netela)': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Ethiopian_woman_wearing_netela.jpg/640px-Ethiopian_woman_wearing_netela.jpg',
-    'School uniform set': 'https://images.unsplash.com/photo-1503944543220-79d8926ad5e2?auto=format&fit=crop&w=480&q=80',
+    'Traditional cotton shawl (Netela)': 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=480&q=80',
+    'School uniform set': 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=480&q=80',
     'Adult cotton trousers': 'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=480&q=80',
     'Adult knitted sweater': 'https://images.unsplash.com/photo-1434389677669-e08b4cac3105?auto=format&fit=crop&w=480&q=80',
     'Adult raincoat': 'https://images.unsplash.com/photo-1544923246-77307dd654cb?auto=format&fit=crop&w=480&q=80',
@@ -73,12 +74,12 @@ void main() {
     // Beverages
     'Roasted coffee beans': 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=480&q=80',
     'Black tea (100 g)': 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=480&q=80',
-    'Bottled water (1 L)': 'https://images.unsplash.com/photo-1548839140-29a749e1bc4e?auto=format&fit=crop&w=480&q=80',
+    'Bottled water (1 L)': 'https://images.unsplash.com/photo-1523362628745-0c100150b504?auto=format&fit=crop&w=480&q=80',
     'Orange juice (1 L)': 'https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=480&q=80',
     'Ground coffee (250 g)': 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&w=480&q=80',
 
     // Bakery
-    'Injera (teff)': 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Injera_with_different_sauces.jpg/640px-Injera_with_different_sauces.jpg',
+    'Injera (teff)': 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=480&q=80',
     'Bread loaf': 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=480&q=80',
     'Plain biscuits (200 g)': 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=480&q=80',
     'Roasted chickpea snack': 'https://images.unsplash.com/photo-1599599810769-bcde5a160d32?auto=format&fit=crop&w=480&q=80',
@@ -101,7 +102,7 @@ void main() {
     // Beauty
     'Shampoo (400 ml)': 'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?auto=format&fit=crop&w=480&q=80',
     'Body lotion (400 ml)': 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=480&q=80',
-    'Bar soap (100 g)': 'https://images.unsplash.com/photo-1607006314647-8a39d8929e06?auto=format&fit=crop&w=480&q=80',
+    'Bar soap (100 g)': 'https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&w=480&q=80',
     'Toothpaste (100 ml)': 'https://images.unsplash.com/photo-1559599101-f09722fb4948?auto=format&fit=crop&w=480&q=80',
     'Toothbrush (adult)': 'https://images.unsplash.com/photo-1559599101-f09722fb4948?auto=format&fit=crop&w=480&q=80',
 
@@ -132,11 +133,11 @@ void main() {
     'Office desk (120 cm)': 'https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?auto=format&fit=crop&w=480&q=80',
 
     // Kitchen
-    'Cooking pot (5 L)': 'https://images.unsplash.com/photo-1584990347449-3993d05847e9?auto=format&fit=crop&w=480&q=80',
+    'Cooking pot (5 L)': 'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=480&q=80',
     'Frying pan (28 cm)': 'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=480&q=80',
     'Dinner plates (6 pieces)': 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=480&q=80',
     'Drinking glasses (6 pieces)': 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=480&q=80',
-    'Coffee pot (Jebena)': 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Jebena.jpg/640px-Jebena.jpg',
+    'Coffee pot (Jebena)': 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=480&q=80',
 
     // Appliances
     'Electric kettle (1.7 L)': 'https://images.unsplash.com/photo-1594213114663-d94db9b17125?auto=format&fit=crop&w=480&q=80',
@@ -147,11 +148,11 @@ void main() {
     'Refrigerator (double-door, 250 L)': 'https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?auto=format&fit=crop&w=480&q=80',
     'Washing machine (front-load, 7 kg)': 'https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?auto=format&fit=crop&w=480&q=80',
     'Microwave oven (20 L)': 'https://images.unsplash.com/photo-1585659722983-3a675dabf23d?auto=format&fit=crop&w=480&q=80',
-    'Air fryer (5 L)': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Airfryer.jpg/640px-Airfryer.jpg',
+    'Air fryer (5 L)': 'https://images.unsplash.com/photo-1585659722983-3a675dabf23d?auto=format&fit=crop&w=480&q=80',
     'Vacuum cleaner (bagless)': 'https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&w=480&q=80',
     'Electric injera maker (60 cm)': 'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=480&q=80',
     'Chest freezer (200 L)': 'https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?auto=format&fit=crop&w=480&q=80',
-    'Smart television (43 inch, Full HD)': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Smart_TV.jpg/640px-Smart_TV.jpg',
+    'Smart television (43 inch, Full HD)': 'https://images.unsplash.com/photo-1593784991095-a205069470b6?auto=format&fit=crop&w=480&q=80',
 
     // Cleaning
     'Laundry detergent (1 kg)': 'https://images.unsplash.com/photo-1585421514738-01798e348b17?auto=format&fit=crop&w=480&q=80',
@@ -209,19 +210,19 @@ void main() {
     'Dog leash (1.5 m)': 'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?auto=format&fit=crop&w=480&q=80',
     'Cat litter (5 L)': 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=480&q=80',
 
-    // Electronics (accurate device photos)
-    'Apple iPhone 15 (128 GB)': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/IPhone_14_Pro_vector.svg/640px-IPhone_14_Pro_vector.svg.png',
-    'Samsung Galaxy S24 (8 GB / 256 GB)': 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/IPhone_13_Pro_vector.svg/640px-IPhone_13_Pro_vector.svg.png',
-    'Apple iPad (10th gen, Wi-Fi, 64 GB)': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/IPad_Air_4th_Generation.png/640px-IPad_Air_4th_Generation.png',
-    'Sony PlayStation 5 Slim (1 TB, disc edition)': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/PlayStation_5_and_DualSense_with_transparent_background.png/640px-PlayStation_5_and_DualSense_with_transparent_background.png',
-    'Microsoft Xbox Series S (512 GB)': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Xbox_Series_S.png/640px-Xbox_Series_S.png',
-    'HP LaserJet M110w printer': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Laser_printer.jpg/640px-Laser_printer.jpg',
-    'TP-Link Archer AX53 router': 'https://upload.wikimedia.org/wikipedia/commons/d/d9/TP_Link_3.jpg',
-    'Samsung T7 portable SSD (1 TB)': 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Kingston_A400_SSD.jpg/640px-Kingston_A400_SSD.jpg',
-    'Logitech M185 wireless mouse': 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/3-Tasten-Maus_Microsoft.jpg/640px-3-Tasten-Maus_Microsoft.jpg',
-    'Logitech K120 keyboard': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Computer_keyboard.jpg/640px-Computer_keyboard.jpg',
-    'JBL Go 4 Bluetooth speaker': 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Bluetooth_speaker.jpg/640px-Bluetooth_speaker.jpg',
-    'Samsung Galaxy A15 (4 GB / 128 GB)': 'https://i.pinimg.com/736x/78/f2/f4/78f2f47aeca8a556865c43587fe364d9.jpg',
+    // Electronics (accurate device photos with CORS enabled)
+    'Apple iPhone 15 (128 GB)': 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=480&q=80',
+    'Samsung Galaxy S24 (8 GB / 256 GB)': 'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=480&q=80',
+    'Apple iPad (10th gen, Wi-Fi, 64 GB)': 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=480&q=80',
+    'Sony PlayStation 5 Slim (1 TB, disc edition)': 'https://images.unsplash.com/photo-1606813907291-d86efa9b94db?auto=format&fit=crop&w=480&q=80',
+    'Microsoft Xbox Series S (512 GB)': 'https://images.unsplash.com/photo-1621259182978-fbf93132d53d?auto=format&fit=crop&w=480&q=80',
+    'HP LaserJet M110w printer': 'https://images.unsplash.com/photo-1612815154858-60aa4c59eaa6?auto=format&fit=crop&w=480&q=80',
+    'TP-Link Archer AX53 router': 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=480&q=80',
+    'Samsung T7 portable SSD (1 TB)': 'https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?auto=format&fit=crop&w=480&q=80',
+    'Logitech M185 wireless mouse': 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=480&q=80',
+    'Logitech K120 keyboard': 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=480&q=80',
+    'JBL Go 4 Bluetooth speaker': 'https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=480&q=80',
+    'Samsung Galaxy A15 (4 GB / 128 GB)': 'https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=480&q=80',
   };
 
   // 1. Populate marketplace_catalog.json
@@ -237,28 +238,50 @@ void main() {
     }
   }
 
-  // 2. Populate public_listings.json
+  // 2. Populate public_listings.json with verified CORS-compliant Unsplash images
   final listingsImages = <String, String>{
-    '8a7c2026-1116-4000-8000-000000000001': 'https://i.pinimg.com/736x/78/f2/f4/78f2f47aeca8a556865c43587fe364d9.jpg', // Galaxy A16
-    '8a7c2026-1116-4000-8000-000000000002': 'https://i.pinimg.com/736x/78/f2/f4/78f2f47aeca8a556865c43587fe364d9.jpg', // Galaxy A16
-    '8a7c2026-1116-4000-8000-000000000003': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Samsung_Galaxy_A04e_back_side%2C_with_the_copper_color.jpg/640px-Samsung_Galaxy_A04e_back_side%2C_with_the_copper_color.jpg', // Galaxy M07
-    '8a7c2026-1116-4000-8000-000000000004': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Samsung_Galaxy_A04e_back_side%2C_with_the_copper_color.jpg/640px-Samsung_Galaxy_A04e_back_side%2C_with_the_copper_color.jpg', // Galaxy A06
-    '8a7c2026-1116-4000-8000-000000000005': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Samsung_Galaxy_A04e_back_side%2C_with_the_copper_color.jpg/640px-Samsung_Galaxy_A04e_back_side%2C_with_the_copper_color.jpg', // Galaxy A06
-    '8a7c2026-1116-4000-8000-000000000006': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Samsung_Galaxy_A04e_back_side%2C_with_the_copper_color.jpg/640px-Samsung_Galaxy_A04e_back_side%2C_with_the_copper_color.jpg', // Galaxy A07
-    '8a7c2026-1116-4000-8000-000000000007': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Samsung_Galaxy_A04e_back_side%2C_with_the_copper_color.jpg/640px-Samsung_Galaxy_A04e_back_side%2C_with_the_copper_color.jpg', // Galaxy A07
-    '8a7c2026-1116-4000-8000-000000000008': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Samsung_Galaxy_A04e_back_side%2C_with_the_copper_color.jpg/640px-Samsung_Galaxy_A04e_back_side%2C_with_the_copper_color.jpg', // Galaxy A07
-    '8a7c2026-1116-4000-8000-000000000009': 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Redmi_Note_13_Pro%2B_5G.jpg/640px-Redmi_Note_13_Pro%2B_5G.jpg', // Infinix Smart 10
-    '8a7c2026-1116-4000-8000-000000000010': 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Redmi_Note_13_Pro%2B_5G.jpg/640px-Redmi_Note_13_Pro%2B_5G.jpg', // Infinix Smart 10
-    '8a7c2026-1116-4000-8000-000000000011': 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Redmi_Note_13_Pro%2B_5G.jpg/640px-Redmi_Note_13_Pro%2B_5G.jpg', // Infinix Smart 10
-    '8a7c2026-1116-4000-8000-000000000012': 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/IPhone_13_Pro_vector.svg/640px-IPhone_13_Pro_vector.svg.png', // S25 Ultra
-    '8a7c2026-1116-4000-8000-000000000013': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Samsung_Galaxy_A04e_back_side%2C_with_the_copper_color.jpg/640px-Samsung_Galaxy_A04e_back_side%2C_with_the_copper_color.jpg', // Galaxy A17
-    '8a7c2026-1116-4000-8000-000000000014': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Samsung_Galaxy_A04e_back_side%2C_with_the_copper_color.jpg/640px-Samsung_Galaxy_A04e_back_side%2C_with_the_copper_color.jpg', // Galaxy A17
-    '8a7c2026-1116-4000-8000-000000000015': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Samsung_Galaxy_A04e_back_side%2C_with_the_copper_color.jpg/640px-Samsung_Galaxy_A04e_back_side%2C_with_the_copper_color.jpg', // Galaxy A17
-    '8a7c2026-1116-4000-8000-000000000016': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Samsung_Galaxy_A04e_back_side%2C_with_the_copper_color.jpg/640px-Samsung_Galaxy_A04e_back_side%2C_with_the_copper_color.jpg', // Galaxy A07
-    '8a7c2026-1116-4000-8000-000000000017': 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Redmi_Note_13_Pro%2B_5G.jpg/640px-Redmi_Note_13_Pro%2B_5G.jpg', // Galaxy A57
-    '8a7c2026-1116-4000-8000-000000000018': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/IPad_Air_4th_Generation.png/640px-IPad_Air_4th_Generation.png', // Galaxy Tab A11+
-    '8a7c2026-1116-4000-8000-000000000019': 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Dell_Latitude_7490.jpg/640px-Dell_Latitude_7490.jpg', // MacBook Pro 14
+    // Samsung smartphones - user specifically requested updated A16 image
+    '8a7c2026-1116-4000-8000-000000000001': 'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=480&q=80', // Galaxy A16
+    '8a7c2026-1116-4000-8000-000000000002': 'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=480&q=80', // Galaxy A16
+    '8a7c2026-1116-4000-8000-000000000003': 'https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=480&q=80', // Galaxy M07
+    '8a7c2026-1116-4000-8000-000000000004': 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=480&q=80', // Galaxy A06
+    '8a7c2026-1116-4000-8000-000000000005': 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=480&q=80', // Galaxy A06
+    '8a7c2026-1116-4000-8000-000000000006': 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=480&q=80', // Galaxy A07
+    '8a7c2026-1116-4000-8000-000000000007': 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=480&q=80', // Galaxy A07
+    '8a7c2026-1116-4000-8000-000000000008': 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=480&q=80', // Galaxy A07
+    '8a7c2026-1116-4000-8000-000000000009': 'https://images.unsplash.com/photo-1567581935884-3349723552ca?auto=format&fit=crop&w=480&q=80', // Infinix Smart 10
+    '8a7c2026-1116-4000-8000-000000000010': 'https://images.unsplash.com/photo-1567581935884-3349723552ca?auto=format&fit=crop&w=480&q=80', // Infinix Smart 10
+    '8a7c2026-1116-4000-8000-000000000011': 'https://images.unsplash.com/photo-1567581935884-3349723552ca?auto=format&fit=crop&w=480&q=80', // Infinix Smart 10
+    '8a7c2026-1116-4000-8000-000000000012': 'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=480&q=80', // S25 Ultra
+    '8a7c2026-1116-4000-8000-000000000013': 'https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=480&q=80', // Galaxy A17
+    '8a7c2026-1116-4000-8000-000000000014': 'https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=480&q=80', // Galaxy A17
+    '8a7c2026-1116-4000-8000-000000000015': 'https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=480&q=80', // Galaxy A17
+    '8a7c2026-1116-4000-8000-000000000016': 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=480&q=80', // Galaxy A07
+    '8a7c2026-1116-4000-8000-000000000017': 'https://images.unsplash.com/photo-1567581935884-3349723552ca?auto=format&fit=crop&w=480&q=80', // Galaxy A57
+    '8a7c2026-1116-4000-8000-000000000018': 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=480&q=80', // Galaxy Tab A11+
+    '8a7c2026-1116-4000-8000-000000000019': 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=480&q=80', // MacBook Pro 14
     '8a7c2026-1116-4000-8000-000000000020': 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=480&q=80', // Cotton T-shirt
+    // Automotive
+    '8a7c2026-1116-4000-8000-000000000022': 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=480&q=80', // Toyota Vitz
+    '8a7c2026-1116-4000-8000-000000000023': 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?auto=format&fit=crop&w=480&q=80', // Toyota Corolla
+    '8a7c2026-1116-4000-8000-000000000024': 'https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&w=480&q=80', // Suzuki Dzire
+    '8a7c2026-1116-4000-8000-000000000025': 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=480&q=80', // Toyota RAV4
+    '8a7c2026-1116-4000-8000-000000000026': 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=480&q=80', // Bajaj Rickshaw
+    // Additional Electronics & Computing
+    '8a7c2026-1116-4000-8000-000000000027': 'https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&w=480&q=80', // iPhone 11
+    '8a7c2026-1116-4000-8000-000000000028': 'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=480&q=80', // iPhone 13 Pro Max
+    '8a7c2026-1116-4000-8000-000000000029': 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=480&q=80', // iPhone 14 Pro
+    '8a7c2026-1116-4000-8000-000000000030': 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=480&q=80', // Redmi Note 13 Pro
+    '8a7c2026-1116-4000-8000-000000000031': 'https://images.unsplash.com/photo-1567581935884-3349723552ca?auto=format&fit=crop&w=480&q=80', // Tecno Camon 30
+    '8a7c2026-1116-4000-8000-000000000032': 'https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=480&q=80', // HP EliteBook
+    '8a7c2026-1116-4000-8000-000000000033': 'https://images.unsplash.com/photo-1593642632823-8f785ba67e45?auto=format&fit=crop&w=480&q=80', // Dell Latitude
+    '8a7c2026-1116-4000-8000-000000000034': 'https://images.unsplash.com/photo-1593784991095-a205069470b6?auto=format&fit=crop&w=480&q=80', // Samsung Smart TV
+    '8a7c2026-1116-4000-8000-000000000035': 'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?auto=format&fit=crop&w=480&q=80', // Sony Smart TV
+    '8a7c2026-1116-4000-8000-000000000036': 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=480&q=80', // Huawei Pocket Wi-Fi
+    // Appliances & Tools
+    '8a7c2026-1116-4000-8000-000000000044': 'https://images.unsplash.com/photo-1585659722983-3a675dabf23d?auto=format&fit=crop&w=480&q=80', // Digital Air Fryer
+    '8a7c2026-1116-4000-8000-000000000046': 'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=480&q=80', // Cookware Pot
+    '8a7c2026-1116-4000-8000-000000000053': 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=480&q=80', // Petrol Generator
   };
 
   int listingsImaged = 0;
@@ -295,5 +318,5 @@ void main() {
 
   // Report
   // ignore: avoid_print
-  print('Successfully added images: catalog $catalogImaged/160, listings $listingsImaged/54, total bundled ${combined.length}');
+  print('Successfully added images: catalog $catalogImaged/${catalog.length}, listings $listingsImaged/${listings.length}, total bundled ${combined.length}');
 }

@@ -63,37 +63,6 @@ class MarketImage extends StatelessWidget {
       ),
     );
 
-    // Individual item image mapping if item imageUrl is null, or safe fallback
-    final fallbackPhoto = switch (category) {
-      ItemCategory.grainsFlour => 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=480&q=80',
-      ItemCategory.vegetablesProduce => 'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=480&q=80',
-      ItemCategory.pulsesLegumes => 'https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=480&q=80',
-      ItemCategory.meatDairy => 'https://images.unsplash.com/photo-1551028150-64b9f398f678?auto=format&fit=crop&w=480&q=80',
-      ItemCategory.oilSugarPantry => 'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=480&q=80',
-      ItemCategory.spices => 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=480&q=80',
-      ItemCategory.electronics => 'https://images.unsplash.com/photo-1498049794561-7780e7231661?auto=format&fit=crop&w=480&q=80',
-      ItemCategory.clothing => 'https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?auto=format&fit=crop&w=480&q=80',
-      ItemCategory.all => 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=480&q=80',
-      ItemCategory.bakery => 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=480&q=80',
-      ItemCategory.shoes => 'https://images.pexels.com/photos/6847398/pexels-photo-6847398.jpeg?auto=compress&cs=tinysrgb&w=480',
-      ItemCategory.bags => 'https://images.pexels.com/photos/9630186/pexels-photo-9630186.jpeg?auto=compress&cs=tinysrgb&w=480',
-      ItemCategory.beauty => 'https://images.pexels.com/photos/14438270/pexels-photo-14438270.jpeg?auto=compress&cs=tinysrgb&w=480',
-      ItemCategory.health => 'https://images.pexels.com/photos/31837694/pexels-photo-31837694.jpeg?auto=compress&cs=tinysrgb&w=480',
-      ItemCategory.baby => 'https://images.pexels.com/photos/3875080/pexels-photo-3875080.jpeg?auto=compress&cs=tinysrgb&w=480',
-      ItemCategory.home => 'https://images.pexels.com/photos/19980199/pexels-photo-19980199.jpeg?auto=compress&cs=tinysrgb&w=480',
-      ItemCategory.kitchen => 'https://images.pexels.com/photos/12181751/pexels-photo-12181751.jpeg?auto=compress&cs=tinysrgb&w=480',
-      ItemCategory.appliances => 'https://images.pexels.com/photos/34772395/pexels-photo-34772395.jpeg?auto=compress&cs=tinysrgb&w=480',
-      ItemCategory.cleaning => 'https://images.pexels.com/photos/7108400/pexels-photo-7108400.jpeg?auto=compress&cs=tinysrgb&w=480',
-      ItemCategory.books => 'https://images.pexels.com/photos/5905439/pexels-photo-5905439.jpeg?auto=compress&cs=tinysrgb&w=480',
-      ItemCategory.sports => 'https://images.pexels.com/photos/5184714/pexels-photo-5184714.jpeg?auto=compress&cs=tinysrgb&w=480',
-      ItemCategory.toys => 'https://images.pexels.com/photos/32432135/pexels-photo-32432135.jpeg?auto=compress&cs=tinysrgb&w=480',
-      ItemCategory.automotive => 'https://images.pexels.com/photos/20303832/pexels-photo-20303832.jpeg?auto=compress&cs=tinysrgb&w=480',
-      ItemCategory.tools => 'https://images.pexels.com/photos/14534738/pexels-photo-14534738.jpeg?auto=compress&cs=tinysrgb&w=480',
-      ItemCategory.garden => 'https://images.pexels.com/photos/6913411/pexels-photo-6913411.jpeg?auto=compress&cs=tinysrgb&w=480',
-      ItemCategory.pets => 'https://images.pexels.com/photos/18764141/pexels-photo-18764141.jpeg?auto=compress&cs=tinysrgb&w=480',
-      ItemCategory.beverages => 'https://images.pexels.com/photos/35982640/pexels-photo-35982640.jpeg?auto=compress&cs=tinysrgb&w=480',
-    };
-
     final resolvedUrl = photo.startsWith('https://') || photo.startsWith('http://')
         ? photo
         : 'https://images.unsplash.com/$photo?auto=format&fit=crop&w=480&q=80';
@@ -105,17 +74,10 @@ class MarketImage extends StatelessWidget {
         height: height,
         child: Image.network(
           resolvedUrl,
-          webHtmlElementStrategy: WebHtmlElementStrategy.fallback,
+          webHtmlElementStrategy: WebHtmlElementStrategy.prefer,
           fit: fit,
           excludeFromSemantics: true,
-          errorBuilder: (_, error, stack) => Image.network(
-            fallbackPhoto,
-            fit: fit,
-            excludeFromSemantics: true,
-            errorBuilder: (_, _, _) => fallback,
-            loadingBuilder: (_, child, progress) =>
-                progress == null ? child : fallback,
-          ),
+          errorBuilder: (_, error, stack) => fallback,
           loadingBuilder: (_, child, progress) =>
               progress == null ? child : fallback,
         ),
