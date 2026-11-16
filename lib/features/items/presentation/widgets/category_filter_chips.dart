@@ -26,7 +26,7 @@ class CategoryFilterChips extends ConsumerWidget {
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF1E293B),
+                    color: Color(0xFF0F172A),
                   ),
                 ),
               ),
@@ -51,11 +51,11 @@ class CategoryFilterChips extends ConsumerWidget {
                         style: const TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w600,
-                          color: Color(0xFF00B53F),
+                          color: Color(0xFF136A36),
                         ),
                       ),
                       const SizedBox(width: 2),
-                      const Icon(Icons.arrow_forward_ios_rounded, size: 12, color: Color(0xFF00B53F)),
+                      const Icon(Icons.arrow_forward_ios_rounded, size: 12, color: Color(0xFF136A36)),
                     ],
                   ),
                 ),
@@ -92,19 +92,19 @@ class CategoryFilterChips extends ConsumerWidget {
                         height: 54,
                         decoration: BoxDecoration(
                           color: isSelected
-                              ? const Color(0xFF00B53F)
+                              ? const Color(0xFF136A36)
                               : Colors.white,
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(
                             color: isSelected
-                                ? const Color(0xFF00B53F)
-                                : const Color(0xFFE5E7EB),
+                                ? const Color(0xFF136A36)
+                                : const Color(0xFFE2E8F0),
                             width: isSelected ? 2 : 1,
                           ),
                           boxShadow: isSelected
                               ? [
                                   BoxShadow(
-                                    color: const Color(0xFF00B53F).withValues(alpha: 0.25),
+                                    color: const Color(0xFF136A36).withValues(alpha: 0.25),
                                     blurRadius: 8,
                                     offset: const Offset(0, 3),
                                   ),
@@ -123,7 +123,7 @@ class CategoryFilterChips extends ConsumerWidget {
                             size: 26,
                             color: isSelected
                                 ? Colors.white
-                                : const Color(0xFF0B7B39),
+                                : const Color(0xFF136A36),
                           ),
                         ),
                       ),
@@ -133,7 +133,7 @@ class CategoryFilterChips extends ConsumerWidget {
                         style: TextStyle(
                           fontSize: 11,
                           fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-                          color: isSelected ? const Color(0xFF00B53F) : const Color(0xFF475569),
+                          color: isSelected ? const Color(0xFF136A36) : const Color(0xFF475569),
                         ),
                         maxLines: 2,
                         textAlign: TextAlign.center,
@@ -156,7 +156,7 @@ class CategoryFilterChips extends ConsumerWidget {
                   decoration: BoxDecoration(
                     color: const Color(0xFFE8F5E9),
                     borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: const Color(0xFF00B53F).withValues(alpha: 0.3)),
+                    border: Border.all(color: const Color(0xFF136A36).withValues(alpha: 0.3)),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -166,7 +166,7 @@ class CategoryFilterChips extends ConsumerWidget {
                         style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
-                          color: Color(0xFF0B7B39),
+                          color: Color(0xFF0E4C26),
                         ),
                       ),
                       const SizedBox(width: 4),
@@ -175,7 +175,7 @@ class CategoryFilterChips extends ConsumerWidget {
                           ref.read(searchQueryProvider.notifier).state = '';
                           ref.read(selectedCategoryProvider.notifier).state = ItemCategory.all;
                         },
-                        child: const Icon(Icons.close_rounded, size: 14, color: Color(0xFF0B7B39)),
+                        child: const Icon(Icons.close_rounded, size: 14, color: Color(0xFF0E4C26)),
                       ),
                     ],
                   ),
@@ -264,12 +264,12 @@ class _CategoryPickerState extends ConsumerState<_CategoryPicker> {
                             width: 42,
                             height: 42,
                             decoration: BoxDecoration(
-                              color: isSelected ? const Color(0xFF00B53F) : const Color(0xFFF1F5F9),
+                              color: isSelected ? const Color(0xFF136A36) : const Color(0xFFF1F5F9),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Icon(
                               category.icon,
-                              color: isSelected ? Colors.white : const Color(0xFF0B7B39),
+                              color: isSelected ? Colors.white : const Color(0xFF136A36),
                               size: 22,
                             ),
                           ),
@@ -277,7 +277,7 @@ class _CategoryPickerState extends ConsumerState<_CategoryPicker> {
                             isAmharic ? category.labelAm : category.labelEn,
                             style: TextStyle(
                               fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-                              color: isSelected ? const Color(0xFF00B53F) : const Color(0xFF1E293B),
+                              color: isSelected ? const Color(0xFF136A36) : const Color(0xFF1E293B),
                             ),
                           ),
                           subtitle: count == null ? null : Text(
@@ -286,7 +286,7 @@ class _CategoryPickerState extends ConsumerState<_CategoryPicker> {
                           ),
                           selected: isSelected,
                           trailing: isSelected
-                              ? const Icon(Icons.check_circle_rounded, color: Color(0xFF00B53F))
+                              ? const Icon(Icons.check_circle_rounded, color: Color(0xFF136A36))
                               : null,
                           onTap: () {
                             ref.read(searchQueryProvider.notifier).state = '';

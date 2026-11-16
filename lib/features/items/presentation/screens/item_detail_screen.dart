@@ -113,7 +113,7 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
     }
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF4F5F7),
+      backgroundColor: const Color(0xFFF8F7F2),
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -199,7 +199,7 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                               Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                                 decoration: BoxDecoration(
-                                  color: const Color(0xFF00B53F),
+                                  color: const Color(0xFF136A36),
                                   borderRadius: BorderRadius.circular(6),
                                 ),
                                 child: Text(
@@ -234,7 +234,7 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                               style: const TextStyle(
                                 fontSize: 30,
                                 fontWeight: FontWeight.w900,
-                                color: Color(0xFF00B53F),
+                                color: Color(0xFF136A36),
                               ),
                             ),
                             const SizedBox(width: 4),
@@ -258,7 +258,7 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                         // Location & Freshness row
                         Row(
                           children: [
-                            const Icon(Icons.location_on_rounded, size: 16, color: Color(0xFF00B53F)),
+                            const Icon(Icons.location_on_rounded, size: 16, color: Color(0xFF136A36)),
                             const SizedBox(width: 4),
                             Text(
                               selectedMarket?.localizedName(isAmharic) ?? 'Addis Ababa',
@@ -293,7 +293,7 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                 children: [
                   Row(
                     children: [
-                      const Icon(Icons.storefront_rounded, size: 20, color: Color(0xFF00B53F)),
+                      const Icon(Icons.storefront_rounded, size: 20, color: Color(0xFF136A36)),
                       const SizedBox(width: 8),
                       Text(
                         isAmharic ? 'የአዲስ አበባ ገበያዎች ንጽጽር' : 'Addis Ababa Markets Comparison',
@@ -340,7 +340,7 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                                 color: isCurrent ? const Color(0xFFE8F5E9) : const Color(0xFFF8FAFC),
                                 borderRadius: BorderRadius.circular(10),
                                 border: Border.all(
-                                  color: isCurrent ? const Color(0xFF00B53F) : const Color(0xFFE2E8F0),
+                                  color: isCurrent ? const Color(0xFF136A36) : const Color(0xFFE2E8F0),
                                   width: isCurrent ? 1.5 : 1,
                                 ),
                               ),
@@ -349,7 +349,7 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                                   Icon(
                                     isCurrent ? Icons.radio_button_checked_rounded : Icons.radio_button_off_rounded,
                                     size: 16,
-                                    color: isCurrent ? const Color(0xFF00B53F) : const Color(0xFF94A3B8),
+                                    color: isCurrent ? const Color(0xFF136A36) : const Color(0xFF94A3B8),
                                   ),
                                   const SizedBox(width: 8),
                                   Expanded(
@@ -379,14 +379,14 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 14,
-                                          color: isCheapest ? const Color(0xFF00B53F) : const Color(0xFF1E293B),
+                                          color: isCheapest ? const Color(0xFF136A36) : const Color(0xFF1E293B),
                                         ),
                                       ),
                                       if (isCheapest)
                                         Container(
                                           padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
                                           decoration: BoxDecoration(
-                                            color: const Color(0xFF00B53F),
+                                            color: const Color(0xFF136A36),
                                             borderRadius: BorderRadius.circular(4),
                                           ),
                                           child: Text(
@@ -518,7 +518,7 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                                   style: const TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w900,
-                                    color: Color(0xFF00B53F),
+                                    color: Color(0xFF136A36),
                                   ),
                                 ),
                               ],
@@ -550,7 +550,7 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                       children: [
                         Row(
                           children: [
-                            const Icon(Icons.insights_rounded, size: 20, color: Color(0xFF00B53F)),
+                            const Icon(Icons.insights_rounded, size: 20, color: Color(0xFF136A36)),
                             const SizedBox(width: 8),
                             Text(
                               isAmharic ? 'የ30 ቀናት የዋጋ እንቅስቃሴ' : '30-Day Price Trend',
@@ -566,7 +566,7 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                           ),
                           child: const Text(
                             'WAGA INDEX',
-                            style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Color(0xFF0B7B39)),
+                            style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Color(0xFF136A36)),
                           ),
                         ),
                       ],
@@ -575,7 +575,7 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                     SizedBox(
                       height: 180,
                       child: _loadingHistory
-                          ? const Center(child: CircularProgressIndicator(color: Color(0xFF00B53F)))
+                          ? const Center(child: CircularProgressIndicator(color: Color(0xFF136A36)))
                           : LineChart(
                               LineChartData(
                                 gridData: FlGridData(
@@ -622,12 +622,12 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                                       );
                                     }).toList(),
                                     isCurved: true,
-                                    color: const Color(0xFF00B53F),
+                                    color: const Color(0xFF136A36),
                                     barWidth: 3,
                                     dotData: const FlDotData(show: false),
                                     belowBarData: BarAreaData(
                                       show: true,
-                                      color: const Color(0xFF00B53F).withValues(alpha: 0.12),
+                                      color: const Color(0xFF136A36).withValues(alpha: 0.12),
                                     ),
                                   ),
                                 ],
@@ -706,7 +706,7 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
               height: 52,
               child: ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF00B53F),
+                  backgroundColor: const Color(0xFF136A36),
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   elevation: 0,

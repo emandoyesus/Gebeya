@@ -46,7 +46,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final isDataSaver = ref.watch(dataSaverProvider);
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF4F5F7),
+      backgroundColor: const Color(0xFFF8F7F2),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
@@ -56,7 +56,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           children: [
             Row(
               children: [
-                // JIJI Style Brand Title
+                // Brand Title in Forest Green
                 RichText(
                   text: TextSpan(
                     children: [
@@ -65,7 +65,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         style: const TextStyle(
                           fontWeight: FontWeight.w900,
                           fontSize: 22,
-                          color: Color(0xFF00B53F),
+                          color: Color(0xFF136A36),
                         ),
                       ),
                       TextSpan(
@@ -93,7 +93,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       Icon(
                         isDataSaver ? Icons.offline_bolt_rounded : Icons.check_circle_rounded,
                         size: 10,
-                        color: isDataSaver ? const Color(0xFFD97706) : const Color(0xFF00B53F),
+                        color: isDataSaver ? const Color(0xFFD97706) : const Color(0xFF136A36),
                       ),
                       const SizedBox(width: 3),
                       Text(
@@ -103,7 +103,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         style: TextStyle(
                           fontSize: 9,
                           fontWeight: FontWeight.bold,
-                          color: isDataSaver ? const Color(0xFFB45309) : const Color(0xFF0B7B39),
+                          color: isDataSaver ? const Color(0xFFB45309) : const Color(0xFF0E4C26),
                         ),
                       ),
                     ],
@@ -119,7 +119,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(Icons.location_on_rounded, size: 14, color: Color(0xFF00B53F)),
+                  const Icon(Icons.location_on_rounded, size: 14, color: Color(0xFF136A36)),
                   const SizedBox(width: 4),
                   Text(
                     selectedMarket != null
@@ -174,7 +174,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 11,
-                  color: Color(0xFF00B53F),
+                  color: Color(0xFF136A36),
                 ),
               ),
             ),
@@ -191,7 +191,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         child: CustomScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
           slivers: [
-            // JIJI-Style Large Search Bar
+            // Search Bar
             SliverToBoxAdapter(
               child: Container(
                 color: Colors.white,
@@ -203,7 +203,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         ? '${selectedMarket?.localizedName(isAmharic) ?? "መርካቶ"} ውስጥ ይፈልጉ...'
                         : 'Search in ${selectedMarket?.localizedName(isAmharic) ?? "Merkato"}...',
                     hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 14),
-                    prefixIcon: const Icon(Icons.search_rounded, color: Color(0xFF00B53F), size: 22),
+                    prefixIcon: const Icon(Icons.search_rounded, color: Color(0xFF136A36), size: 22),
                     suffixIcon: query.isEmpty
                         ? null
                         : IconButton(
@@ -224,7 +224,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(color: Color(0xFF00B53F), width: 1.5),
+                      borderSide: const BorderSide(color: Color(0xFF136A36), width: 1.5),
                     ),
                   ),
                   onChanged: (val) {
@@ -234,7 +234,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ),
             ),
 
-            // JIJI Style Category Carousel
+            // Category Carousel
             SliverToBoxAdapter(
               child: Container(
                 color: Colors.white,
@@ -250,14 +250,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   padding: const EdgeInsets.all(14),
                   decoration: BoxDecoration(
                     gradient: const LinearGradient(
-                      colors: [Color(0xFF0B7B39), Color(0xFF00B53F)],
+                      colors: [Color(0xFF0F3D24), Color(0xFF136A36)],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
                     borderRadius: BorderRadius.circular(14),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xFF00B53F).withValues(alpha: 0.2),
+                        color: const Color(0xFF136A36).withValues(alpha: 0.2),
                         blurRadius: 8,
                         offset: const Offset(0, 3),
                       ),
@@ -274,13 +274,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 Container(
                                   padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                                   decoration: BoxDecoration(
-                                    color: Colors.white.withValues(alpha: 0.2),
+                                    color: Colors.white.withValues(alpha: 0.18),
                                     borderRadius: BorderRadius.circular(4),
                                   ),
                                   child: Text(
                                     isAmharic ? 'የገበያ ዋጋ ጠቋሚ' : 'MARKET INTELLIGENCE',
                                     style: const TextStyle(
-                                      color: Colors.white,
+                                      color: Color(0xFFFEF3C7),
                                       fontSize: 9,
                                       fontWeight: FontWeight.bold,
                                       letterSpacing: 0.5,
@@ -288,7 +288,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                   ),
                                 ),
                                 const SizedBox(width: 8),
-                                const Icon(Icons.trending_up_rounded, color: Colors.white, size: 14),
+                                const Icon(Icons.trending_up_rounded, color: Color(0xFFFEF3C7), size: 14),
                               ],
                             ),
                             const SizedBox(height: 6),
@@ -329,7 +329,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
-                              color: Color(0xFF0B7B39),
+                              color: Color(0xFF136A36),
                             ),
                           ),
                         ),
@@ -373,14 +373,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 Icon(
                                   viewMode == ViewMode.grid ? Icons.view_list_rounded : Icons.grid_view_rounded,
                                   size: 16,
-                                  color: const Color(0xFF00B53F),
+                                  color: const Color(0xFF136A36),
                                 ),
                                 const SizedBox(width: 4),
                                 Text(
                                   viewMode == ViewMode.grid
                                       ? (isAmharic ? 'ዝርዝር' : 'List')
                                       : (isAmharic ? 'ፍርግርግ' : 'Grid'),
-                                  style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFF00B53F)),
+                                  style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFF136A36)),
                                 ),
                               ],
                             ),
@@ -393,7 +393,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ),
             ),
 
-            // Products Grid / List
+            // Products Grid / List (Zero overflow layout)
             itemsAsync.when(
               data: (_) {
                 final aggregates = aggregatesAsync.valueOrNull ?? <String, PriceAggregateModel>{};
@@ -412,7 +412,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           ),
                           const SizedBox(height: 12),
                           FilledButton(
-                            style: FilledButton.styleFrom(backgroundColor: const Color(0xFF00B53F)),
+                            style: FilledButton.styleFrom(backgroundColor: const Color(0xFF136A36)),
                             onPressed: () {
                               ref.read(searchQueryProvider.notifier).state = '';
                               ref.read(selectedCategoryProvider.notifier).state = ItemCategory.all;
@@ -425,16 +425,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   );
                 }
 
-                // JIJI 2-Column Grid View
+                // 2-Column Responsive Grid View with fixed height (guarantees zero overflow)
                 if (viewMode == ViewMode.grid && !isDataSaver) {
                   return SliverPadding(
                     padding: const EdgeInsets.fromLTRB(16, 4, 16, 80),
                     sliver: SliverGrid(
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
+                      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 220,
                         mainAxisSpacing: 12,
                         crossAxisSpacing: 12,
-                        childAspectRatio: 0.68,
+                        mainAxisExtent: 235,
                       ),
                       delegate: SliverChildBuilderDelegate(
                         (context, index) {
@@ -473,7 +473,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 );
               },
               loading: () => const SliverFillRemaining(
-                child: Center(child: CircularProgressIndicator(color: Color(0xFF00B53F))),
+                child: Center(child: CircularProgressIndicator(color: Color(0xFF136A36))),
               ),
               error: (err, _) => SliverFillRemaining(
                 child: Center(
@@ -485,7 +485,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       Text(isAmharic ? 'እቃዎችን መጫን አልተቻለም' : 'Could not load catalog'),
                       const SizedBox(height: 12),
                       FilledButton.icon(
-                        style: FilledButton.styleFrom(backgroundColor: const Color(0xFF00B53F)),
+                        style: FilledButton.styleFrom(backgroundColor: const Color(0xFF136A36)),
                         onPressed: () => ref.invalidate(itemsProvider),
                         icon: const Icon(Icons.refresh_rounded),
                         label: Text(isAmharic ? 'እንደገና ሞክር' : 'Try again'),
@@ -499,7 +499,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: const Color(0xFF00B53F),
+        backgroundColor: const Color(0xFF136A36),
         foregroundColor: Colors.white,
         icon: const Icon(Icons.add_shopping_cart_rounded),
         label: Text(

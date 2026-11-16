@@ -30,7 +30,7 @@ class PriceCard extends ConsumerWidget {
   }
 }
 
-/// Jiji signature 2-column Product Card
+/// Jiji signature 2-column Product Card (overflow-free)
 class _JijiGridCard extends ConsumerWidget {
   final ItemModel item;
   final PriceAggregateModel? aggregate;
@@ -72,11 +72,11 @@ class _JijiGridCard extends ConsumerWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: const Color(0xFFE5E7EB)),
+          border: Border.all(color: const Color(0xFFE2E8F0)),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.04),
-              blurRadius: 6,
+              color: Colors.black.withValues(alpha: 0.03),
+              blurRadius: 5,
               offset: const Offset(0, 2),
             ),
           ],
@@ -90,25 +90,25 @@ class _JijiGridCard extends ConsumerWidget {
               children: [
                 SizedBox(
                   width: double.infinity,
-                  height: 140,
+                  height: 120,
                   child: MarketImage(
                     category: item.category,
                     imageUrl: item.imageUrl,
                     width: double.infinity,
-                    height: 140,
+                    height: 120,
                     fit: BoxFit.cover,
                   ),
                 ),
-                // Badges (TOP / TELEGRAM / DEAL)
+                // Badges (TOP / TELEGRAM / VERIFIED)
                 Positioned(
-                  top: 8,
-                  left: 8,
+                  top: 6,
+                  left: 6,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       if (isTelegram)
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                           decoration: BoxDecoration(
                             color: const Color(0xFF0088CC),
                             borderRadius: BorderRadius.circular(4),
@@ -116,8 +116,8 @@ class _JijiGridCard extends ConsumerWidget {
                           child: const Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Icon(Icons.send_rounded, size: 10, color: Colors.white),
-                              SizedBox(width: 3),
+                              Icon(Icons.send_rounded, size: 9, color: Colors.white),
+                              SizedBox(width: 2),
                               Text(
                                 'Telegram',
                                 style: TextStyle(
@@ -131,9 +131,9 @@ class _JijiGridCard extends ConsumerWidget {
                         )
                       else if (aggregate != null)
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                           decoration: BoxDecoration(
-                            color: const Color(0xFF00B53F),
+                            color: const Color(0xFF136A36),
                             borderRadius: BorderRadius.circular(4),
                           ),
                           child: Text(
@@ -147,9 +147,9 @@ class _JijiGridCard extends ConsumerWidget {
                         )
                       else
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                           decoration: BoxDecoration(
-                            color: const Color(0xFFF59E0B),
+                            color: const Color(0xFFD97706),
                             borderRadius: BorderRadius.circular(4),
                           ),
                           child: Text(
@@ -172,14 +172,14 @@ class _JijiGridCard extends ConsumerWidget {
                     onTap: () => ref.read(favoritesProvider.notifier).toggle(item.id),
                     borderRadius: BorderRadius.circular(20),
                     child: Container(
-                      padding: const EdgeInsets.all(5),
+                      padding: const EdgeInsets.all(4),
                       decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.85),
+                        color: Colors.white.withValues(alpha: 0.9),
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
                         isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
-                        size: 16,
+                        size: 15,
                         color: isFavorite ? const Color(0xFFE11D48) : const Color(0xFF64748B),
                       ),
                     ),
@@ -188,130 +188,132 @@ class _JijiGridCard extends ConsumerWidget {
               ],
             ),
 
-            // Card Body
-            Padding(
-              padding: const EdgeInsets.fromLTRB(10, 8, 10, 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Item Name (2 lines max)
-                  Text(
-                    item.localizedName(isAmharic),
-                    style: const TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF1E293B),
-                      height: 1.25,
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 6),
-
-                  // Price
-                  if (median != null) ...[
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.baseline,
-                      textBaseline: TextBaseline.alphabetic,
+            // Card Body (Expanded to prevent any bottom overflow)
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(8, 6, 8, 8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    // Item Title & Price Block
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          median >= 1000000
-                              ? '${(median / 1000000).toStringAsFixed(1)}M'
-                              : median >= 100000
-                              ? '${(median / 1000).toStringAsFixed(0)}k'
-                              : median.toStringAsFixed(median.truncateToDouble() == median ? 0 : 1),
+                          item.localizedName(isAmharic),
                           style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w900,
-                            color: Color(0xFF00B53F),
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF0F172A),
+                            height: 1.2,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        const SizedBox(height: 3),
+                        if (median != null) ...[
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.baseline,
+                            textBaseline: TextBaseline.alphabetic,
+                            children: [
+                              Text(
+                                median >= 1000000
+                                    ? '${(median / 1000000).toStringAsFixed(1)}M'
+                                    : median >= 100000
+                                    ? '${(median / 1000).toStringAsFixed(0)}k'
+                                    : median.toStringAsFixed(median.truncateToDouble() == median ? 0 : 1),
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w900,
+                                  color: Color(0xFF136A36),
+                                ),
+                              ),
+                              const SizedBox(width: 2),
+                              Text(
+                                ' ETB/$unit',
+                                style: const TextStyle(
+                                  fontSize: 9,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color(0xFF64748B),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ] else ...[
+                          Text(
+                            isAmharic ? 'ዋጋ ገና የለም' : 'Price pending',
+                            style: const TextStyle(
+                              fontSize: 11,
+                              color: Color(0xFF94A3B8),
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                        if (localUnitEstimate != null) ...[
+                          const SizedBox(height: 1),
+                          Text(
+                            localUnitEstimate,
+                            style: const TextStyle(
+                              fontSize: 9,
+                              fontWeight: FontWeight.w500,
+                              color: Color(0xFFD97706),
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ],
+                    ),
+
+                    // Location & Trend Footer
+                    Row(
+                      children: [
+                        const Icon(Icons.location_on_rounded, size: 10, color: Color(0xFF94A3B8)),
+                        const SizedBox(width: 2),
+                        Expanded(
+                          child: Text(
+                            selectedMarket?.localizedName(isAmharic) ?? (isAmharic ? 'መርካቶ' : 'Merkato'),
+                            style: const TextStyle(
+                              fontSize: 10,
+                              color: Color(0xFF64748B),
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                        const SizedBox(width: 2),
-                        Text(
-                          ' ETB/$unit',
-                          style: const TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.w600,
-                            color: Color(0xFF64748B),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+                          decoration: BoxDecoration(
+                            color: isTrendStable
+                                ? const Color(0xFFF1F5F9)
+                                : isTrendUp
+                                ? const Color(0xFFFEE2E2)
+                                : const Color(0xFFE8F5E9),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: Text(
+                            isTrendStable
+                                ? '•'
+                                : isTrendUp
+                                ? '+$trendValue%'
+                                : '$trendValue%',
+                            style: TextStyle(
+                              fontSize: 8,
+                              fontWeight: FontWeight.bold,
+                              color: isTrendStable
+                                  ? const Color(0xFF64748B)
+                                  : isTrendUp
+                                  ? const Color(0xFFDC2626)
+                                  : const Color(0xFF136A36),
+                            ),
                           ),
                         ),
                       ],
                     ),
-                  ] else ...[
-                    Text(
-                      isAmharic ? 'ዋጋ ገና የለም' : 'Price pending',
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: Color(0xFF94A3B8),
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
                   ],
-
-                  // Idea 3: Local Unit Equivalent
-                  if (localUnitEstimate != null) ...[
-                    const SizedBox(height: 2),
-                    Text(
-                      localUnitEstimate,
-                      style: const TextStyle(
-                        fontSize: 10,
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xFFD97706),
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
-
-                  const SizedBox(height: 6),
-
-                  // Location & Trend Footer
-                  Row(
-                    children: [
-                      const Icon(Icons.location_on_rounded, size: 11, color: Color(0xFF94A3B8)),
-                      const SizedBox(width: 2),
-                      Expanded(
-                        child: Text(
-                          selectedMarket?.localizedName(isAmharic) ?? (isAmharic ? 'መርካቶ' : 'Merkato'),
-                          style: const TextStyle(
-                            fontSize: 10,
-                            color: Color(0xFF64748B),
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      // Idea 4: Mini Trend Tag
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
-                        decoration: BoxDecoration(
-                          color: isTrendStable
-                              ? const Color(0xFFF1F5F9)
-                              : isTrendUp
-                              ? const Color(0xFFFEE2E2)
-                              : const Color(0xFFE8F5E9),
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: Text(
-                          isTrendStable
-                              ? '•'
-                              : isTrendUp
-                              ? '+$trendValue%'
-                              : '$trendValue%',
-                          style: TextStyle(
-                            fontSize: 9,
-                            fontWeight: FontWeight.bold,
-                            color: isTrendStable
-                                ? const Color(0xFF64748B)
-                                : isTrendUp
-                                ? const Color(0xFFDC2626)
-                                : const Color(0xFF00B53F),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                ),
               ),
             ),
           ],
@@ -353,7 +355,7 @@ class _JijiListCard extends ConsumerWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: const Color(0xFFE5E7EB)),
+          border: Border.all(color: const Color(0xFFE2E8F0)),
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -367,7 +369,7 @@ class _JijiListCard extends ConsumerWidget {
                 child: isDataSaver
                     ? Container(
                         color: const Color(0xFFE8F5E9),
-                        child: Icon(item.category.icon, color: const Color(0xFF00B53F), size: 28),
+                        child: Icon(item.category.icon, color: const Color(0xFF136A36), size: 28),
                       )
                     : MarketImage(
                         category: item.category,
@@ -393,7 +395,7 @@ class _JijiListCard extends ConsumerWidget {
                           style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
-                            color: Color(0xFF1E293B),
+                            color: Color(0xFF0F172A),
                           ),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
@@ -469,7 +471,7 @@ class _JijiListCard extends ConsumerWidget {
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w900,
-                      color: Color(0xFF00B53F),
+                      color: Color(0xFF136A36),
                     ),
                   ),
                   Text(

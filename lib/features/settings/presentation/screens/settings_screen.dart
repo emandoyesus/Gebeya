@@ -14,13 +14,13 @@ class SettingsScreen extends ConsumerWidget {
     final viewMode = ref.watch(viewModeProvider);
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF4F5F7),
+      backgroundColor: const Color(0xFFF8F7F2),
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
         title: Text(
           isAmharic ? 'ማስተካከያ' : 'Settings',
-          style: const TextStyle(color: Color(0xFF1E293B), fontWeight: FontWeight.bold),
+          style: const TextStyle(color: Color(0xFF0F172A), fontWeight: FontWeight.bold),
         ),
       ),
       body: ListView(
@@ -32,7 +32,7 @@ class SettingsScreen extends ConsumerWidget {
             children: [
               // Grid vs List mode
               ListTile(
-                leading: const Icon(Icons.grid_view_rounded, color: Color(0xFF00B53F)),
+                leading: const Icon(Icons.grid_view_rounded, color: Color(0xFF136A36)),
                 title: Text(isAmharic ? 'የእቃዎች አቀራረብ' : 'Layout style'),
                 subtitle: Text(
                   viewMode == ViewMode.grid
@@ -72,7 +72,7 @@ class SettingsScreen extends ConsumerWidget {
                   style: const TextStyle(fontSize: 12, color: Color(0xFF64748B)),
                 ),
                 value: isDataSaver,
-                activeColor: const Color(0xFF00B53F),
+                activeColor: const Color(0xFF136A36),
                 onChanged: (_) => ref.read(dataSaverProvider.notifier).toggle(),
               ),
             ],
@@ -115,14 +115,14 @@ class SettingsScreen extends ConsumerWidget {
                 title: const Text('አማርኛ (Amharic)'),
                 value: 'am',
                 groupValue: isAmharic ? 'am' : 'en',
-                activeColor: const Color(0xFF00B53F),
+                activeColor: const Color(0xFF136A36),
                 onChanged: (_) => ref.read(localeProvider.notifier).setLocale('am'),
               ),
               RadioListTile<String>(
                 title: const Text('English'),
                 value: 'en',
                 groupValue: isAmharic ? 'am' : 'en',
-                activeColor: const Color(0xFF00B53F),
+                activeColor: const Color(0xFF136A36),
                 onChanged: (_) => ref.read(localeProvider.notifier).setLocale('en'),
               ),
             ],
@@ -136,7 +136,7 @@ class SettingsScreen extends ConsumerWidget {
               ListTile(
                 leading: Icon(
                   SupabaseConfig.isConfigured ? Icons.cloud_done_rounded : Icons.offline_pin_rounded,
-                  color: const Color(0xFF00B53F),
+                  color: const Color(0xFF136A36),
                 ),
                 title: Text(
                   SupabaseConfig.isConfigured

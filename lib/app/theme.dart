@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
-  // JIJI-inspired vibrant Ethiopian market palette
-  static const Color jijiGreen = Color(0xFF00B53F);
-  static const Color primaryGreen = Color(0xFF00B53F);
-  static const Color primaryGreenDark = Color(0xFF0B7B39);
-  static const Color accentGold = Color(0xFFF59E0B);
+  // Rich, authentic Ethiopian market palette
+  static const Color primaryGreen = Color(0xFF136A36);
+  static const Color primaryGreenDark = Color(0xFF0E4C26);
+  static const Color primaryGreenLight = Color(0xFF2E8540);
+  static const Color accentGold = Color(0xFFD97706);
+  static const Color accentGoldLight = Color(0xFFFEF3C7);
   static const Color telegramBlue = Color(0xFF0088CC);
-  static const Color backgroundLight = Color(0xFFF4F5F7);
+  static const Color backgroundLight = Color(0xFFF8F7F2);
   static const Color surfaceWhite = Colors.white;
-  static const Color textDark = Color(0xFF1E293B);
+  static const Color textDark = Color(0xFF0F172A);
   static const Color textMuted = Color(0xFF64748B);
   static const Color borderLight = Color(0xFFE5E7EB);
   static const Color priceBadgeBg = Color(0xFFE8F5E9);
@@ -29,16 +30,26 @@ class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: surfaceWhite,
-        contentPadding: const EdgeInsets.all(18),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(14),
           borderSide: const BorderSide(color: borderLight),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: const BorderSide(color: borderLight),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: const BorderSide(color: primaryGreen, width: 1.5),
         ),
       ),
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
-          minimumSize: const Size(48, 52),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+          backgroundColor: primaryGreen,
+          foregroundColor: Colors.white,
+          minimumSize: const Size(48, 50),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         ),
       ),
       textTheme: GoogleFonts.notoSansEthiopicTextTheme(base.textTheme).copyWith(
@@ -67,7 +78,7 @@ class AppTheme {
         scrolledUnderElevation: 1,
         centerTitle: false,
         titleTextStyle: GoogleFonts.notoSansEthiopic(
-          fontSize: 20,
+          fontSize: 18,
           fontWeight: FontWeight.bold,
           color: textDark,
         ),
@@ -77,13 +88,13 @@ class AppTheme {
         color: surfaceWhite,
         elevation: 0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(14),
           side: const BorderSide(color: borderLight, width: 1),
         ),
       ),
       chipTheme: ChipThemeData(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(12),
         ),
         side: BorderSide.none,
       ),
