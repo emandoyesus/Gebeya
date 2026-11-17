@@ -1,3 +1,13 @@
+# Product photo corrections
+
+Representative images, not seller inventory photographs. Remote sources:
+- Ivory teff: https://www.jaivikanaturals.com/products/teff-ivory-4-50-per-lb
+- Brown teff: https://www.jaivikanaturals.com/products/teff-brown-4-50-per-lb
+- Shiro flour: https://adarashmarket.com/products/shiro_duket_65
+- Denim jeans: https://www.shoes.fr/Le-Temps-des-Cerises-700-11-BASIC-x30100621.php
+- Cotton T-shirt: https://laurenblue.co.za/products/plain-white-t-shirt
+- Galaxy A16 4G: https://www.telstra.com.au/mobile-phones/prepaid-mobiles/galaxy-a16-4g
+
 # Category photo sources
 
 Photos represent categories, not the exact model, condition, colour, or seller stock.

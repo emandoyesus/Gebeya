@@ -14,6 +14,7 @@ class ItemModel {
   final double? listingPrice;
   final String? listingSource;
   final String? listingNote;
+  final String? listingLocation;
   // Bundled listing has not yet been imported into the configured backend.
   final bool catalogOnly;
 
@@ -29,6 +30,7 @@ class ItemModel {
     this.listingPrice,
     this.listingSource,
     this.listingNote,
+    this.listingLocation,
     this.catalogOnly = false,
   });
 
@@ -36,8 +38,59 @@ class ItemModel {
     id: id, nameEn: nameEn, nameAm: nameAm, category: category,
     standardUnit: standardUnit, supportedLocalUnits: supportedLocalUnits,
     iconName: iconName, imageUrl: imageUrl, listingPrice: listingPrice,
-    listingSource: listingSource, listingNote: listingNote, catalogOnly: value,
+    listingSource: listingSource, listingNote: listingNote, listingLocation: listingLocation, catalogOnly: value,
   );
+
+  /// Prefer explicit location metadata. Legacy Jiji notes use
+  /// "Jiji · location · description"; channel names are not locations.
+  String? get sourceLocation {
+    final location = listingLocation?.trim();
+    if (location != null && location.isNotEmpty) return location;
+    final parts = listingNote?.split(' · ');
+    if (parts != null && parts.length >= 3 && parts.first.trim() == 'Jiji') {
+      final place = parts[1].trim();
+      if (place.isNotEmpty) return place;
+    }
+    return null;
+  }
+
+  String? get sourceLabel {
+    final source = listingSource?.trim();
+    if (source == null || source.isEmpty) return null;
+    final uri = Uri.tryParse(source);
+    if (uri == null || uri.host.isEmpty) return source;
+    if (uri.host == 't.me' && uri.pathSegments.isNotEmpty) {
+      return 'Telegram · @${uri.pathSegments.first}';
+    }
+    return uri.host;
+  }
+
+  /// Representative product photos; source credits are in IMAGE_CREDITS.md.
+  /// Resolve by product name so backend records and bundled items stay consistent.
+  String? get correctedImageUrl {
+    final name = nameEn.toLowerCase();
+    if (name.startsWith('teff (magna)')) {
+      return 'https://www.jaivikanaturals.com/cdn/shop/products/Jaivika_Teff_Ivory_1072x.jpg?v=1606888038';
+    }
+    if (name.startsWith('teff (sergegna)')) {
+      return 'https://www.jaivikanaturals.com/cdn/shop/products/Jaivika_Teff_Brown_800x.jpg?v=1606888071';
+    }
+    if (name == 'shiro flour') {
+      return 'https://cdn.shopify.com/s/files/1/0098/9564/1139/products/1_3e8fd758-b633-4336-9786-9295bca4cf89.jpg?v=1565191566';
+    }
+    if (name == 'denim jeans') {
+      return 'https://photos6.shoes.fr/photos/301/30100621/Le-Temps-des-Cerises-700-11-BASIC-30100621_1200_A.jpg';
+    }
+    if (name.contains('cotton t-shirt')) {
+      return 'https://laurenblue.co.za/cdn/shop/files/WhiteTShirts.png?v=1731538307';
+    }
+    if (name.contains('galaxy a16') || name.contains('galaxy a-16')) {
+      return 'https://telstra.com.au/content/dam/tcom/prepaid/mobile-devices/SamsungGalaxyA16-4G/samsung-galaxy-a16-4g-black-front-and-back-900x1200.jpg';
+    }
+    return null;
+  }
+
+  String? get displayImageUrl => correctedImageUrl ?? imageUrl;
 
   String localizedName(bool isAmharic) => isAmharic ? nameAm : nameEn;
 
@@ -120,6 +173,7 @@ class ItemModel {
       listingPrice: (json['listing_price'] as num?)?.toDouble(),
       listingSource: json['listing_source'],
       listingNote: json['listing_note'],
+      listingLocation: json['listing_location'],
       catalogOnly: json['catalog_only'] == true,
     );
   }

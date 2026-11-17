@@ -80,41 +80,12 @@ class ItemsRepository {
         // Fallback to local
       }
     }
-    return MockData.generateInitialAggregates(marketId);
+    return {};
   }
 
   Future<List<Map<String, dynamic>>> getItemHistory(String itemId, String marketId, {int days = 30}) async {
-    // Generate realistic historical daily price curve for charts
-    final now = DateTime.now();
-    final points = <Map<String, dynamic>>[];
-    final aggregates = await getAggregatesForMarket(marketId);
-    double? basePrice = aggregates[itemId]?.medianPrice;
-
-    if (basePrice == null) {
-      // Look up item in bundled catalog or MockData to see if it has a listing price
-      final allItems = await getItems();
-      final itemMatch = allItems.where((i) => i.id == itemId);
-      if (itemMatch.isNotEmpty) {
-        basePrice = itemMatch.first.listingPrice;
-      }
-    }
-
-    if (basePrice == null) return [];
-
-    // Scale variation proportional to the item base price (1-3%)
-    final scale = (basePrice * 0.015).clamp(1.0, 50000.0);
-
-    for (int i = days; i >= 0; i -= 3) {
-      final date = now.subtract(Duration(days: i));
-      // Trend: realistic slight fluctuation (inflation/seasonality/negotiation variance)
-      final variation = (i % 5 - 2) * scale;
-      final pointPrice = (basePrice + variation).clamp(basePrice * 0.7, basePrice * 1.4);
-      points.add({
-        'date': date,
-        'price': pointPrice,
-      });
-    }
-    return points;
+    // No recorded historical series is available yet.
+    return [];
   }
 
   /// Idea 2: Cross-Market Price Comparison (Merkato vs Shola vs Saris vs Kera vs Megenagna)
@@ -126,25 +97,6 @@ class ItemsRepository {
       final price = aggregates[itemId]?.medianPrice;
       if (price != null) {
         result[market.id] = price;
-      }
-    }
-    // If aggregates not found (e.g. for listing items), simulate small market variance
-    if (result.isEmpty) {
-      final items = await getItems();
-      final match = items.where((i) => i.id == itemId);
-      if (match.isNotEmpty && match.first.listingPrice != null) {
-        final base = match.first.listingPrice!;
-        // Merkato typically cheapest (wholesale hub), Bole/Yeka higher
-        final offsets = {
-          'm-merkato': 0.96,
-          'm-shola': 1.02,
-          'm-saris': 0.99,
-          'm-kera': 1.01,
-          'm-megenagna': 1.04,
-        };
-        for (final m in markets) {
-          result[m.id] = (base * (offsets[m.id] ?? 1.0)).roundToDouble();
-        }
       }
     }
     return result;
