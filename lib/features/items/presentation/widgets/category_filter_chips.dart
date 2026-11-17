@@ -45,7 +45,7 @@ class CategoryFilterChips extends ConsumerWidget {
                 ),
                 borderRadius: BorderRadius.circular(8),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -54,11 +54,11 @@ class CategoryFilterChips extends ConsumerWidget {
                         style: const TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w600,
-                          color: Color(0xFFC7F33B),
+                          color: Color(0xFFB2D15A),
                         ),
                       ),
                       const SizedBox(width: 2),
-                      const Icon(Icons.arrow_forward_ios_rounded, size: 12, color: Color(0xFFC7F33B)),
+                      const Icon(Icons.arrow_forward_ios_rounded, size: 12, color: Color(0xFFB2D15A)),
                     ],
                   ),
                 ),
@@ -95,19 +95,19 @@ class CategoryFilterChips extends ConsumerWidget {
                         height: 54,
                         decoration: BoxDecoration(
                           color: isSelected
-                              ? const Color(0xFFC7F33B)
+                              ? const Color(0xFFB2D15A)
                               : const Color(0xFF16191E),
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(
                             color: isSelected
-                                ? const Color(0xFFC7F33B)
+                                ? const Color(0xFFB2D15A)
                                 : const Color(0xFF262C36),
                             width: isSelected ? 2 : 1,
                           ),
                           boxShadow: isSelected
                               ? [
                                   BoxShadow(
-                                    color: const Color(0xFFC7F33B).withValues(alpha: 0.3),
+                                    color: const Color(0xFFB2D15A).withValues(alpha: 0.3),
                                     blurRadius: 10,
                                     offset: const Offset(0, 3),
                                   ),
@@ -130,7 +130,7 @@ class CategoryFilterChips extends ConsumerWidget {
                         style: TextStyle(
                           fontSize: 11,
                           fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                          color: isSelected ? const Color(0xFFC7F33B) : const Color(0xFF8E9BAE),
+                          color: isSelected ? const Color(0xFFB2D15A) : const Color(0xFF8E9BAE),
                         ),
                         maxLines: 2,
                         textAlign: TextAlign.center,
@@ -153,7 +153,7 @@ class CategoryFilterChips extends ConsumerWidget {
                   decoration: BoxDecoration(
                     color: const Color(0xFF232A16),
                     borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: const Color(0xFFC7F33B).withValues(alpha: 0.4)),
+                    border: Border.all(color: const Color(0xFFB2D15A).withValues(alpha: 0.4)),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -163,16 +163,17 @@ class CategoryFilterChips extends ConsumerWidget {
                         style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
-                          color: Color(0xFFC7F33B),
+                          color: Color(0xFFB2D15A),
                         ),
                       ),
                       const SizedBox(width: 4),
-                      InkWell(
-                        onTap: () {
+                      IconButton(
+                        tooltip: isAmharic ? 'ምድብ አጽዳ' : 'Clear category',
+                        onPressed: () {
                           ref.read(searchQueryProvider.notifier).state = '';
                           ref.read(selectedCategoryProvider.notifier).state = ItemCategory.all;
                         },
-                        child: const Icon(Icons.close_rounded, size: 14, color: Color(0xFFC7F33B)),
+                        icon: const Icon(Icons.close_rounded, size: 20, color: Color(0xFFB2D15A)),
                       ),
                     ],
                   ),
@@ -233,8 +234,8 @@ class _CategoryPickerState extends ConsumerState<_CategoryPicker> {
               style: const TextStyle(color: Color(0xFFF8FAFC)),
               decoration: InputDecoration(
                 hintText: isAmharic ? 'ምድቦችን ፈልግ' : 'Find a category',
-                hintStyle: const TextStyle(color: Color(0xFF566171)),
-                prefixIcon: const Icon(Icons.search_rounded, color: Color(0xFFC7F33B)),
+                hintStyle: const TextStyle(color: Color(0xFF9AA7B8)),
+                prefixIcon: const Icon(Icons.search_rounded, color: Color(0xFFB2D15A)),
                 filled: true,
                 fillColor: const Color(0xFF0C0E12),
                 contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -266,7 +267,7 @@ class _CategoryPickerState extends ConsumerState<_CategoryPicker> {
                             width: 42,
                             height: 42,
                             decoration: BoxDecoration(
-                              color: isSelected ? const Color(0xFFC7F33B) : const Color(0xFF1E232B),
+                              color: isSelected ? const Color(0xFFB2D15A) : const Color(0xFF1E232B),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Icon(
@@ -279,7 +280,7 @@ class _CategoryPickerState extends ConsumerState<_CategoryPicker> {
                             isAmharic ? category.labelAm : category.labelEn,
                             style: TextStyle(
                               fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-                              color: isSelected ? const Color(0xFFC7F33B) : const Color(0xFFF8FAFC),
+                              color: isSelected ? const Color(0xFFB2D15A) : const Color(0xFFF8FAFC),
                             ),
                           ),
                           subtitle: count == null ? null : Text(
@@ -288,7 +289,7 @@ class _CategoryPickerState extends ConsumerState<_CategoryPicker> {
                           ),
                           selected: isSelected,
                           trailing: isSelected
-                              ? const Icon(Icons.check_circle_rounded, color: Color(0xFFC7F33B))
+                              ? const Icon(Icons.check_circle_rounded, color: Color(0xFFB2D15A))
                               : null,
                           onTap: () {
                             ref.read(searchQueryProvider.notifier).state = '';

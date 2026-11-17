@@ -32,7 +32,7 @@ class SettingsScreen extends ConsumerWidget {
             children: [
               // Grid vs List mode
               ListTile(
-                leading: const Icon(Icons.grid_view_rounded, color: Color(0xFFC7F33B)),
+                leading: const Icon(Icons.grid_view_rounded, color: Color(0xFFB2D15A)),
                 title: Text(isAmharic ? 'የእቃዎች አቀራረብ' : 'Layout style', style: const TextStyle(color: Color(0xFFF8FAFC))),
                 subtitle: Text(
                   viewMode == ViewMode.grid
@@ -43,7 +43,7 @@ class SettingsScreen extends ConsumerWidget {
                 trailing: SegmentedButton<ViewMode>(
                   style: ButtonStyle(
                     backgroundColor: WidgetStateProperty.resolveWith((states) {
-                      if (states.contains(WidgetState.selected)) return const Color(0xFFC7F33B);
+                      if (states.contains(WidgetState.selected)) return const Color(0xFFB2D15A);
                       return const Color(0xFF1E232B);
                     }),
                     foregroundColor: WidgetStateProperty.resolveWith((states) {
@@ -70,19 +70,19 @@ class SettingsScreen extends ConsumerWidget {
               const Divider(height: 1, color: Color(0xFF262C36)),
               // IDEA 6: Data Saver / Zero-Data Mode Toggle
               SwitchListTile(
-                secondary: const Icon(Icons.offline_bolt_rounded, color: Color(0xFFF59E0B)),
+                secondary: const Icon(Icons.offline_bolt_rounded, color: Color(0xFFD79C3A)),
                 title: Text(
                   isAmharic ? 'ዳታ ቆጣቢ ሁነታ (Data Saver)' : 'Data Saver Mode',
                   style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Color(0xFFF8FAFC)),
                 ),
                 subtitle: Text(
                   isAmharic
-                      ? 'ከፍተኛ ፍጥነት እና አነስተኛ የኢንተርኔት ዳታ ፍጆታ (ለኢትዮ ቴሌኮም ተስማሚ)'
-                      : 'Compresses photos & accelerates loading on Ethiopian mobile networks',
+                      ? 'ዝርዝር አቀራረብ ይጠቀማል፤ ምስሎች አሁንም ዳታ ይጠቀማሉ'
+                      : 'Uses a compact list layout; images still require mobile data',
                   style: const TextStyle(fontSize: 12, color: Color(0xFF8E9BAE)),
                 ),
                 value: isDataSaver,
-                activeThumbColor: const Color(0xFFC7F33B),
+                activeThumbColor: const Color(0xFFB2D15A),
                 onChanged: (_) => ref.read(dataSaverProvider.notifier).toggle(),
               ),
             ],
@@ -94,7 +94,7 @@ class SettingsScreen extends ConsumerWidget {
             title: isAmharic ? 'ቴሌግራም ቦትና ቻናል' : 'Telegram & Community',
             children: [
               ListTile(
-                leading: const Icon(Icons.send_rounded, color: Color(0xFF38BDF8)),
+                leading: const Icon(Icons.send_rounded, color: Color(0xFF59B0D7)),
                 title: const Text('Gebeya Telegram Bot (@gebeya_price_bot)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Color(0xFFF8FAFC))),
                 subtitle: Text(
                   isAmharic
@@ -102,13 +102,29 @@ class SettingsScreen extends ConsumerWidget {
                       : 'Query real-time market medians directly via Telegram bot',
                   style: const TextStyle(fontSize: 12, color: Color(0xFF8E9BAE)),
                 ),
-                trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 14, color: Color(0xFF566171)),
+                trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 14, color: Color(0xFF9AA7B8)),
                 onTap: () {
                   Clipboard.setData(const ClipboardData(text: 'https://t.me/gebeya_price_bot'));
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      backgroundColor: const Color(0xFF0284C7),
-                      content: Text(isAmharic ? 'የቦቱ አድራሻ ተቀድቷል፡ @gebeya_price_bot' : 'Copied bot handle: @gebeya_price_bot'),
+                      backgroundColor: const Color(0xFF16191E),
+                      behavior: SnackBarBehavior.floating,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(14),
+                        side: const BorderSide(color: Color(0xFF262C36)),
+                      ),
+                      content: Row(
+                        children: [
+                          const Icon(Icons.send_rounded, color: Color(0xFF59B0D7), size: 20),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Text(
+                              isAmharic ? 'የቦቱ አድራሻ ተቀድቷል፡ @gebeya_price_bot' : 'Copied bot handle: @gebeya_price_bot',
+                              style: const TextStyle(color: Color(0xFFF8FAFC)),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },
@@ -125,14 +141,14 @@ class SettingsScreen extends ConsumerWidget {
                 title: const Text('አማርኛ (Amharic)', style: TextStyle(color: Color(0xFFF8FAFC))),
                 value: 'am',
                 groupValue: isAmharic ? 'am' : 'en',
-                activeColor: const Color(0xFFC7F33B),
+                activeColor: const Color(0xFFB2D15A),
                 onChanged: (_) => ref.read(localeProvider.notifier).setLocale('am'),
               ),
               RadioListTile<String>(
                 title: const Text('English', style: TextStyle(color: Color(0xFFF8FAFC))),
                 value: 'en',
                 groupValue: isAmharic ? 'am' : 'en',
-                activeColor: const Color(0xFFC7F33B),
+                activeColor: const Color(0xFFB2D15A),
                 onChanged: (_) => ref.read(localeProvider.notifier).setLocale('en'),
               ),
             ],
@@ -146,18 +162,18 @@ class SettingsScreen extends ConsumerWidget {
               ListTile(
                 leading: Icon(
                   SupabaseConfig.isConfigured ? Icons.cloud_done_rounded : Icons.offline_pin_rounded,
-                  color: const Color(0xFFC7F33B),
+                  color: const Color(0xFFB2D15A),
                 ),
                 title: Text(
                   SupabaseConfig.isConfigured
-                      ? (isAmharic ? 'Supabase ተገናኝቷል' : 'Supabase Cloud Connected')
+                      ? (isAmharic ? 'የደመና አገልግሎት ተዋቅሯል' : 'Cloud configured')
                       : (isAmharic ? 'ከመስመር ውጭ ይሰራል (Offline Ready)' : 'Offline Ready / Local Cache Active'),
                   style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Color(0xFFF8FAFC)),
                 ),
                 subtitle: Text(
                   SupabaseConfig.isConfigured
-                      ? (isAmharic ? 'የቀጥታ ዳታቤዝ ይሰራል' : 'Live cloud synchronization active')
-                      : (isAmharic ? '214 የተረጋገጡ እቃዎች በስልኩ ላይ ተቀምጠዋል' : '214 verified items stored on-device; works without data'),
+                      ? (isAmharic ? 'ግንኙነቱ በኔትወርክዎ ሁኔታ ይወሰናል' : 'Connection availability depends on your network')
+                      : (isAmharic ? 'የእቃዎች ዝርዝር በስልኩ ላይ ተቀምጧል፤ መረጃው ያረጀ ሊሆን ይችላል' : 'Bundled catalog available offline; listings may be outdated'),
                   style: const TextStyle(color: Color(0xFF8E9BAE), fontSize: 12),
                 ),
               ),
@@ -173,8 +189,8 @@ class SettingsScreen extends ConsumerWidget {
                 padding: const EdgeInsets.all(16),
                 child: Text(
                   isAmharic
-                      ? 'የገበያ ዋጋዎች የሚሰበሰቡት ከአዲስ አበባ ዋና ዋና ገበያዎች (መርካቶ፣ ሾላ፣ ሳሪስ፣ ቄራ፣ መገናኛ)፣ እንዲሁም ከተረጋገጡ የቴሌግራም ቻናሎችና የመስክ ተጠቃሚዎች ሪፖርት ነው።'
-                      : 'Prices are crowdsourced & verified from Addis Ababa physical markets (Merkato, Shola, Saris, Kera, Megenagna), public Telegram marketplace channels, and consumer submissions.',
+                      ? 'የተቀመጡ የመስመር ላይ ዝርዝሮችና ያሉ ሪፖርቶች ከምንጫቸው ጋር ይታያሉ። የሻጮች መረጃና ዋጋ በገለልተኛ ወገን አልተረጋገጡም። የጎደለ ዋጋ አይገመትም።'
+                      : 'Saved online listings and available backend reports are shown with their sources. Seller claims and prices are not independently verified. Missing prices are not estimated.',
                   style: const TextStyle(fontSize: 13, color: Color(0xFF8E9BAE), height: 1.5),
                 ),
               ),
@@ -202,7 +218,7 @@ class SettingsScreen extends ConsumerWidget {
               style: const TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFFC7F33B),
+                color: Color(0xFFB2D15A),
                 letterSpacing: 0.3,
               ),
             ),

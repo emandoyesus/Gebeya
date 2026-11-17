@@ -38,7 +38,7 @@ class MarketsScreen extends ConsumerWidget {
                   color: isCurrent ? const Color(0xFF1E232B) : const Color(0xFF16191E),
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(
-                    color: isCurrent ? const Color(0xFFC7F33B) : const Color(0xFF262C36),
+                    color: isCurrent ? const Color(0xFFB2D15A) : const Color(0xFF262C36),
                     width: isCurrent ? 2 : 1,
                   ),
                 ),
@@ -50,11 +50,11 @@ class MarketsScreen extends ConsumerWidget {
                     decoration: BoxDecoration(
                       color: isCurrent ? const Color(0xFF232A16) : const Color(0xFF0C0E12),
                       borderRadius: BorderRadius.circular(14),
-                      border: Border.all(color: isCurrent ? const Color(0xFFC7F33B) : const Color(0xFF262C36)),
+                      border: Border.all(color: isCurrent ? const Color(0xFFB2D15A) : const Color(0xFF262C36)),
                     ),
                     child: Icon(
                       Icons.storefront_rounded,
-                      color: isCurrent ? const Color(0xFFC7F33B) : const Color(0xFF8E9BAE),
+                      color: isCurrent ? const Color(0xFFB2D15A) : const Color(0xFF8E9BAE),
                     ),
                   ),
                   title: Row(
@@ -68,7 +68,7 @@ class MarketsScreen extends ConsumerWidget {
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
                           decoration: BoxDecoration(
-                            color: const Color(0xFFC7F33B),
+                            color: const Color(0xFFB2D15A),
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: Text(
@@ -95,18 +95,18 @@ class MarketsScreen extends ConsumerWidget {
                         const SizedBox(height: 4),
                         Row(
                           children: [
-                            const Icon(Icons.location_on_outlined, size: 14, color: Color(0xFF566171)),
+                            const Icon(Icons.location_on_outlined, size: 14, color: Color(0xFF9AA7B8)),
                             const SizedBox(width: 4),
                             Text(
                               '${market.latitude?.toStringAsFixed(3)}, ${market.longitude?.toStringAsFixed(3)}',
-                              style: const TextStyle(color: Color(0xFF566171), fontSize: 11),
+                              style: const TextStyle(color: Color(0xFF9AA7B8), fontSize: 11),
                             ),
                           ],
                         ),
                       ],
                     ),
                   ),
-                  trailing: const Icon(Icons.chevron_right_rounded, color: Color(0xFF566171)),
+                  trailing: const Icon(Icons.chevron_right_rounded, color: Color(0xFF8E9BAE)),
                   onTap: () {
                     ref.read(selectedMarketProvider.notifier).state = market;
                     context.go('/');
@@ -116,8 +116,27 @@ class MarketsScreen extends ConsumerWidget {
             },
           );
         },
-        loading: () => const Center(child: CircularProgressIndicator(color: Color(0xFFC7F33B))),
-        error: (e, _) => Center(child: Text(e.toString(), style: const TextStyle(color: Colors.red))),
+        loading: () => const Center(child: CircularProgressIndicator(color: Color(0xFFB2D15A))),
+        error: (e, _) => Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                isAmharic ? 'የገበያ መረጃዎችን መጫን አልተቻለም' : 'Could not load markets.',
+                style: const TextStyle(color: Color(0xFF8E9BAE), fontSize: 15),
+              ),
+              const SizedBox(height: 12),
+              FilledButton(
+                style: FilledButton.styleFrom(
+                  backgroundColor: const Color(0xFFB2D15A),
+                  foregroundColor: const Color(0xFF0C0E12),
+                ),
+                onPressed: () => ref.invalidate(marketsProvider),
+                child: Text(isAmharic ? 'እንደገና ሞክር' : 'Retry'),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

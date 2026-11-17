@@ -1,4 +1,3 @@
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,7 +7,6 @@ import 'package:gebeya/features/items/data/item_model.dart';
 import 'package:gebeya/features/items/presentation/items_provider.dart';
 import 'package:gebeya/features/items/presentation/widgets/market_image.dart';
 import 'package:gebeya/features/settings/presentation/settings_provider.dart';
-import 'package:go_router/go_router.dart';
 
 class ItemDetailScreen extends ConsumerStatefulWidget {
   final String itemId;
@@ -20,30 +18,8 @@ class ItemDetailScreen extends ConsumerStatefulWidget {
 }
 
 class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
-  List<Map<String, dynamic>> _history = [];
-  bool _loadingHistory = true;
   LocalUnitInfo? _selectedUnit;
   double _unitQty = 1.0;
-
-  @override
-  void initState() {
-    super.initState();
-    _loadHistory();
-  }
-
-  Future<void> _loadHistory() async {
-    final selectedMarket = ref.read(selectedMarketProvider);
-    final marketId = selectedMarket?.id ?? 'm-merkato';
-    final history = await ref
-        .read(itemsRepositoryProvider)
-        .getItemHistory(widget.itemId, marketId);
-    if (mounted) {
-      setState(() {
-        _history = history;
-        _loadingHistory = false;
-      });
-    }
-  }
 
   void _shareToTelegram(ItemModel item, double? price, String unit, String marketName, bool isAmharic) {
     final priceStr = price != null ? '${price.toStringAsFixed(0)} ETB/$unit' : 'ዋጋ ገና አልተረጋገጠም';
@@ -57,17 +33,22 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
     Clipboard.setData(ClipboardData(text: msg));
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        backgroundColor: const Color(0xFF0088CC),
+        backgroundColor: const Color(0xFF16191E),
         behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(14),
+          side: const BorderSide(color: Color(0xFF262C36)),
+        ),
         content: Row(
           children: [
-            const Icon(Icons.send_rounded, color: Colors.white, size: 20),
+            const Icon(Icons.send_rounded, color: Color(0xFF59B0D7), size: 20),
             const SizedBox(width: 8),
             Expanded(
               child: Text(
                 isAmharic
                     ? 'የቴሌግራም መልእክት ተቀድቷል! ቴሌግራም ላይ ፔስት ያድርጉ።'
                     : 'Telegram deal copied to clipboard! Paste in Telegram.',
+                style: const TextStyle(color: Color(0xFFF8FAFC)),
               ),
             ),
           ],
@@ -80,30 +61,38 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
   Widget build(BuildContext context) {
     final itemsAsync = ref.watch(itemsProvider);
     final aggregatesAsync = ref.watch(marketAggregatesProvider);
-    final selectedMarket = ref.watch(selectedMarketProvider);
     final isAmharic = ref.watch(isAmharicProvider);
     final isFavorite = ref.watch(favoritesProvider).contains(widget.itemId);
-    final comparisonAsync = ref.watch(marketComparisonProvider(widget.itemId));
-    final marketsAsync = ref.watch(marketsProvider);
 
     final matches = itemsAsync.valueOrNull
         ?.where((candidate) => candidate.id == widget.itemId);
     final ItemModel? item =
         matches == null || matches.isEmpty ? null : matches.first;
 
+    if (itemsAsync.isLoading) {
+      return Scaffold(appBar: AppBar(), body: const Center(child: CircularProgressIndicator()));
+    }
+    if (itemsAsync.hasError) {
+      return Scaffold(
+        appBar: AppBar(),
+        body: Center(child: TextButton(
+          onPressed: () => ref.invalidate(itemsProvider),
+          child: Text(isAmharic ? 'እንደገና ሞክር' : 'Could not load item. Retry'),
+        )),
+      );
+    }
     if (item == null) {
       return Scaffold(
         appBar: AppBar(),
-        body: const Center(child: Text('Item not found')),
+        body: Center(child: Text(isAmharic ? 'እቃው አልተገኘም' : 'Item not found')),
       );
     }
 
     final aggregate = aggregatesAsync.valueOrNull?[item.id];
     final unit = item.localizedStandardUnit(isAmharic);
-    final isListing = aggregate == null && item.listingPrice != null;
     final effectivePrice = aggregate?.medianPrice ?? item.listingPrice;
-    final minPrice = aggregate?.minPrice ?? (isListing ? (item.listingPrice! * 0.95) : null);
-    final maxPrice = aggregate?.maxPrice ?? (isListing ? (item.listingPrice! * 1.05) : null);
+    final minPrice = aggregate?.minPrice;
+    final maxPrice = aggregate?.maxPrice;
     final isTelegram = item.listingSource != null &&
         (item.listingSource!.contains('t.me') || item.listingSource!.contains('telegram'));
 
@@ -134,12 +123,12 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
           // Share to Telegram button (Idea 5)
           IconButton(
             tooltip: isAmharic ? 'ለቴሌግራም አጋራ' : 'Share to Telegram',
-            icon: const Icon(Icons.send_rounded, color: Color(0xFF38BDF8)),
+            icon: const Icon(Icons.send_rounded, color: Color(0xFF59B0D7)),
             onPressed: () => _shareToTelegram(
               item,
               effectivePrice,
               unit,
-              selectedMarket?.localizedName(isAmharic) ?? 'Merkato',
+              item.sourceLocation ?? item.sourceLabel ?? 'Location not provided',
               isAmharic,
             ),
           ),
@@ -168,10 +157,10 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                         height: 250,
                         child: MarketImage(
                           category: item.category,
-                          imageUrl: item.imageUrl,
+                          imageUrl: item.displayImageUrl,
                           width: double.infinity,
                           height: 250,
-                          fit: BoxFit.cover,
+                          fit: item.correctedImageUrl != null ? BoxFit.contain : BoxFit.cover,
                         ),
                       ),
                       Positioned(
@@ -183,15 +172,15 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                               Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                                 decoration: BoxDecoration(
-                                  color: const Color(0xFF0088CC),
+                                  color: const Color(0xFF59B0D7),
                                   borderRadius: BorderRadius.circular(6),
                                 ),
                                 child: const Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    Icon(Icons.send_rounded, size: 12, color: Colors.white),
+                                    Icon(Icons.send_rounded, size: 12, color: Color(0xFF0C0E12)),
                                     SizedBox(width: 4),
-                                    Text('Telegram Verified', style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold)),
+                                    Text('Telegram listing', style: TextStyle(color: Color(0xFF0C0E12), fontSize: 10, fontWeight: FontWeight.bold)),
                                   ],
                                 ),
                               )
@@ -201,11 +190,11 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                                 decoration: BoxDecoration(
                                   color: const Color(0xFF232A16),
                                   borderRadius: BorderRadius.circular(6),
-                                  border: Border.all(color: const Color(0xFFC7F33B).withValues(alpha: 0.5)),
+                                  border: Border.all(color: const Color(0xFFB2D15A).withValues(alpha: 0.5)),
                                 ),
                                 child: Text(
-                                  isAmharic ? 'የተረጋገጠ የገበያ ዋጋ' : 'Verified Market Price',
-                                  style: const TextStyle(color: Color(0xFFC7F33B), fontSize: 10, fontWeight: FontWeight.bold),
+                                  isAmharic ? 'የዋጋ ግምት' : 'Price estimate',
+                                  style: const TextStyle(color: Color(0xFFB2D15A), fontSize: 10, fontWeight: FontWeight.bold),
                                 ),
                               ),
                           ],
@@ -235,7 +224,7 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                               style: const TextStyle(
                                 fontSize: 30,
                                 fontWeight: FontWeight.w900,
-                                color: Color(0xFFC7F33B),
+                                color: Color(0xFFB2D15A),
                               ),
                             ),
                             const SizedBox(width: 4),
@@ -259,10 +248,10 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                         // Location & Freshness row
                         Row(
                           children: [
-                            const Icon(Icons.location_on_rounded, size: 16, color: Color(0xFFC7F33B)),
+                            const Icon(Icons.location_on_rounded, size: 16, color: Color(0xFFB2D15A)),
                             const SizedBox(width: 4),
                             Text(
-                              selectedMarket?.localizedName(isAmharic) ?? 'Addis Ababa',
+                              item.sourceLocation ?? item.sourceLabel ?? (isAmharic ? 'አካባቢ አልተገለጸም' : 'Location not provided'),
                               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Color(0xFFF8FAFC)),
                             ),
                             const Spacer(),
@@ -281,8 +270,8 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
             ),
             const SizedBox(height: 16),
 
-            // IDEA 2: Physical Market Comparison Card (Merkato vs Shola vs Saris vs Kera vs Megenagna)
             Container(
+              width: double.infinity,
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: const Color(0xFF16191E),
@@ -292,121 +281,28 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      const Icon(Icons.storefront_rounded, size: 20, color: Color(0xFFC7F33B)),
-                      const SizedBox(width: 8),
-                      Text(
-                        isAmharic ? 'የአዲስ አበባ ገበያዎች ንጽጽር' : 'Addis Ababa Markets Comparison',
-                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFFF8FAFC)),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 6),
                   Text(
-                    isAmharic
-                        ? 'በየትኛው ገበያ ርካሽ እንደሆነ ይመልከቱ (ለመቀየር ገበያውን ይጫኑ)'
-                        : 'See which market offers the best price (Tap to switch)',
-                    style: const TextStyle(fontSize: 12, color: Color(0xFF8E9BAE)),
+                    isAmharic ? 'አካባቢ እና ምንጭ' : 'Location & source',
+                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 12),
-                  comparisonAsync.when(
-                    data: (comparison) {
-                      final allMarkets = marketsAsync.valueOrNull ?? [];
-                      if (comparison.isEmpty || allMarkets.isEmpty) {
-                        return const Text('Comparison not available', style: TextStyle(color: Color(0xFF8E9BAE)));
-                      }
-                      // Find minimum price
-                      double minP = double.infinity;
-                      for (final p in comparison.values) {
-                        if (p < minP) minP = p;
-                      }
-
-                      return Column(
-                        children: allMarkets.map((market) {
-                          final price = comparison[market.id] ?? effectivePrice;
-                          final isCheapest = price != null && (price - minP).abs() < 1;
-                          final isCurrent = market.id == selectedMarket?.id;
-
-                          return InkWell(
-                            onTap: () {
-                              ref.read(selectedMarketProvider.notifier).state = market;
-                              _loadHistory();
-                            },
-                            borderRadius: BorderRadius.circular(10),
-                            child: Container(
-                              margin: const EdgeInsets.symmetric(vertical: 4),
-                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                              decoration: BoxDecoration(
-                                color: isCurrent ? const Color(0xFF232A16) : const Color(0xFF1E232B),
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  color: isCurrent ? const Color(0xFFC7F33B) : const Color(0xFF262C36),
-                                  width: isCurrent ? 1.5 : 1,
-                                ),
-                              ),
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    isCurrent ? Icons.radio_button_checked_rounded : Icons.radio_button_off_rounded,
-                                    size: 16,
-                                    color: isCurrent ? const Color(0xFFC7F33B) : const Color(0xFF566171),
-                                  ),
-                                  const SizedBox(width: 8),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          market.localizedName(isAmharic),
-                                          style: TextStyle(
-                                            fontWeight: isCurrent ? FontWeight.bold : FontWeight.w600,
-                                            fontSize: 13,
-                                            color: const Color(0xFFF8FAFC),
-                                          ),
-                                        ),
-                                        Text(
-                                          market.subcity ?? '',
-                                          style: const TextStyle(fontSize: 11, color: Color(0xFF8E9BAE)),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Text(
-                                        price != null ? '${price.toStringAsFixed(0)} ETB' : '--',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14,
-                                          color: isCheapest ? const Color(0xFFC7F33B) : const Color(0xFFF8FAFC),
-                                        ),
-                                      ),
-                                      if (isCheapest)
-                                        Container(
-                                          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
-                                          decoration: BoxDecoration(
-                                            color: const Color(0xFFC7F33B),
-                                            borderRadius: BorderRadius.circular(4),
-                                          ),
-                                          child: Text(
-                                            isAmharic ? '💰 በጣም ርካሽ' : '💰 Best Price',
-                                            style: const TextStyle(color: Color(0xFF0C0E12), fontSize: 9, fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        }).toList(),
-                      );
-                    },
-                    loading: () => const Center(child: Padding(padding: EdgeInsets.all(12), child: CircularProgressIndicator(color: Color(0xFFC7F33B)))),
-                    error: (_, _) => const SizedBox.shrink(),
+                  Text(
+                    item.sourceLocation != null
+                        ? '${isAmharic ? "በዝርዝሩ የተጠቀሰ አካባቢ" : "Listed location"}: ${item.sourceLocation}'
+                        : (isAmharic ? 'የሻጩ አካባቢ አልተገለጸም' : 'Seller location not provided'),
+                    style: const TextStyle(color: Color(0xFFB2D15A), fontWeight: FontWeight.w600),
                   ),
+                  const SizedBox(height: 8),
+                  Text(
+                    item.sourceLabel != null
+                        ? '${isAmharic ? "የመረጃ ምንጭ" : "Listing source"}: ${item.sourceLabel}'
+                        : (isAmharic ? 'የመረጃ ምንጭ አልተገለጸም' : 'Source not provided'),
+                    style: const TextStyle(color: Color(0xFF8E9BAE)),
+                  ),
+                  if (item.listingSource?.trim().isNotEmpty == true) ...[
+                    const SizedBox(height: 8),
+                    SelectableText(item.listingSource!, style: const TextStyle(color: Color(0xFF59B0D7), fontSize: 12)),
+                  ],
                 ],
               ),
             ),
@@ -426,7 +322,7 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                   children: [
                     Row(
                       children: [
-                        const Icon(Icons.balance_rounded, size: 20, color: Color(0xFFF59E0B)),
+                        const Icon(Icons.balance_rounded, size: 20, color: Color(0xFFD79C3A)),
                         const SizedBox(width: 8),
                         Text(
                           isAmharic ? 'የኢትዮጵያ የገበያ መለኪያዎችና አስሊ' : 'Ethiopian Market Unit Calculator',
@@ -450,7 +346,7 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                         final isSel = _selectedUnit?.unitKey == lu.unitKey;
                         return ChoiceChip(
                           selected: isSel,
-                          selectedColor: const Color(0xFFC7F33B),
+                          selectedColor: const Color(0xFFB2D15A),
                           backgroundColor: const Color(0xFF1E232B),
                           label: Text(
                             isAmharic ? lu.nameAm : lu.nameEn,
@@ -474,7 +370,7 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                         decoration: BoxDecoration(
                           color: const Color(0xFF281C0B),
                           borderRadius: BorderRadius.circular(16),
-                          border: Border.all(color: const Color(0xFFF59E0B).withValues(alpha: 0.4)),
+                          border: Border.all(color: const Color(0xFFD79C3A).withValues(alpha: 0.4)),
                         ),
                         child: Column(
                           children: [
@@ -490,7 +386,7 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                                 Row(
                                   children: [
                                     IconButton(
-                                      icon: const Icon(Icons.remove_circle_outline_rounded, color: Color(0xFFF59E0B)),
+                                      icon: const Icon(Icons.remove_circle_outline_rounded, color: Color(0xFFD79C3A)),
                                       onPressed: _unitQty > 1
                                           ? () => setState(() => _unitQty -= 1)
                                           : null,
@@ -500,7 +396,7 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                                       style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color(0xFFF8FAFC)),
                                     ),
                                     IconButton(
-                                      icon: const Icon(Icons.add_circle_outline_rounded, color: Color(0xFFF59E0B)),
+                                      icon: const Icon(Icons.add_circle_outline_rounded, color: Color(0xFFD79C3A)),
                                       onPressed: () => setState(() => _unitQty += 1),
                                     ),
                                   ],
@@ -520,7 +416,7 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                                   style: const TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w900,
-                                    color: Color(0xFFC7F33B),
+                                    color: Color(0xFFB2D15A),
                                   ),
                                 ),
                               ],
@@ -535,113 +431,44 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
               const SizedBox(height: 16),
             ],
 
-            // IDEA 4: Daily Commodity & 30-Day Inflation/Trend Chart
-            if (effectivePrice != null || _history.isNotEmpty || _loadingHistory) ...[
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF16191E),
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: const Color(0xFF262C36)),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            const Icon(Icons.insights_rounded, size: 20, color: Color(0xFFC7F33B)),
-                            const SizedBox(width: 8),
-                            Text(
-                              isAmharic ? 'የ30 ቀናት የዋጋ እንቅስቃሴ' : '30-Day Price Trend',
-                              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFFF8FAFC)),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFF232A16),
-                            borderRadius: BorderRadius.circular(6),
-                            border: Border.all(color: const Color(0xFFC7F33B).withValues(alpha: 0.5)),
-                          ),
-                          child: const Text(
-                            'WAGA INDEX',
-                            style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Color(0xFFC7F33B)),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    SizedBox(
-                      height: 180,
-                      child: _loadingHistory
-                          ? const Center(child: CircularProgressIndicator(color: Color(0xFFC7F33B)))
-                          : LineChart(
-                              LineChartData(
-                                gridData: FlGridData(
-                                  show: true,
-                                  drawVerticalLine: false,
-                                  getDrawingHorizontalLine: (value) => FlLine(
-                                    color: const Color(0xFF262C36),
-                                    strokeWidth: 1,
-                                  ),
-                                ),
-                                titlesData: FlTitlesData(
-                                  rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                                  topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                                  leftTitles: AxisTitles(
-                                    sideTitles: SideTitles(
-                                      showTitles: true,
-                                      reservedSize: 45,
-                                      getTitlesWidget: (val, meta) {
-                                        final intVal = val.toInt();
-                                        String text;
-                                        if (intVal >= 1000000) {
-                                          text = '${(intVal / 1000000).toStringAsFixed(1)}M';
-                                        } else if (intVal >= 1000) {
-                                          text = '${(intVal / 1000).toStringAsFixed(0)}k';
-                                        } else {
-                                          text = '$intVal';
-                                        }
-                                        return Text(
-                                          text,
-                                          style: const TextStyle(color: Color(0xFF566171), fontSize: 10),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                  bottomTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                                ),
-                                borderData: FlBorderData(show: false),
-                                lineBarsData: [
-                                  LineChartBarData(
-                                    spots: _history.asMap().entries.map((e) {
-                                      return FlSpot(
-                                        e.key.toDouble(),
-                                        (e.value['price'] as num).toDouble(),
-                                      );
-                                    }).toList(),
-                                    isCurved: true,
-                                    color: const Color(0xFFC7F33B),
-                                    barWidth: 3,
-                                    dotData: const FlDotData(show: false),
-                                    belowBarData: BarAreaData(
-                                      show: true,
-                                      color: const Color(0xFFC7F33B).withValues(alpha: 0.15),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                    ),
-                  ],
-                ),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: const Color(0xFF16191E),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: const Color(0xFF262C36)),
               ),
-              const SizedBox(height: 16),
-            ],
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Icon(Icons.show_chart_rounded, size: 20, color: Color(0xFFB2D15A)),
+                      const SizedBox(width: 8),
+                      Text(
+                        isAmharic ? 'የዋጋ ታሪክ' : 'Price History',
+                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFFF8FAFC)),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      const Icon(Icons.history_toggle_off_rounded, size: 18, color: Color(0xFF8E9BAE)),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          isAmharic ? 'የተመዘገበ የዋጋ ታሪክ ገና የለም።' : 'Recorded price history is not available yet.',
+                          style: const TextStyle(color: Color(0xFF8E9BAE), fontSize: 13),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
 
             // IDEA 5: Telegram & Listing Sources Action Card
             if (item.listingSource != null || item.listingNote != null) ...[
@@ -657,7 +484,7 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                   children: [
                     Row(
                       children: [
-                        const Icon(Icons.info_outline_rounded, size: 20, color: Color(0xFF38BDF8)),
+                        const Icon(Icons.info_outline_rounded, size: 20, color: Color(0xFF59B0D7)),
                         const SizedBox(width: 8),
                         Text(
                           isAmharic ? 'የእቃውና የሻጩ መረጃ' : 'Listing & Verification Details',
@@ -676,8 +503,8 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                           Expanded(
                             child: OutlinedButton.icon(
                               style: OutlinedButton.styleFrom(
-                                foregroundColor: const Color(0xFF38BDF8),
-                                side: const BorderSide(color: Color(0xFF38BDF8)),
+                                foregroundColor: const Color(0xFF59B0D7),
+                                side: const BorderSide(color: Color(0xFF59B0D7)),
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                               ),
                               icon: const Icon(Icons.send_rounded, size: 16),
@@ -689,7 +516,7 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                                 item,
                                 effectivePrice,
                                 unit,
-                                selectedMarket?.localizedName(isAmharic) ?? 'Merkato',
+                                item.sourceLocation ?? item.sourceLabel ?? 'Location not provided',
                                 isAmharic,
                               ),
                             ),
@@ -703,25 +530,6 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
               const SizedBox(height: 20),
             ],
 
-            // Primary Bottom Action: Report Price
-            SizedBox(
-              width: double.infinity,
-              height: 52,
-              child: ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFC7F33B),
-                  foregroundColor: const Color(0xFF0C0E12),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                  elevation: 0,
-                ),
-                icon: const Icon(Icons.rate_review_outlined),
-                label: Text(
-                  isAmharic ? 'የገዙበትን ዋጋ ያስመዝግቡ' : 'Report What You Paid',
-                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w900),
-                ),
-                onPressed: () => context.push('/report?itemId=${item.id}'),
-              ),
-            ),
             const SizedBox(height: 24),
           ],
         ),

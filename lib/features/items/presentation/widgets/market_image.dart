@@ -53,12 +53,12 @@ class MarketImage extends StatelessWidget {
             ItemCategory.beverages => 'https://images.pexels.com/photos/35982640/pexels-photo-35982640.jpeg?auto=compress&cs=tinysrgb&w=480',
           };
     final fallback = ColoredBox(
-      color: const Color(0xFFE8EFE3),
+      color: const Color(0xFF1E232B),
       child: Center(
         child: Icon(
           category.icon,
           size: width < 60 ? 24 : 36,
-          color: const Color(0xFF136A36),
+          color: const Color(0xFF8E9BAE),
         ),
       ),
     );

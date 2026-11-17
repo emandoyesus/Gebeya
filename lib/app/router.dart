@@ -70,7 +70,7 @@ class _ScaffoldWithNavBar extends ConsumerWidget {
     if (location.startsWith('/markets')) {
       currentIndex = 1;
     } else if (location.startsWith('/settings')) {
-      currentIndex = 3;
+      currentIndex = 2;
     }
 
     return Scaffold(
@@ -81,69 +81,68 @@ class _ScaffoldWithNavBar extends ConsumerWidget {
           color: Color(0xFF0C0E12),
           border: Border(top: BorderSide(color: Color(0xFF1E232B), width: 1)),
         ),
-        padding: const EdgeInsets.only(top: 8, bottom: 12),
+        padding: const EdgeInsets.only(top: 8, bottom: 8),
         child: SafeArea(
           top: false,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              // 1. Today / Prices
+              // 1. Prices / Catalog
               _NavBarItem(
-                icon: Icons.wb_sunny_outlined,
-                activeIcon: Icons.wb_sunny_rounded,
-                label: isAmharic ? 'ዛሬ' : 'Today',
+                icon: Icons.storefront_outlined,
+                activeIcon: Icons.storefront_rounded,
+                label: isAmharic ? 'ዋጋዎች' : 'Prices',
                 isSelected: currentIndex == 0,
                 onTap: () => context.go('/'),
               ),
-              // 2. Markets / Log
+              // 2. Markets / Locations
               _NavBarItem(
-                icon: Icons.list_alt_rounded,
-                activeIcon: Icons.list_alt_rounded,
+                icon: Icons.location_city_outlined,
+                activeIcon: Icons.location_city_rounded,
                 label: isAmharic ? 'ገበያዎች' : 'Markets',
                 isSelected: currentIndex == 1,
                 onTap: () => context.go('/markets'),
               ),
-              // 3. Central Neon Floating Action Button (+)
-              GestureDetector(
-                onTap: () => context.push('/report'),
-                child: Container(
-                  width: 52,
-                  height: 52,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFC7F33B),
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xFFC7F33B).withValues(alpha: 0.35),
-                        blurRadius: 16,
-                        spreadRadius: 2,
-                        offset: const Offset(0, 4),
+              // 3. Central Neon Add Action
+              Tooltip(
+                message: isAmharic ? 'ዋጋ ያስመዝግቡ' : 'Report price',
+                child: Semantics(
+                  button: true,
+                  label: isAmharic ? 'ዋጋ ያስመዝግቡ' : 'Report price',
+                  child: InkWell(
+                    onTap: () => context.push('/report'),
+                    borderRadius: BorderRadius.circular(24),
+                    child: Container(
+                      width: 48,
+                      height: 48,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFB2D15A),
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color(0xFFB2D15A).withValues(alpha: 0.3),
+                            blurRadius: 12,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                  child: const Center(
-                    child: Icon(
-                      Icons.add_rounded,
-                      size: 32,
-                      color: Color(0xFF0C0E12),
+                      child: const Center(
+                        child: Icon(
+                          Icons.add_rounded,
+                          size: 30,
+                          color: Color(0xFF0C0E12),
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ),
-              // 4. Progress / Trends
+              // 4. Settings
               _NavBarItem(
-                icon: Icons.bar_chart_rounded,
-                activeIcon: Icons.bar_chart_rounded,
-                label: isAmharic ? 'እንቅስቃሴ' : 'Trends',
-                isSelected: currentIndex == 2,
-                onTap: () => context.go('/'),
-              ),
-              // 5. Settings / Learn
-              _NavBarItem(
-                icon: Icons.menu_book_rounded,
-                activeIcon: Icons.menu_book_rounded,
+                icon: Icons.tune_outlined,
+                activeIcon: Icons.tune_rounded,
                 label: isAmharic ? 'ማስተካከያ' : 'Settings',
-                isSelected: currentIndex == 3,
+                isSelected: currentIndex == 2,
                 onTap: () => context.go('/settings'),
               ),
             ],
@@ -171,30 +170,42 @@ class _NavBarItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = isSelected ? const Color(0xFFC7F33B) : const Color(0xFF566171);
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              isSelected ? activeIcon : icon,
-              size: 24,
-              color: color,
-            ),
-            const SizedBox(height: 4),
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 11,
-                fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                color: color,
+    final color = isSelected ? const Color(0xFFB2D15A) : const Color(0xFF8E9BAE);
+    return Tooltip(
+      message: label,
+      child: Semantics(
+        button: true,
+        label: label,
+        selected: isSelected,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(16),
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(minWidth: 56, minHeight: 48),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    isSelected ? activeIcon : icon,
+                    size: 24,
+                    color: color,
+                  ),
+                  const SizedBox(height: 3),
+                  Text(
+                    label,
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+                      color: color,
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
+          ),
         ),
       ),
     );

@@ -110,7 +110,7 @@ class _AddReportScreenState extends ConsumerState<AddReportScreen> {
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.verified_user_rounded, color: Color(0xFFC7F33B), size: 24),
+                    const Icon(Icons.verified_user_rounded, color: Color(0xFFB2D15A), size: 24),
                     const SizedBox(width: 12),
                     Expanded(
                       child: Text(
@@ -245,9 +245,9 @@ class _AddReportScreenState extends ConsumerState<AddReportScreen> {
                           style: const TextStyle(color: Color(0xFFF8FAFC)),
                           decoration: InputDecoration(
                             hintText: '0.00',
-                            hintStyle: const TextStyle(color: Color(0xFF566171)),
+                            hintStyle: const TextStyle(color: Color(0xFF8E9BAE)),
                             prefixText: 'ETB ',
-                            prefixStyle: const TextStyle(color: Color(0xFFC7F33B), fontWeight: FontWeight.bold),
+                            prefixStyle: const TextStyle(color: Color(0xFFB2D15A), fontWeight: FontWeight.bold),
                             filled: true,
                             fillColor: const Color(0xFF16191E),
                             border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: const BorderSide(color: Color(0xFF262C36))),
@@ -296,17 +296,17 @@ class _AddReportScreenState extends ConsumerState<AddReportScreen> {
                   decoration: BoxDecoration(
                     color: const Color(0xFF232A16),
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: const Color(0xFFC7F33B).withValues(alpha: 0.5)),
+                    border: Border.all(color: const Color(0xFFB2D15A).withValues(alpha: 0.5)),
                   ),
                   child: Row(
                     children: [
-                      const Icon(Icons.calculate_rounded, color: Color(0xFFC7F33B), size: 20),
+                      const Icon(Icons.calculate_rounded, color: Color(0xFFB2D15A), size: 20),
                       const SizedBox(width: 8),
                       Text(
                         isAmharic
                             ? 'በመደበኛ መለኪያ፡ ≈ ${_calculatedPricePerStandardUnit.toStringAsFixed(1)} ETB / $standardUnit'
                             : 'Standard equivalent: ≈ ${_calculatedPricePerStandardUnit.toStringAsFixed(1)} ETB / $standardUnit',
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Color(0xFFC7F33B)),
+                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Color(0xFFB2D15A)),
                       ),
                     ],
                   ),
@@ -319,7 +319,7 @@ class _AddReportScreenState extends ConsumerState<AddReportScreen> {
                 height: 52,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFC7F33B),
+                    backgroundColor: const Color(0xFFB2D15A),
                     foregroundColor: const Color(0xFF0C0E12),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                     elevation: 0,
@@ -330,6 +330,8 @@ class _AddReportScreenState extends ConsumerState<AddReportScreen> {
                           if (_formKey.currentState!.validate() && _selectedItem != null && _selectedMarket != null) {
                             final price = double.tryParse(_priceController.text) ?? 0.0;
                             final qty = double.tryParse(_quantityController.text) ?? 1.0;
+                            final messenger = ScaffoldMessenger.of(context);
+                            final router = GoRouter.of(context);
                             final success = await ref.read(reportingProvider.notifier).submitPriceReport(
                                   itemId: _selectedItem!.id,
                                   marketId: _selectedMarket!.id,
@@ -340,16 +342,16 @@ class _AddReportScreenState extends ConsumerState<AddReportScreen> {
                                   notes: _notesController.text.isNotEmpty ? _notesController.text : null,
                                 );
                             if (success && mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(
+                              messenger.showSnackBar(
                                 SnackBar(
                                   backgroundColor: const Color(0xFF232A16),
                                   content: Text(
                                     isAmharic ? 'ዋጋው በተሳካ ሁኔታ ተመዝግቧል!' : 'Price reported successfully!',
-                                    style: const TextStyle(color: Color(0xFFC7F33B), fontWeight: FontWeight.bold),
+                                    style: const TextStyle(color: Color(0xFFB2D15A), fontWeight: FontWeight.bold),
                                   ),
                                 ),
                               );
-                              context.pop();
+                              router.pop();
                             }
                           }
                         },
