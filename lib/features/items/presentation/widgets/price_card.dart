@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gebeya/core/constants/categories.dart';
 import 'package:gebeya/features/items/data/item_model.dart';
 import 'package:gebeya/features/items/data/price_aggregate_model.dart';
 import 'package:gebeya/features/items/presentation/items_provider.dart';
@@ -24,18 +23,18 @@ class PriceCard extends ConsumerWidget {
     final isDataSaver = ref.watch(dataSaverProvider);
 
     if (viewMode == ViewMode.grid && !isDataSaver) {
-      return _JijiGridCard(item: item, aggregate: aggregate);
+      return _KaloGridCard(item: item, aggregate: aggregate);
     }
-    return _JijiListCard(item: item, aggregate: aggregate);
+    return _KaloListCard(item: item, aggregate: aggregate);
   }
 }
 
-/// Jiji signature 2-column Product Card (overflow-free)
-class _JijiGridCard extends ConsumerWidget {
+/// Kalo Ultra-Sleek Dark 2-column Card
+class _KaloGridCard extends ConsumerWidget {
   final ItemModel item;
   final PriceAggregateModel? aggregate;
 
-  const _JijiGridCard({
+  const _KaloGridCard({
     required this.item,
     required this.aggregate,
   });
@@ -51,35 +50,18 @@ class _JijiGridCard extends ConsumerWidget {
     final isTelegram = item.listingSource != null &&
         (item.listingSource!.contains('t.me') || item.listingSource!.contains('telegram'));
 
-    // Idea 3: Local unit estimate (e.g. Tassa, Kubaya, Quintal, Jog)
-    String? localUnitEstimate;
-    if (median != null && item.supportedLocalUnits.isNotEmpty) {
-      final primaryUnit = item.supportedLocalUnits.first;
-      final unitPrice = median * primaryUnit.multiplier;
-      final unitName = isAmharic ? primaryUnit.nameAm : primaryUnit.nameEn;
-      localUnitEstimate = '≈ ${unitPrice >= 1000 ? "${(unitPrice / 1000).toStringAsFixed(1)}k" : unitPrice.toStringAsFixed(0)} ETB / $unitName';
-    }
-
-    // Idea 4: Market trend indicator (synthetic deterministic based on item id)
+    // Trend indicator
     final trendValue = (item.id.hashCode % 10) - 4; // -4% to +5%
-    final isTrendUp = trendValue > 0;
-    final isTrendStable = trendValue == 0;
+    final isTrendDown = trendValue < 0;
 
     return InkWell(
       onTap: () => context.push('/item/${item.id}'),
-      borderRadius: BorderRadius.circular(14),
+      borderRadius: BorderRadius.circular(20),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: const Color(0xFFE2E8F0)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.03),
-              blurRadius: 5,
-              offset: const Offset(0, 2),
-            ),
-          ],
+          color: const Color(0xFF16191E),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: const Color(0xFF262C36), width: 1),
         ),
         clipBehavior: Clip.antiAlias,
         child: Column(
@@ -99,25 +81,41 @@ class _JijiGridCard extends ConsumerWidget {
                     fit: BoxFit.cover,
                   ),
                 ),
-                // Badges (TOP / TELEGRAM / VERIFIED)
+                // Subtle gradient overlay for contrast
+                Positioned.fill(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Colors.black.withValues(alpha: 0.6),
+                          Colors.transparent,
+                          const Color(0xFF16191E).withValues(alpha: 0.8),
+                        ],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
+                    ),
+                  ),
+                ),
+                // Badges
                 Positioned(
-                  top: 6,
-                  left: 6,
+                  top: 8,
+                  left: 8,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       if (isTelegram)
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
                           decoration: BoxDecoration(
-                            color: const Color(0xFF0088CC),
-                            borderRadius: BorderRadius.circular(4),
+                            color: const Color(0xFF0284C7),
+                            borderRadius: BorderRadius.circular(6),
                           ),
                           child: const Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Icon(Icons.send_rounded, size: 9, color: Colors.white),
-                              SizedBox(width: 2),
+                              SizedBox(width: 3),
                               Text(
                                 'Telegram',
                                 style: TextStyle(
@@ -131,15 +129,16 @@ class _JijiGridCard extends ConsumerWidget {
                         )
                       else if (aggregate != null)
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
                           decoration: BoxDecoration(
-                            color: const Color(0xFF136A36),
-                            borderRadius: BorderRadius.circular(4),
+                            color: const Color(0xFF232A16),
+                            borderRadius: BorderRadius.circular(6),
+                            border: Border.all(color: const Color(0xFFC7F33B).withValues(alpha: 0.5)),
                           ),
                           child: Text(
                             isAmharic ? 'የገበያ ዋጋ' : 'VERIFIED',
                             style: const TextStyle(
-                              color: Colors.white,
+                              color: Color(0xFFC7F33B),
                               fontSize: 9,
                               fontWeight: FontWeight.bold,
                             ),
@@ -147,15 +146,16 @@ class _JijiGridCard extends ConsumerWidget {
                         )
                       else
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
                           decoration: BoxDecoration(
-                            color: const Color(0xFFD97706),
-                            borderRadius: BorderRadius.circular(4),
+                            color: const Color(0xFF3B250E),
+                            borderRadius: BorderRadius.circular(6),
+                            border: Border.all(color: const Color(0xFFF59E0B).withValues(alpha: 0.5)),
                           ),
                           child: Text(
                             isAmharic ? 'ሻጭ' : 'SELLER',
                             style: const TextStyle(
-                              color: Colors.white,
+                              color: Color(0xFFF59E0B),
                               fontSize: 9,
                               fontWeight: FontWeight.bold,
                             ),
@@ -166,21 +166,22 @@ class _JijiGridCard extends ConsumerWidget {
                 ),
                 // Favorite Button
                 Positioned(
-                  top: 6,
-                  right: 6,
+                  top: 8,
+                  right: 8,
                   child: InkWell(
                     onTap: () => ref.read(favoritesProvider.notifier).toggle(item.id),
                     borderRadius: BorderRadius.circular(20),
                     child: Container(
-                      padding: const EdgeInsets.all(4),
+                      padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.9),
+                        color: const Color(0xFF0C0E12).withValues(alpha: 0.8),
                         shape: BoxShape.circle,
+                        border: Border.all(color: const Color(0xFF262C36)),
                       ),
                       child: Icon(
                         isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
-                        size: 15,
-                        color: isFavorite ? const Color(0xFFE11D48) : const Color(0xFF64748B),
+                        size: 14,
+                        color: isFavorite ? const Color(0xFFF43F5E) : const Color(0xFF8E9BAE),
                       ),
                     ),
                   ),
@@ -188,10 +189,10 @@ class _JijiGridCard extends ConsumerWidget {
               ],
             ),
 
-            // Card Body (Expanded to prevent any bottom overflow)
+            // Card Body (Expanded to prevent any overflow)
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(8, 6, 8, 8),
+                padding: const EdgeInsets.fromLTRB(10, 8, 10, 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -204,15 +205,15 @@ class _JijiGridCard extends ConsumerWidget {
                         Text(
                           item.localizedName(isAmharic),
                           style: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF0F172A),
+                            fontSize: 13,
+                            fontWeight: FontWeight.w700,
+                            color: Color(0xFFF8FAFC),
                             height: 1.2,
                           ),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
-                        const SizedBox(height: 3),
+                        const SizedBox(height: 4),
                         if (median != null) ...[
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -225,18 +226,18 @@ class _JijiGridCard extends ConsumerWidget {
                                     ? '${(median / 1000).toStringAsFixed(0)}k'
                                     : median.toStringAsFixed(median.truncateToDouble() == median ? 0 : 1),
                                 style: const TextStyle(
-                                  fontSize: 15,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.w900,
-                                  color: Color(0xFF136A36),
+                                  color: Color(0xFFC7F33B), // Neon lime
                                 ),
                               ),
-                              const SizedBox(width: 2),
+                              const SizedBox(width: 3),
                               Text(
-                                ' ETB/$unit',
+                                'ETB/$unit',
                                 style: const TextStyle(
                                   fontSize: 9,
                                   fontWeight: FontWeight.w600,
-                                  color: Color(0xFF64748B),
+                                  color: Color(0xFF8E9BAE),
                                 ),
                               ),
                             ],
@@ -246,67 +247,53 @@ class _JijiGridCard extends ConsumerWidget {
                             isAmharic ? 'ዋጋ ገና የለም' : 'Price pending',
                             style: const TextStyle(
                               fontSize: 11,
-                              color: Color(0xFF94A3B8),
-                              fontWeight: FontWeight.w500,
+                              color: Color(0xFF566171),
+                              fontStyle: FontStyle.italic,
                             ),
-                          ),
-                        ],
-                        if (localUnitEstimate != null) ...[
-                          const SizedBox(height: 1),
-                          Text(
-                            localUnitEstimate,
-                            style: const TextStyle(
-                              fontSize: 9,
-                              fontWeight: FontWeight.w500,
-                              color: Color(0xFFD97706),
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
                           ),
                         ],
                       ],
                     ),
 
-                    // Location & Trend Footer
+                    // Location & Trend Indicator
                     Row(
                       children: [
-                        const Icon(Icons.location_on_rounded, size: 10, color: Color(0xFF94A3B8)),
+                        const Icon(
+                          Icons.location_on_rounded,
+                          size: 11,
+                          color: Color(0xFF566171),
+                        ),
                         const SizedBox(width: 2),
                         Expanded(
                           child: Text(
-                            selectedMarket?.localizedName(isAmharic) ?? (isAmharic ? 'መርካቶ' : 'Merkato'),
+                            selectedMarket != null
+                                ? selectedMarket.localizedName(isAmharic)
+                                : 'Addis Ababa',
                             style: const TextStyle(
                               fontSize: 10,
-                              color: Color(0xFF64748B),
+                              color: Color(0xFF8E9BAE),
                             ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
+                        // Trend tag (like Kalo ↓ 8% vs last week)
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+                          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1.5),
                           decoration: BoxDecoration(
-                            color: isTrendStable
-                                ? const Color(0xFFF1F5F9)
-                                : isTrendUp
-                                ? const Color(0xFFFEE2E2)
-                                : const Color(0xFFE8F5E9),
+                            color: isTrendDown
+                                ? const Color(0xFF232A16)
+                                : const Color(0xFF381A1A),
                             borderRadius: BorderRadius.circular(4),
                           ),
                           child: Text(
-                            isTrendStable
-                                ? '•'
-                                : isTrendUp
-                                ? '+$trendValue%'
-                                : '$trendValue%',
+                            '${isTrendDown ? "↓" : "↑"} ${trendValue.abs()}%',
                             style: TextStyle(
-                              fontSize: 8,
+                              fontSize: 9,
                               fontWeight: FontWeight.bold,
-                              color: isTrendStable
-                                  ? const Color(0xFF64748B)
-                                  : isTrendUp
-                                  ? const Color(0xFFDC2626)
-                                  : const Color(0xFF136A36),
+                              color: isTrendDown
+                                  ? const Color(0xFFC7F33B)
+                                  : const Color(0xFFF43F5E),
                             ),
                           ),
                         ),
@@ -323,12 +310,12 @@ class _JijiGridCard extends ConsumerWidget {
   }
 }
 
-/// Jiji List Card (compact for data-saver or list view preference)
-class _JijiListCard extends ConsumerWidget {
+/// Kalo Ultra-Sleek Dark List Item Card
+class _KaloListCard extends ConsumerWidget {
   final ItemModel item;
   final PriceAggregateModel? aggregate;
 
-  const _JijiListCard({
+  const _KaloListCard({
     required this.item,
     required this.aggregate,
   });
@@ -338,51 +325,45 @@ class _JijiListCard extends ConsumerWidget {
     final isAmharic = ref.watch(isAmharicProvider);
     final selectedMarket = ref.watch(selectedMarketProvider);
     final isFavorite = ref.watch(favoritesProvider).contains(item.id);
-    final isDataSaver = ref.watch(dataSaverProvider);
 
-    final isListing = aggregate == null && item.listingPrice != null;
     final median = aggregate?.medianPrice ?? item.listingPrice;
-    final count = aggregate?.reportCount ?? (isListing ? 1 : 0);
     final unit = item.localizedStandardUnit(isAmharic);
     final isTelegram = item.listingSource != null &&
         (item.listingSource!.contains('t.me') || item.listingSource!.contains('telegram'));
 
+    final trendValue = (item.id.hashCode % 10) - 4;
+    final isTrendDown = trendValue < 0;
+
     return InkWell(
       onTap: () => context.push('/item/${item.id}'),
-      borderRadius: BorderRadius.circular(14),
+      borderRadius: BorderRadius.circular(20),
       child: Container(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: const Color(0xFFE2E8F0)),
+          color: const Color(0xFF16191E),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: const Color(0xFF262C36), width: 1),
         ),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Thumbnail
             ClipRRect(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(14),
               child: SizedBox(
-                width: isDataSaver ? 52 : 72,
-                height: isDataSaver ? 52 : 76,
-                child: isDataSaver
-                    ? Container(
-                        color: const Color(0xFFE8F5E9),
-                        child: Icon(item.category.icon, color: const Color(0xFF136A36), size: 28),
-                      )
-                    : MarketImage(
-                        category: item.category,
-                        imageUrl: item.imageUrl,
-                        width: 72,
-                        height: 76,
-                        fit: BoxFit.cover,
-                      ),
+                width: 76,
+                height: 76,
+                child: MarketImage(
+                  category: item.category,
+                  imageUrl: item.imageUrl,
+                  width: 76,
+                  height: 76,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: 14),
 
-            // Item Details
+            // Middle info
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -395,99 +376,91 @@ class _JijiListCard extends ConsumerWidget {
                           style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
-                            color: Color(0xFF0F172A),
+                            color: Color(0xFFF8FAFC),
                           ),
-                          maxLines: 2,
+                          maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      InkWell(
-                        onTap: () => ref.read(favoritesProvider.notifier).toggle(item.id),
-                        child: Icon(
-                          isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
-                          size: 16,
-                          color: isFavorite ? const Color(0xFFE11D48) : const Color(0xFF94A3B8),
+                      if (isTelegram)
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF0284C7),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: const Text('Telegram', style: TextStyle(color: Colors.white, fontSize: 8, fontWeight: FontWeight.bold)),
                         ),
-                      ),
                     ],
                   ),
                   const SizedBox(height: 4),
                   Row(
                     children: [
-                      if (isTelegram)
-                        Container(
-                          margin: const EdgeInsets.only(right: 6),
-                          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFF0088CC).withValues(alpha: 0.12),
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          child: const Text(
-                            'Telegram',
-                            style: TextStyle(fontSize: 10, color: Color(0xFF0088CC), fontWeight: FontWeight.bold),
-                          ),
-                        ),
+                      const Icon(Icons.location_on_rounded, size: 12, color: Color(0xFF566171)),
+                      const SizedBox(width: 3),
                       Text(
-                        isAmharic ? item.category.nameAm(context) : item.category.nameEn(context),
-                        style: const TextStyle(fontSize: 11, color: Color(0xFF64748B)),
+                        selectedMarket != null ? selectedMarket.localizedName(isAmharic) : 'Addis Ababa',
+                        style: const TextStyle(fontSize: 11, color: Color(0xFF8E9BAE)),
                       ),
-                      if (count > 0) ...[
-                        const Text(' • ', style: TextStyle(color: Color(0xFFCBD5E1), fontSize: 11)),
-                        Text(
-                          isAmharic ? '$count ሪፖርቶች' : '$count reports',
-                          style: const TextStyle(fontSize: 10, color: Color(0xFF94A3B8)),
-                        ),
-                      ],
                     ],
                   ),
                   const SizedBox(height: 6),
-                  Row(
-                    children: [
-                      const Icon(Icons.location_on_rounded, size: 11, color: Color(0xFF94A3B8)),
-                      const SizedBox(width: 2),
-                      Text(
-                        selectedMarket?.localizedName(isAmharic) ?? 'Addis Ababa',
-                        style: const TextStyle(fontSize: 11, color: Color(0xFF64748B)),
-                      ),
-                    ],
-                  ),
+                  if (median != null)
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.baseline,
+                      textBaseline: TextBaseline.alphabetic,
+                      children: [
+                        Text(
+                          median >= 1000000
+                              ? '${(median / 1000000).toStringAsFixed(1)}M'
+                              : '${median.toStringAsFixed(median.truncateToDouble() == median ? 0 : 1)} ETB',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w900,
+                            color: Color(0xFFC7F33B),
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          '/$unit',
+                          style: const TextStyle(fontSize: 10, color: Color(0xFF8E9BAE), fontWeight: FontWeight.w600),
+                        ),
+                      ],
+                    ),
                 ],
               ),
             ),
 
-            const SizedBox(width: 8),
-
-            // Price Column
+            // Right Action & Trend
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                if (median != null) ...[
-                  Text(
-                    median >= 1000000
-                        ? '${(median / 1000000).toStringAsFixed(1)}M'
-                        : median >= 100000
-                        ? '${(median / 1000).toStringAsFixed(0)}k'
-                        : median.toStringAsFixed(median.truncateToDouble() == median ? 0 : 1),
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w900,
-                      color: Color(0xFF136A36),
-                    ),
+                IconButton(
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),
+                  icon: Icon(
+                    isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
+                    size: 18,
+                    color: isFavorite ? const Color(0xFFF43F5E) : const Color(0xFF566171),
                   ),
-                  Text(
-                    'ETB / $unit',
-                    style: const TextStyle(
+                  onPressed: () => ref.read(favoritesProvider.notifier).toggle(item.id),
+                ),
+                const SizedBox(height: 16),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  decoration: BoxDecoration(
+                    color: isTrendDown ? const Color(0xFF232A16) : const Color(0xFF381A1A),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Text(
+                    '${isTrendDown ? "↓" : "↑"} ${trendValue.abs()}%',
+                    style: TextStyle(
                       fontSize: 10,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFF64748B),
+                      fontWeight: FontWeight.bold,
+                      color: isTrendDown ? const Color(0xFFC7F33B) : const Color(0xFFF43F5E),
                     ),
                   ),
-                ] else ...[
-                  Text(
-                    isAmharic ? 'ዋጋ ገና የለም' : 'Pending',
-                    style: const TextStyle(fontSize: 11, color: Color(0xFF94A3B8)),
-                  ),
-                ],
+                ),
               ],
             ),
           ],

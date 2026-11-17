@@ -113,13 +113,13 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
     }
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F7F2),
+      backgroundColor: const Color(0xFF0C0E12),
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: const Color(0xFF0C0E12),
         elevation: 0,
         title: Text(
           item.localizedName(isAmharic),
-          style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Color(0xFF1E293B)),
+          style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Color(0xFFF8FAFC)),
         ),
         actions: [
           // Favorite button
@@ -127,14 +127,14 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
             tooltip: isFavorite ? 'Remove from saved' : 'Save item',
             icon: Icon(
               isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
-              color: isFavorite ? const Color(0xFFE11D48) : const Color(0xFF64748B),
+              color: isFavorite ? const Color(0xFFF43F5E) : const Color(0xFF8E9BAE),
             ),
             onPressed: () => ref.read(favoritesProvider.notifier).toggle(item.id),
           ),
           // Share to Telegram button (Idea 5)
           IconButton(
             tooltip: isAmharic ? 'ለቴሌግራም አጋራ' : 'Share to Telegram',
-            icon: const Icon(Icons.send_rounded, color: Color(0xFF0088CC)),
+            icon: const Icon(Icons.send_rounded, color: Color(0xFF38BDF8)),
             onPressed: () => _shareToTelegram(
               item,
               effectivePrice,
@@ -150,12 +150,12 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // JIJI Style Large Photo Showcase Card
+            // Kalo Style Dark Large Photo Showcase Card
             Container(
               decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: const Color(0xFFE5E7EB)),
+                color: const Color(0xFF16191E),
+                borderRadius: BorderRadius.circular(24),
+                border: Border.all(color: const Color(0xFF262C36)),
               ),
               clipBehavior: Clip.antiAlias,
               child: Column(
@@ -199,12 +199,13 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                               Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                                 decoration: BoxDecoration(
-                                  color: const Color(0xFF136A36),
+                                  color: const Color(0xFF232A16),
                                   borderRadius: BorderRadius.circular(6),
+                                  border: Border.all(color: const Color(0xFFC7F33B).withValues(alpha: 0.5)),
                                 ),
                                 child: Text(
                                   isAmharic ? 'የተረጋገጠ የገበያ ዋጋ' : 'Verified Market Price',
-                                  style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
+                                  style: const TextStyle(color: Color(0xFFC7F33B), fontSize: 10, fontWeight: FontWeight.bold),
                                 ),
                               ),
                           ],
@@ -219,7 +220,7 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                       children: [
                         Text(
                           item.localizedName(isAmharic),
-                          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF1E293B)),
+                          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFFF8FAFC)),
                         ),
                         const SizedBox(height: 8),
                         // Price Banner
@@ -234,13 +235,13 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                               style: const TextStyle(
                                 fontSize: 30,
                                 fontWeight: FontWeight.w900,
-                                color: Color(0xFF136A36),
+                                color: Color(0xFFC7F33B),
                               ),
                             ),
                             const SizedBox(width: 4),
                             Text(
                               '/ $unit',
-                              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Color(0xFF64748B)),
+                              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Color(0xFF8E9BAE)),
                             ),
                           ],
                         ),
@@ -250,25 +251,25 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                             isAmharic
                                 ? 'የዋጋ ክልል፡ ${minPrice.toStringAsFixed(0)} - ${maxPrice.toStringAsFixed(0)} ETB'
                                 : 'Market range: ${minPrice.toStringAsFixed(0)} - ${maxPrice.toStringAsFixed(0)} ETB',
-                            style: const TextStyle(fontSize: 12, color: Color(0xFF64748B)),
+                            style: const TextStyle(fontSize: 12, color: Color(0xFF8E9BAE)),
                           ),
                         const SizedBox(height: 12),
-                        const Divider(height: 1),
+                        const Divider(height: 1, color: Color(0xFF262C36)),
                         const SizedBox(height: 12),
                         // Location & Freshness row
                         Row(
                           children: [
-                            const Icon(Icons.location_on_rounded, size: 16, color: Color(0xFF136A36)),
+                            const Icon(Icons.location_on_rounded, size: 16, color: Color(0xFFC7F33B)),
                             const SizedBox(width: 4),
                             Text(
                               selectedMarket?.localizedName(isAmharic) ?? 'Addis Ababa',
-                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Color(0xFF1E293B)),
+                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Color(0xFFF8FAFC)),
                             ),
                             const Spacer(),
                             if (aggregate?.lastReportedAt != null)
                               Text(
                                 RelativeTime.format(aggregate!.lastReportedAt, isAmharic: isAmharic),
-                                style: const TextStyle(fontSize: 12, color: Color(0xFF64748B)),
+                                style: const TextStyle(fontSize: 12, color: Color(0xFF8E9BAE)),
                               ),
                           ],
                         ),
@@ -284,20 +285,20 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: const Color(0xFFE5E7EB)),
+                color: const Color(0xFF16191E),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: const Color(0xFF262C36)),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
-                      const Icon(Icons.storefront_rounded, size: 20, color: Color(0xFF136A36)),
+                      const Icon(Icons.storefront_rounded, size: 20, color: Color(0xFFC7F33B)),
                       const SizedBox(width: 8),
                       Text(
                         isAmharic ? 'የአዲስ አበባ ገበያዎች ንጽጽር' : 'Addis Ababa Markets Comparison',
-                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF1E293B)),
+                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFFF8FAFC)),
                       ),
                     ],
                   ),
@@ -306,14 +307,14 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                     isAmharic
                         ? 'በየትኛው ገበያ ርካሽ እንደሆነ ይመልከቱ (ለመቀየር ገበያውን ይጫኑ)'
                         : 'See which market offers the best price (Tap to switch)',
-                    style: const TextStyle(fontSize: 12, color: Color(0xFF64748B)),
+                    style: const TextStyle(fontSize: 12, color: Color(0xFF8E9BAE)),
                   ),
                   const SizedBox(height: 12),
                   comparisonAsync.when(
                     data: (comparison) {
                       final allMarkets = marketsAsync.valueOrNull ?? [];
                       if (comparison.isEmpty || allMarkets.isEmpty) {
-                        return const Text('Comparison not available');
+                        return const Text('Comparison not available', style: TextStyle(color: Color(0xFF8E9BAE)));
                       }
                       // Find minimum price
                       double minP = double.infinity;
@@ -337,10 +338,10 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                               margin: const EdgeInsets.symmetric(vertical: 4),
                               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                               decoration: BoxDecoration(
-                                color: isCurrent ? const Color(0xFFE8F5E9) : const Color(0xFFF8FAFC),
+                                color: isCurrent ? const Color(0xFF232A16) : const Color(0xFF1E232B),
                                 borderRadius: BorderRadius.circular(10),
                                 border: Border.all(
-                                  color: isCurrent ? const Color(0xFF136A36) : const Color(0xFFE2E8F0),
+                                  color: isCurrent ? const Color(0xFFC7F33B) : const Color(0xFF262C36),
                                   width: isCurrent ? 1.5 : 1,
                                 ),
                               ),
@@ -349,7 +350,7 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                                   Icon(
                                     isCurrent ? Icons.radio_button_checked_rounded : Icons.radio_button_off_rounded,
                                     size: 16,
-                                    color: isCurrent ? const Color(0xFF136A36) : const Color(0xFF94A3B8),
+                                    color: isCurrent ? const Color(0xFFC7F33B) : const Color(0xFF566171),
                                   ),
                                   const SizedBox(width: 8),
                                   Expanded(
@@ -361,12 +362,12 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                                           style: TextStyle(
                                             fontWeight: isCurrent ? FontWeight.bold : FontWeight.w600,
                                             fontSize: 13,
-                                            color: const Color(0xFF1E293B),
+                                            color: const Color(0xFFF8FAFC),
                                           ),
                                         ),
                                         Text(
                                           market.subcity ?? '',
-                                          style: const TextStyle(fontSize: 11, color: Color(0xFF64748B)),
+                                          style: const TextStyle(fontSize: 11, color: Color(0xFF8E9BAE)),
                                         ),
                                       ],
                                     ),
@@ -379,19 +380,19 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 14,
-                                          color: isCheapest ? const Color(0xFF136A36) : const Color(0xFF1E293B),
+                                          color: isCheapest ? const Color(0xFFC7F33B) : const Color(0xFFF8FAFC),
                                         ),
                                       ),
                                       if (isCheapest)
                                         Container(
                                           padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
                                           decoration: BoxDecoration(
-                                            color: const Color(0xFF136A36),
+                                            color: const Color(0xFFC7F33B),
                                             borderRadius: BorderRadius.circular(4),
                                           ),
                                           child: Text(
                                             isAmharic ? '💰 በጣም ርካሽ' : '💰 Best Price',
-                                            style: const TextStyle(color: Colors.white, fontSize: 9, fontWeight: FontWeight.bold),
+                                            style: const TextStyle(color: Color(0xFF0C0E12), fontSize: 9, fontWeight: FontWeight.bold),
                                           ),
                                         ),
                                     ],
@@ -403,7 +404,7 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                         }).toList(),
                       );
                     },
-                    loading: () => const Center(child: Padding(padding: EdgeInsets.all(12), child: CircularProgressIndicator())),
+                    loading: () => const Center(child: Padding(padding: EdgeInsets.all(12), child: CircularProgressIndicator(color: Color(0xFFC7F33B)))),
                     error: (_, _) => const SizedBox.shrink(),
                   ),
                 ],
@@ -416,20 +417,20 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: const Color(0xFFE5E7EB)),
+                  color: const Color(0xFF16191E),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: const Color(0xFF262C36)),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
-                        const Icon(Icons.balance_rounded, size: 20, color: Color(0xFFD97706)),
+                        const Icon(Icons.balance_rounded, size: 20, color: Color(0xFFF59E0B)),
                         const SizedBox(width: 8),
                         Text(
                           isAmharic ? 'የኢትዮጵያ የገበያ መለኪያዎችና አስሊ' : 'Ethiopian Market Unit Calculator',
-                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF1E293B)),
+                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFFF8FAFC)),
                         ),
                       ],
                     ),
@@ -438,7 +439,7 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                       isAmharic
                           ? 'እንደ ጣሳ፣ ኩባያ፣ ኩንታል፣ ወይም ጆግ ያሉ ባህላዊ መለኪያዎችን አስላ'
                           : 'Calculate prices for traditional units (Tassa, Kubaya, Quintal, Jog)',
-                      style: const TextStyle(fontSize: 12, color: Color(0xFF64748B)),
+                      style: const TextStyle(fontSize: 12, color: Color(0xFF8E9BAE)),
                     ),
                     const SizedBox(height: 12),
                     // Unit Selection Chips
@@ -449,11 +450,12 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                         final isSel = _selectedUnit?.unitKey == lu.unitKey;
                         return ChoiceChip(
                           selected: isSel,
-                          selectedColor: const Color(0xFFFEF3C7),
+                          selectedColor: const Color(0xFFC7F33B),
+                          backgroundColor: const Color(0xFF1E232B),
                           label: Text(
                             isAmharic ? lu.nameAm : lu.nameEn,
                             style: TextStyle(
-                              color: isSel ? const Color(0xFFB45309) : const Color(0xFF475569),
+                              color: isSel ? const Color(0xFF0C0E12) : const Color(0xFF8E9BAE),
                               fontWeight: isSel ? FontWeight.bold : FontWeight.w500,
                             ),
                           ),
@@ -470,9 +472,9 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                       Container(
                         padding: const EdgeInsets.all(14),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFFFFBEB),
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(color: const Color(0xFFFDE68A)),
+                          color: const Color(0xFF281C0B),
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(color: const Color(0xFFF59E0B).withValues(alpha: 0.4)),
                         ),
                         child: Column(
                           children: [
@@ -483,42 +485,42 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                                   isAmharic
                                       ? 'ብዛት (${_selectedUnit!.nameAm})'
                                       : 'Quantity (${_selectedUnit!.nameEn})',
-                                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Color(0xFFF8FAFC)),
                                 ),
                                 Row(
                                   children: [
                                     IconButton(
-                                      icon: const Icon(Icons.remove_circle_outline_rounded, color: Color(0xFFD97706)),
+                                      icon: const Icon(Icons.remove_circle_outline_rounded, color: Color(0xFFF59E0B)),
                                       onPressed: _unitQty > 1
                                           ? () => setState(() => _unitQty -= 1)
                                           : null,
                                     ),
                                     Text(
                                       _unitQty.toStringAsFixed(0),
-                                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color(0xFFF8FAFC)),
                                     ),
                                     IconButton(
-                                      icon: const Icon(Icons.add_circle_outline_rounded, color: Color(0xFFD97706)),
+                                      icon: const Icon(Icons.add_circle_outline_rounded, color: Color(0xFFF59E0B)),
                                       onPressed: () => setState(() => _unitQty += 1),
                                     ),
                                   ],
                                 ),
                               ],
                             ),
-                            const Divider(),
+                            const Divider(color: Color(0xFF38230D)),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
                                   '${_unitQty.toStringAsFixed(0)} ${_selectedUnit!.nameAm} ≈ ${(_unitQty * _selectedUnit!.multiplier).toStringAsFixed(2)} $unit',
-                                  style: const TextStyle(fontSize: 12, color: Color(0xFF64748B)),
+                                  style: const TextStyle(fontSize: 12, color: Color(0xFF8E9BAE)),
                                 ),
                                 Text(
                                   '${(_unitQty * _selectedUnit!.multiplier * effectivePrice).toStringAsFixed(0)} ETB',
                                   style: const TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w900,
-                                    color: Color(0xFF136A36),
+                                    color: Color(0xFFC7F33B),
                                   ),
                                 ),
                               ],
@@ -538,9 +540,9 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: const Color(0xFFE5E7EB)),
+                  color: const Color(0xFF16191E),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: const Color(0xFF262C36)),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -550,23 +552,24 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                       children: [
                         Row(
                           children: [
-                            const Icon(Icons.insights_rounded, size: 20, color: Color(0xFF136A36)),
+                            const Icon(Icons.insights_rounded, size: 20, color: Color(0xFFC7F33B)),
                             const SizedBox(width: 8),
                             Text(
                               isAmharic ? 'የ30 ቀናት የዋጋ እንቅስቃሴ' : '30-Day Price Trend',
-                              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF1E293B)),
+                              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFFF8FAFC)),
                             ),
                           ],
                         ),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                           decoration: BoxDecoration(
-                            color: const Color(0xFFE8F5E9),
-                            borderRadius: BorderRadius.circular(4),
+                            color: const Color(0xFF232A16),
+                            borderRadius: BorderRadius.circular(6),
+                            border: Border.all(color: const Color(0xFFC7F33B).withValues(alpha: 0.5)),
                           ),
                           child: const Text(
                             'WAGA INDEX',
-                            style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Color(0xFF136A36)),
+                            style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Color(0xFFC7F33B)),
                           ),
                         ),
                       ],
@@ -575,14 +578,14 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                     SizedBox(
                       height: 180,
                       child: _loadingHistory
-                          ? const Center(child: CircularProgressIndicator(color: Color(0xFF136A36)))
+                          ? const Center(child: CircularProgressIndicator(color: Color(0xFFC7F33B)))
                           : LineChart(
                               LineChartData(
                                 gridData: FlGridData(
                                   show: true,
                                   drawVerticalLine: false,
                                   getDrawingHorizontalLine: (value) => FlLine(
-                                    color: Colors.grey.shade100,
+                                    color: const Color(0xFF262C36),
                                     strokeWidth: 1,
                                   ),
                                 ),
@@ -605,7 +608,7 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                                         }
                                         return Text(
                                           text,
-                                          style: TextStyle(color: Colors.grey.shade400, fontSize: 10),
+                                          style: const TextStyle(color: Color(0xFF566171), fontSize: 10),
                                         );
                                       },
                                     ),
@@ -622,12 +625,12 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                                       );
                                     }).toList(),
                                     isCurved: true,
-                                    color: const Color(0xFF136A36),
+                                    color: const Color(0xFFC7F33B),
                                     barWidth: 3,
                                     dotData: const FlDotData(show: false),
                                     belowBarData: BarAreaData(
                                       show: true,
-                                      color: const Color(0xFF136A36).withValues(alpha: 0.12),
+                                      color: const Color(0xFFC7F33B).withValues(alpha: 0.15),
                                     ),
                                   ),
                                 ],
@@ -645,26 +648,26 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: const Color(0xFFE5E7EB)),
+                  color: const Color(0xFF16191E),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: const Color(0xFF262C36)),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
-                        const Icon(Icons.info_outline_rounded, size: 20, color: Color(0xFF0088CC)),
+                        const Icon(Icons.info_outline_rounded, size: 20, color: Color(0xFF38BDF8)),
                         const SizedBox(width: 8),
                         Text(
                           isAmharic ? 'የእቃውና የሻጩ መረጃ' : 'Listing & Verification Details',
-                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF1E293B)),
+                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFFF8FAFC)),
                         ),
                       ],
                     ),
                     if (item.listingNote != null) ...[
                       const SizedBox(height: 8),
-                      Text(item.listingNote!, style: const TextStyle(fontSize: 13, color: Color(0xFF475569))),
+                      Text(item.listingNote!, style: const TextStyle(fontSize: 13, color: Color(0xFF8E9BAE))),
                     ],
                     if (item.listingSource != null) ...[
                       const SizedBox(height: 12),
@@ -673,9 +676,9 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                           Expanded(
                             child: OutlinedButton.icon(
                               style: OutlinedButton.styleFrom(
-                                foregroundColor: const Color(0xFF0088CC),
-                                side: const BorderSide(color: Color(0xFF0088CC)),
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                foregroundColor: const Color(0xFF38BDF8),
+                                side: const BorderSide(color: Color(0xFF38BDF8)),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                               ),
                               icon: const Icon(Icons.send_rounded, size: 16),
                               label: Text(
@@ -706,15 +709,15 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
               height: 52,
               child: ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF136A36),
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  backgroundColor: const Color(0xFFC7F33B),
+                  foregroundColor: const Color(0xFF0C0E12),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                   elevation: 0,
                 ),
                 icon: const Icon(Icons.rate_review_outlined),
                 label: Text(
                   isAmharic ? 'የገዙበትን ዋጋ ያስመዝግቡ' : 'Report What You Paid',
-                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w900),
                 ),
                 onPressed: () => context.push('/report?itemId=${item.id}'),
               ),

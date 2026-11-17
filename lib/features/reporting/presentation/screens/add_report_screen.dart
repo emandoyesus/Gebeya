@@ -84,8 +84,14 @@ class _AddReportScreenState extends ConsumerState<AddReportScreen> {
     final standardUnit = _selectedItem?.localizedStandardUnit(isAmharic) ?? 'kg';
 
     return Scaffold(
+      backgroundColor: const Color(0xFF0C0E12),
       appBar: AppBar(
-        title: Text(isAmharic ? 'ዋጋ ያስመዝግቡ' : 'Submit Price Report'),
+        backgroundColor: const Color(0xFF0C0E12),
+        elevation: 0,
+        title: Text(
+          isAmharic ? 'ዋጋ ያስመዝግቡ' : 'Submit Price Report',
+          style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFFF8FAFC)),
+        ),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
@@ -96,25 +102,22 @@ class _AddReportScreenState extends ConsumerState<AddReportScreen> {
             children: [
               // Notice banner
               Container(
-                padding: const EdgeInsets.all(12),
+                padding: const EdgeInsets.all(14),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFE8F5E9),
-                  borderRadius: BorderRadius.circular(12),
+                  color: const Color(0xFF16191E),
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: const Color(0xFF262C36)),
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.shield_outlined, color: Color(0xFF136A36), size: 20),
-                    const SizedBox(width: 10),
+                    const Icon(Icons.verified_user_rounded, color: Color(0xFFC7F33B), size: 24),
+                    const SizedBox(width: 12),
                     Expanded(
                       child: Text(
                         isAmharic
-                            ? 'የእርስዎ ሪፖርት ማህበረሰቡ ትክክለኛውን የገበያ ዋጋ እንዲያውቅ ይረዳል!'
-                            : 'Your report helps the community know the fair market price!',
-                        style: const TextStyle(
-                          color: Color(0xFF136A36),
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                        ),
+                            ? 'የእርስዎ ሪፖርት ሌሎች ሸማቾች ትክክለኛውን ዋጋ እንዲያውቁ ይረዳል'
+                            : 'Your report helps fellow Ethiopians track fair prices',
+                        style: const TextStyle(fontSize: 13, color: Color(0xFF8E9BAE)),
                       ),
                     ),
                   ],
@@ -122,20 +125,23 @@ class _AddReportScreenState extends ConsumerState<AddReportScreen> {
               ),
               const SizedBox(height: 20),
 
-              // Item Selector
-              Text(
-                isAmharic ? 'የእቃው አይነት' : 'Item',
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-              ),
-              const SizedBox(height: 6),
+              // Item Dropdown
+              Text(isAmharic ? 'የእቃው ስም' : 'Select Item', style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFFF8FAFC))),
+              const SizedBox(height: 8),
               DropdownButtonFormField<ItemModel>(
-                isExpanded: true,
                 value: _selectedItem,
-                decoration: _inputDecoration(),
+                dropdownColor: const Color(0xFF16191E),
+                style: const TextStyle(color: Color(0xFFF8FAFC)),
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: const Color(0xFF16191E),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: const BorderSide(color: Color(0xFF262C36))),
+                  enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: const BorderSide(color: Color(0xFF262C36))),
+                ),
                 items: items.map((item) {
-                  return DropdownMenuItem<ItemModel>(
+                  return DropdownMenuItem(
                     value: item,
-                    child: Text(item.localizedName(isAmharic), maxLines: 2, overflow: TextOverflow.ellipsis),
+                    child: Text(item.localizedName(isAmharic), style: const TextStyle(color: Color(0xFFF8FAFC))),
                   );
                 }).toList(),
                 onChanged: (val) {
@@ -148,50 +154,62 @@ class _AddReportScreenState extends ConsumerState<AddReportScreen> {
               ),
               const SizedBox(height: 16),
 
-              // Market Selector
-              Text(
-                isAmharic ? 'የገበያ ቦታ' : 'Market',
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-              ),
-              const SizedBox(height: 6),
+              // Market Dropdown
+              Text(isAmharic ? 'የገዙበት ገበያ' : 'Market Location', style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFFF8FAFC))),
+              const SizedBox(height: 8),
               DropdownButtonFormField<MarketModel>(
                 value: _selectedMarket,
-                decoration: _inputDecoration(),
-                items: markets.map((market) {
-                  return DropdownMenuItem<MarketModel>(
-                    value: market,
-                    child: Text(market.localizedName(isAmharic)),
+                dropdownColor: const Color(0xFF16191E),
+                style: const TextStyle(color: Color(0xFFF8FAFC)),
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: const Color(0xFF16191E),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: const BorderSide(color: Color(0xFF262C36))),
+                  enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: const BorderSide(color: Color(0xFF262C36))),
+                ),
+                items: markets.map((m) {
+                  return DropdownMenuItem(
+                    value: m,
+                    child: Text(m.localizedName(isAmharic), style: const TextStyle(color: Color(0xFFF8FAFC))),
                   );
                 }).toList(),
-                onChanged: (val) {
-                  setState(() {
-                    _selectedMarket = val;
-                  });
-                },
+                onChanged: (val) => setState(() => _selectedMarket = val),
               ),
               const SizedBox(height: 16),
 
-              // Unit Selector (supports Tassa, Kubaya, Quintal, etc.)
-              Text(
-                isAmharic ? 'የገዙበት መለኪያ' : 'Unit of Purchase',
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-              ),
-              const SizedBox(height: 6),
+              // Unit Selector
+              Text(isAmharic ? 'የመለኪያ ዓይነት' : 'Unit Type', style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFFF8FAFC))),
+              const SizedBox(height: 8),
               DropdownButtonFormField<String>(
                 value: _selectedUnit,
-                decoration: _inputDecoration(),
+                dropdownColor: const Color(0xFF16191E),
+                style: const TextStyle(color: Color(0xFFF8FAFC)),
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: const Color(0xFF16191E),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: const BorderSide(color: Color(0xFF262C36))),
+                  enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: const BorderSide(color: Color(0xFF262C36))),
+                ),
                 items: [
                   DropdownMenuItem(
                     value: 'standard',
                     child: Text(
-                      '${isAmharic ? "መደበኛ" : "Standard"} ($standardUnit)',
+                      isAmharic
+                          ? 'መደበኛ ($standardUnit)'
+                          : 'Standard ($standardUnit)',
+                      style: const TextStyle(color: Color(0xFFF8FAFC)),
                     ),
                   ),
                   if (_selectedItem != null)
                     ..._selectedItem!.supportedLocalUnits.map((lu) {
                       return DropdownMenuItem(
                         value: lu.unitKey,
-                        child: Text('${isAmharic ? lu.nameAm : lu.nameEn} (≈ ${lu.multiplier} $standardUnit)'),
+                        child: Text(
+                          isAmharic
+                              ? '${lu.nameAm} (${lu.multiplier} $standardUnit)'
+                              : '${lu.nameEn} (${lu.multiplier} $standardUnit)',
+                          style: const TextStyle(color: Color(0xFFF8FAFC)),
+                        ),
                       );
                     }),
                 ],
@@ -202,38 +220,42 @@ class _AddReportScreenState extends ConsumerState<AddReportScreen> {
                     if (val == 'standard') {
                       _unitMultiplier = 1.0;
                     } else {
-                      final found = _selectedItem?.supportedLocalUnits.firstWhere(
-                        (u) => u.unitKey == val,
-                        orElse: () => LocalUnitInfo(unitKey: val, nameAm: val, nameEn: val, multiplier: 1.0),
-                      );
-                      _unitMultiplier = found?.multiplier ?? 1.0;
+                      final lu = _selectedItem?.supportedLocalUnits
+                          .firstWhere((u) => u.unitKey == val);
+                      _unitMultiplier = lu?.multiplier ?? 1.0;
                     }
                   });
                 },
               ),
               const SizedBox(height: 16),
 
-              // Quantity & Total Price Paid
+              // Price Paid & Quantity Row
               Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
                     flex: 2,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          isAmharic ? 'መጠን' : 'Quantity',
-                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                        ),
-                        const SizedBox(height: 6),
+                        Text(isAmharic ? 'የከፈሉት ጠቅላላ ዋጋ (ETB)' : 'Total Price Paid (ETB)', style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFFF8FAFC))),
+                        const SizedBox(height: 8),
                         TextFormField(
-                          controller: _quantityController,
+                          controller: _priceController,
                           keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                          decoration: _inputDecoration(hint: '1'),
+                          style: const TextStyle(color: Color(0xFFF8FAFC)),
+                          decoration: InputDecoration(
+                            hintText: '0.00',
+                            hintStyle: const TextStyle(color: Color(0xFF566171)),
+                            prefixText: 'ETB ',
+                            prefixStyle: const TextStyle(color: Color(0xFFC7F33B), fontWeight: FontWeight.bold),
+                            filled: true,
+                            fillColor: const Color(0xFF16191E),
+                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: const BorderSide(color: Color(0xFF262C36))),
+                            enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: const BorderSide(color: Color(0xFF262C36))),
+                          ),
                           validator: (val) {
-                            if (val == null || val.isEmpty) return 'Required';
-                            if (double.tryParse(val) == null) return 'Invalid';
+                            if (val == null || val.isEmpty) return 'Please enter price';
+                            if (double.tryParse(val) == null) return 'Enter valid number';
                             return null;
                           },
                           onChanged: (_) => setState(() {}),
@@ -243,25 +265,21 @@ class _AddReportScreenState extends ConsumerState<AddReportScreen> {
                   ),
                   const SizedBox(width: 12),
                   Expanded(
-                    flex: 3,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          isAmharic ? 'የከፈሉት ዋጋ (ብር)' : 'Price Paid (ETB)',
-                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                        ),
-                        const SizedBox(height: 6),
+                        Text(isAmharic ? 'ብዛት' : 'Quantity', style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFFF8FAFC))),
+                        const SizedBox(height: 8),
                         TextFormField(
-                          controller: _priceController,
+                          controller: _quantityController,
                           keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                          decoration: _inputDecoration(hint: 'e.g. 150', suffix: 'ETB'),
-                          validator: (val) {
-                            if (val == null || val.isEmpty) return 'Required';
-                            final parsed = double.tryParse(val);
-                            if (parsed == null || parsed <= 0) return 'Invalid price';
-                            return null;
-                          },
+                          style: const TextStyle(color: Color(0xFFF8FAFC)),
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: const Color(0xFF16191E),
+                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: const BorderSide(color: Color(0xFF262C36))),
+                            enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: const BorderSide(color: Color(0xFF262C36))),
+                          ),
                           onChanged: (_) => setState(() {}),
                         ),
                       ],
@@ -271,49 +289,29 @@ class _AddReportScreenState extends ConsumerState<AddReportScreen> {
               ),
               const SizedBox(height: 16),
 
-              // Live Standardized Price Preview Card
-              if (_calculatedPricePerStandardUnit > 0)
+              // Computed standard unit conversion pill
+              if (_selectedUnit != 'standard' && _priceController.text.isNotEmpty)
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF1F8E9),
+                    color: const Color(0xFF232A16),
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: const Color(0xFFC8E6C9)),
+                    border: Border.all(color: const Color(0xFFC7F33B).withValues(alpha: 0.5)),
                   ),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      const Icon(Icons.calculate_rounded, color: Color(0xFFC7F33B), size: 20),
+                      const SizedBox(width: 8),
                       Text(
-                        isAmharic ? 'የ1 $standardUnit ዋጋ፡' : 'Price per $standardUnit:',
-                        style: const TextStyle(fontSize: 13, color: Color(0xFF2E7D32)),
-                      ),
-                      Text(
-                        '${_calculatedPricePerStandardUnit.toStringAsFixed(1)} ETB / $standardUnit',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF1B5E20),
-                        ),
+                        isAmharic
+                            ? 'በመደበኛ መለኪያ፡ ≈ ${_calculatedPricePerStandardUnit.toStringAsFixed(1)} ETB / $standardUnit'
+                            : 'Standard equivalent: ≈ ${_calculatedPricePerStandardUnit.toStringAsFixed(1)} ETB / $standardUnit',
+                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Color(0xFFC7F33B)),
                       ),
                     ],
                   ),
                 ),
-              const SizedBox(height: 16),
-
-              // Optional Notes
-              Text(
-                isAmharic ? 'ተጨማሪ ማስታወሻ (አማራጭ)' : 'Notes (optional)',
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-              ),
-              const SizedBox(height: 6),
-              TextFormField(
-                controller: _notesController,
-                maxLines: 2,
-                decoration: _inputDecoration(
-                  hint: isAmharic ? 'ለምሳሌ፡ በጣም ጥራት ያለው' : 'e.g. High quality, fresh stock',
-                ),
-              ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 24),
 
               // Submit Button
               SizedBox(
@@ -321,79 +319,51 @@ class _AddReportScreenState extends ConsumerState<AddReportScreen> {
                 height: 52,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF136A36),
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
-                    ),
+                    backgroundColor: const Color(0xFFC7F33B),
+                    foregroundColor: const Color(0xFF0C0E12),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                    elevation: 0,
                   ),
                   onPressed: reportingState.isLoading
                       ? null
                       : () async {
-                          if (!_formKey.currentState!.validate()) return;
-                          if (_selectedItem == null || _selectedMarket == null) return;
-
-                          final success = await ref
-                              .read(reportingProvider.notifier)
-                              .submitPriceReport(
-                                itemId: _selectedItem!.id,
-                                marketId: _selectedMarket!.id,
-                                totalPrice: double.parse(_priceController.text),
-                                quantity: double.parse(_quantityController.text),
-                                unit: _selectedUnit,
-                                pricePerStandardUnit: _calculatedPricePerStandardUnit,
-                                notes: _notesController.text.trim().isEmpty
-                                    ? null
-                                    : _notesController.text.trim(),
-                              );
-
-                          if (context.mounted && success) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                backgroundColor: const Color(0xFF136A36),
-                                content: Text(
-                                  isAmharic
-                                      ? 'ሪፖርትዎ በተሳካ ሁኔታ ተመዝግቧል! እናመሰግናለን።'
-                                      : 'Price report submitted successfully! Thank you.',
+                          if (_formKey.currentState!.validate() && _selectedItem != null && _selectedMarket != null) {
+                            final price = double.tryParse(_priceController.text) ?? 0.0;
+                            final qty = double.tryParse(_quantityController.text) ?? 1.0;
+                            final success = await ref.read(reportingProvider.notifier).submitPriceReport(
+                                  itemId: _selectedItem!.id,
+                                  marketId: _selectedMarket!.id,
+                                  totalPrice: price,
+                                  quantity: qty,
+                                  unit: _selectedUnit,
+                                  pricePerStandardUnit: _calculatedPricePerStandardUnit,
+                                  notes: _notesController.text.isNotEmpty ? _notesController.text : null,
+                                );
+                            if (success && mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  backgroundColor: const Color(0xFF232A16),
+                                  content: Text(
+                                    isAmharic ? 'ዋጋው በተሳካ ሁኔታ ተመዝግቧል!' : 'Price reported successfully!',
+                                    style: const TextStyle(color: Color(0xFFC7F33B), fontWeight: FontWeight.bold),
+                                  ),
                                 ),
-                              ),
-                            );
-                            context.pop();
+                              );
+                              context.pop();
+                            }
                           }
                         },
                   child: reportingState.isLoading
-                      ? const SizedBox(
-                          width: 24,
-                          height: 24,
-                          child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
-                        )
+                      ? const CircularProgressIndicator(color: Color(0xFF0C0E12))
                       : Text(
-                          isAmharic ? 'ሪፖርቱን አስገባ' : 'Submit Report',
-                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          isAmharic ? 'ዋጋ አስመዝግብ' : 'Submit Price',
+                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w900),
                         ),
                 ),
               ),
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  InputDecoration _inputDecoration({String? hint, String? suffix}) {
-    return InputDecoration(
-      hintText: hint,
-      suffixText: suffix,
-      filled: true,
-      fillColor: Colors.white,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
       ),
     );
   }

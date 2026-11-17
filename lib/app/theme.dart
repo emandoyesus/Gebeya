@@ -2,69 +2,85 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
-  // Rich, authentic Ethiopian market palette
-  static const Color primaryGreen = Color(0xFF136A36);
-  static const Color primaryGreenDark = Color(0xFF0E4C26);
-  static const Color primaryGreenLight = Color(0xFF2E8540);
-  static const Color accentGold = Color(0xFFD97706);
-  static const Color accentGoldLight = Color(0xFFFEF3C7);
-  static const Color telegramBlue = Color(0xFF0088CC);
-  static const Color backgroundLight = Color(0xFFF8F7F2);
-  static const Color surfaceWhite = Colors.white;
-  static const Color textDark = Color(0xFF0F172A);
-  static const Color textMuted = Color(0xFF64748B);
-  static const Color borderLight = Color(0xFFE5E7EB);
-  static const Color priceBadgeBg = Color(0xFFE8F5E9);
+  // Ultra-sleek OLED Dark Fitness / Financial Dashboard Palette (Kalo Style)
+  static const Color oledBlack = Color(0xFF0C0E12); // Deep rich black background
+  static const Color cardDark = Color(0xFF16191E); // Elevated dark card surface
+  static const Color cardDarkLighter = Color(0xFF1E232B); // Secondary card surface
+  static const Color cardBorder = Color(0xFF262C36); // Subtle border outline
+  static const Color limeAccent = Color(0xFFC7F33B); // Neon Lime / Chartreuse primary highlight
+  static const Color limeAccentMuted = Color(0xFF384318); // Dark lime container fill
+  static const Color amberFlame = Color(0xFFF59E0B); // Amber / orange streak flame
+  static const Color amberFlameMuted = Color(0xFF452B0E); // Amber streak container fill
+  static const Color telegramBlue = Color(0xFF38BDF8); // Crisp vibrant cyan/blue
 
-  static ThemeData get lightTheme {
-    final base = ThemeData.light();
+  static const Color textWhite = Color(0xFFF8FAFC); // High contrast text
+  static const Color textMuted = Color(0xFF8E9BAE); // Muted secondary text
+  static const Color textDim = Color(0xFF566171); // Dim auxiliary text
+
+  // Legacy mappings for backwards-compatible references
+  static const Color primaryGreen = limeAccent;
+  static const Color primaryGreenDark = Color(0xFF84A618);
+  static const Color primaryGreenLight = Color(0xFFD6FA5E);
+  static const Color accentGold = amberFlame;
+  static const Color accentGoldLight = amberFlameMuted;
+  static const Color backgroundLight = oledBlack;
+  static const Color surfaceWhite = cardDark;
+  static const Color textDark = textWhite;
+  static const Color borderLight = cardBorder;
+  static const Color priceBadgeBg = limeAccentMuted;
+
+  static ThemeData get darkTheme {
+    final base = ThemeData.dark();
     return base.copyWith(
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: primaryGreen,
-        primary: primaryGreen,
-        secondary: accentGold,
-        surface: surfaceWhite,
+      scaffoldBackgroundColor: oledBlack,
+      canvasColor: oledBlack,
+      cardColor: cardDark,
+      dividerColor: cardBorder,
+      colorScheme: const ColorScheme.dark(
+        primary: limeAccent,
+        onPrimary: Color(0xFF0C0E12),
+        secondary: amberFlame,
+        surface: cardDark,
+        onSurface: textWhite,
       ),
-      scaffoldBackgroundColor: backgroundLight,
-      dividerColor: borderLight,
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: surfaceWhite,
+        fillColor: cardDark,
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(14),
-          borderSide: const BorderSide(color: borderLight),
+          borderRadius: BorderRadius.circular(16),
+          borderSide: const BorderSide(color: cardBorder),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(14),
-          borderSide: const BorderSide(color: borderLight),
+          borderRadius: BorderRadius.circular(16),
+          borderSide: const BorderSide(color: cardBorder),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(14),
-          borderSide: const BorderSide(color: primaryGreen, width: 1.5),
+          borderRadius: BorderRadius.circular(16),
+          borderSide: const BorderSide(color: limeAccent, width: 1.5),
         ),
       ),
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
-          backgroundColor: primaryGreen,
-          foregroundColor: Colors.white,
+          backgroundColor: limeAccent,
+          foregroundColor: const Color(0xFF0C0E12),
           minimumSize: const Size(48, 50),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         ),
       ),
       textTheme: GoogleFonts.notoSansEthiopicTextTheme(base.textTheme).copyWith(
         titleLarge: GoogleFonts.notoSansEthiopic(
           fontWeight: FontWeight.bold,
-          color: textDark,
-          fontSize: 20,
+          color: textWhite,
+          fontSize: 22,
         ),
         titleMedium: GoogleFonts.notoSansEthiopic(
           fontWeight: FontWeight.w600,
-          color: textDark,
+          color: textWhite,
           fontSize: 16,
         ),
         bodyMedium: GoogleFonts.notoSansEthiopic(
-          color: textDark,
+          color: textWhite,
           fontSize: 14,
         ),
         bodySmall: GoogleFonts.notoSansEthiopic(
@@ -73,31 +89,37 @@ class AppTheme {
         ),
       ),
       appBarTheme: AppBarTheme(
-        backgroundColor: surfaceWhite,
+        backgroundColor: oledBlack,
         elevation: 0,
-        scrolledUnderElevation: 1,
+        scrolledUnderElevation: 0,
         centerTitle: false,
         titleTextStyle: GoogleFonts.notoSansEthiopic(
           fontSize: 18,
           fontWeight: FontWeight.bold,
-          color: textDark,
+          color: textWhite,
         ),
-        iconTheme: const IconThemeData(color: textDark),
+        iconTheme: const IconThemeData(color: textWhite),
       ),
       cardTheme: CardThemeData(
-        color: surfaceWhite,
+        color: cardDark,
         elevation: 0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(14),
-          side: const BorderSide(color: borderLight, width: 1),
+          borderRadius: BorderRadius.circular(20),
+          side: const BorderSide(color: cardBorder, width: 1),
         ),
       ),
       chipTheme: ChipThemeData(
+        backgroundColor: cardDark,
+        selectedColor: limeAccent,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(16),
+          side: const BorderSide(color: cardBorder),
         ),
-        side: BorderSide.none,
       ),
     );
   }
+
+  // Backwards compatibility alias
+  static ThemeData get lightTheme => darkTheme;
 }
+

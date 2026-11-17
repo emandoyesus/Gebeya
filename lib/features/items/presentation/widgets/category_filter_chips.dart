@@ -26,7 +26,7 @@ class CategoryFilterChips extends ConsumerWidget {
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF0F172A),
+                    color: Color(0xFFF8FAFC),
                   ),
                 ),
               ),
@@ -34,7 +34,10 @@ class CategoryFilterChips extends ConsumerWidget {
                 onTap: () => showModalBottomSheet<void>(
                   context: context,
                   isScrollControlled: true,
-                  useSafeArea: true,
+                  backgroundColor: const Color(0xFF16191E),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+                  ),
                   builder: (_) => const FractionallySizedBox(
                     heightFactor: 0.85,
                     child: _CategoryPicker(),
@@ -51,11 +54,11 @@ class CategoryFilterChips extends ConsumerWidget {
                         style: const TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w600,
-                          color: Color(0xFF136A36),
+                          color: Color(0xFFC7F33B),
                         ),
                       ),
                       const SizedBox(width: 2),
-                      const Icon(Icons.arrow_forward_ios_rounded, size: 12, color: Color(0xFF136A36)),
+                      const Icon(Icons.arrow_forward_ios_rounded, size: 12, color: Color(0xFFC7F33B)),
                     ],
                   ),
                 ),
@@ -63,7 +66,7 @@ class CategoryFilterChips extends ConsumerWidget {
             ],
           ),
         ),
-        const SizedBox(height: 6),
+        const SizedBox(height: 8),
         SizedBox(
           height: 94,
           child: ListView.separated(
@@ -80,7 +83,7 @@ class CategoryFilterChips extends ConsumerWidget {
                   ref.read(searchQueryProvider.notifier).state = '';
                   ref.read(selectedCategoryProvider.notifier).state = category;
                 },
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(18),
                 child: SizedBox(
                   width: 68,
                   child: Column(
@@ -92,38 +95,32 @@ class CategoryFilterChips extends ConsumerWidget {
                         height: 54,
                         decoration: BoxDecoration(
                           color: isSelected
-                              ? const Color(0xFF136A36)
-                              : Colors.white,
+                              ? const Color(0xFFC7F33B)
+                              : const Color(0xFF16191E),
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(
                             color: isSelected
-                                ? const Color(0xFF136A36)
-                                : const Color(0xFFE2E8F0),
+                                ? const Color(0xFFC7F33B)
+                                : const Color(0xFF262C36),
                             width: isSelected ? 2 : 1,
                           ),
                           boxShadow: isSelected
                               ? [
                                   BoxShadow(
-                                    color: const Color(0xFF136A36).withValues(alpha: 0.25),
-                                    blurRadius: 8,
+                                    color: const Color(0xFFC7F33B).withValues(alpha: 0.3),
+                                    blurRadius: 10,
                                     offset: const Offset(0, 3),
                                   ),
                                 ]
-                              : [
-                                  BoxShadow(
-                                    color: Colors.black.withValues(alpha: 0.03),
-                                    blurRadius: 4,
-                                    offset: const Offset(0, 2),
-                                  ),
-                                ],
+                              : null,
                         ),
                         child: Center(
                           child: Icon(
                             category.icon,
-                            size: 26,
+                            size: 24,
                             color: isSelected
-                                ? Colors.white
-                                : const Color(0xFF136A36),
+                                ? const Color(0xFF0C0E12)
+                                : const Color(0xFF8E9BAE),
                           ),
                         ),
                       ),
@@ -132,8 +129,8 @@ class CategoryFilterChips extends ConsumerWidget {
                         isAmharic ? category.labelAm : category.labelEn,
                         style: TextStyle(
                           fontSize: 11,
-                          fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-                          color: isSelected ? const Color(0xFF136A36) : const Color(0xFF475569),
+                          fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+                          color: isSelected ? const Color(0xFFC7F33B) : const Color(0xFF8E9BAE),
                         ),
                         maxLines: 2,
                         textAlign: TextAlign.center,
@@ -154,9 +151,9 @@ class CategoryFilterChips extends ConsumerWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFE8F5E9),
+                    color: const Color(0xFF232A16),
                     borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: const Color(0xFF136A36).withValues(alpha: 0.3)),
+                    border: Border.all(color: const Color(0xFFC7F33B).withValues(alpha: 0.4)),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -166,7 +163,7 @@ class CategoryFilterChips extends ConsumerWidget {
                         style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
-                          color: Color(0xFF0E4C26),
+                          color: Color(0xFFC7F33B),
                         ),
                       ),
                       const SizedBox(width: 4),
@@ -175,7 +172,7 @@ class CategoryFilterChips extends ConsumerWidget {
                           ref.read(searchQueryProvider.notifier).state = '';
                           ref.read(selectedCategoryProvider.notifier).state = ItemCategory.all;
                         },
-                        child: const Icon(Icons.close_rounded, size: 14, color: Color(0xFF0E4C26)),
+                        child: const Icon(Icons.close_rounded, size: 14, color: Color(0xFFC7F33B)),
                       ),
                     ],
                   ),
@@ -208,7 +205,8 @@ class _CategoryPickerState extends ConsumerState<_CategoryPicker> {
         category.labelAm.contains(_query)).toList();
 
     return SafeArea(
-      child: Padding(
+      child: Container(
+        color: const Color(0xFF16191E),
         padding: EdgeInsets.fromLTRB(
           16, 16, 16, MediaQuery.viewInsetsOf(context).bottom,
         ),
@@ -220,21 +218,25 @@ class _CategoryPickerState extends ConsumerState<_CategoryPicker> {
                 Expanded(
                   child: Text(
                     isAmharic ? 'ሁሉም ምድቦች' : 'All Categories',
-                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFFF8FAFC)),
                   ),
                 ),
                 IconButton(
                   tooltip: isAmharic ? 'ዝጋ' : 'Close',
-                  icon: const Icon(Icons.close_rounded),
+                  icon: const Icon(Icons.close_rounded, color: Color(0xFF8E9BAE)),
                   onPressed: () => Navigator.pop(context),
                 ),
               ],
             ),
             const SizedBox(height: 12),
             TextField(
+              style: const TextStyle(color: Color(0xFFF8FAFC)),
               decoration: InputDecoration(
                 hintText: isAmharic ? 'ምድቦችን ፈልግ' : 'Find a category',
-                prefixIcon: const Icon(Icons.search_rounded),
+                hintStyle: const TextStyle(color: Color(0xFF566171)),
+                prefixIcon: const Icon(Icons.search_rounded, color: Color(0xFFC7F33B)),
+                filled: true,
+                fillColor: const Color(0xFF0C0E12),
                 contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               ),
               onChanged: (value) => setState(() {
@@ -247,7 +249,7 @@ class _CategoryPickerState extends ConsumerState<_CategoryPicker> {
                   ? Center(
                       child: Text(
                         isAmharic ? 'ምንም ምድብ አልተገኘም' : 'No matching categories',
-                        style: TextStyle(color: Colors.grey.shade500),
+                        style: const TextStyle(color: Color(0xFF8E9BAE)),
                       ),
                     )
                   : ListView.builder(
@@ -264,12 +266,12 @@ class _CategoryPickerState extends ConsumerState<_CategoryPicker> {
                             width: 42,
                             height: 42,
                             decoration: BoxDecoration(
-                              color: isSelected ? const Color(0xFF136A36) : const Color(0xFFF1F5F9),
+                              color: isSelected ? const Color(0xFFC7F33B) : const Color(0xFF1E232B),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Icon(
                               category.icon,
-                              color: isSelected ? Colors.white : const Color(0xFF136A36),
+                              color: isSelected ? const Color(0xFF0C0E12) : const Color(0xFF8E9BAE),
                               size: 22,
                             ),
                           ),
@@ -277,16 +279,16 @@ class _CategoryPickerState extends ConsumerState<_CategoryPicker> {
                             isAmharic ? category.labelAm : category.labelEn,
                             style: TextStyle(
                               fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-                              color: isSelected ? const Color(0xFF136A36) : const Color(0xFF1E293B),
+                              color: isSelected ? const Color(0xFFC7F33B) : const Color(0xFFF8FAFC),
                             ),
                           ),
                           subtitle: count == null ? null : Text(
                             isAmharic ? '$count እቃዎች' : '$count items',
-                            style: TextStyle(fontSize: 12, color: Colors.grey.shade500),
+                            style: const TextStyle(fontSize: 12, color: Color(0xFF8E9BAE)),
                           ),
                           selected: isSelected,
                           trailing: isSelected
-                              ? const Icon(Icons.check_circle_rounded, color: Color(0xFF136A36))
+                              ? const Icon(Icons.check_circle_rounded, color: Color(0xFFC7F33B))
                               : null,
                           onTap: () {
                             ref.read(searchQueryProvider.notifier).state = '';
