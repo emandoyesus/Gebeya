@@ -4,7 +4,6 @@ import 'package:gebeya/core/constants/categories.dart';
 import 'package:gebeya/features/items/data/price_aggregate_model.dart';
 import 'package:gebeya/features/items/presentation/items_provider.dart';
 import 'package:gebeya/features/items/presentation/widgets/category_filter_chips.dart';
-import 'package:gebeya/features/items/presentation/widgets/market_selector_sheet.dart';
 import 'package:gebeya/features/items/presentation/widgets/price_card.dart';
 import 'package:gebeya/features/settings/presentation/settings_provider.dart';
 
@@ -81,78 +80,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           ],
         ),
         actions: [
-          // Data / window indicator pill
-          Tooltip(
-            message: isDataSaver
-                ? (isAmharic ? 'ዳታ ቆጣቢ ሁነታ በርቷል' : 'Data saver active')
-                : (isAmharic ? 'የቅርብ 7 ቀናት መረጃ' : 'Last 7 days data window'),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              decoration: BoxDecoration(
-                color: const Color(0xFF1E232B),
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: const Color(0xFF262C36)),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(
-                    Icons.local_fire_department_rounded,
-                    color: Color(0xFFD79C3A),
-                    size: 16,
-                  ),
-                  const SizedBox(width: 4),
-                  Text(
-                    isDataSaver ? 'DATA' : '7d',
-                    style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFFF8FAFC),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(width: 8),
-
-          // Market Selector Pill
-          Tooltip(
-            message: isAmharic ? 'የገበያ ቦታ ይምረጡ' : 'Select market location',
-            child: Semantics(
-              button: true,
-              label: isAmharic ? 'የገበያ ቦታ ይምረጡ' : 'Select market location',
-              child: InkWell(
-                onTap: () => MarketSelectorSheet.show(context),
-                borderRadius: BorderRadius.circular(20),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF1E232B),
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: const Color(0xFF262C36)),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(Icons.location_on_rounded, size: 14, color: Color(0xFFB2D15A)),
-                      const SizedBox(width: 4),
-                      Text(
-                        selectedMarket?.localizedName(isAmharic) ?? 'Merkato',
-                        style: const TextStyle(
-                          fontSize: 11,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFFF8FAFC),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: 8),
-
           // Language Toggle
           Tooltip(
             message: isAmharic ? 'ወደ English ቀይር' : 'ወደ አማርኛ ቀይር',
@@ -207,8 +134,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   style: const TextStyle(color: Color(0xFFF8FAFC)),
                   decoration: InputDecoration(
                     hintText: isAmharic
-                        ? '${selectedMarket?.localizedName(isAmharic) ?? "መርካቶ"} ውስጥ ይፈልጉ...'
-                        : 'Search in ${selectedMarket?.localizedName(isAmharic) ?? "Merkato"}...',
+                        ? (selectedMarket != null
+                            ? '${selectedMarket.localizedName(isAmharic)} ወይም በመላው ኢትዮጵያ ይፈልጉ...'
+                            : 'እቃ ወይም ዋጋ በመላው ኢትዮጵያ ይፈልጉ...')
+                        : (selectedMarket != null
+                            ? 'Search in ${selectedMarket.localizedName(isAmharic)} or across Ethiopia...'
+                            : 'Search items across Ethiopia...'),
                     hintStyle: const TextStyle(color: Color(0xFF9AA7B8), fontSize: 14),
                     prefixIcon: const Icon(Icons.search_rounded, color: Color(0xFFB2D15A), size: 22),
                     suffixIcon: query.isEmpty

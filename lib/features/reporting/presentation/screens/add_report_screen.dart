@@ -155,11 +155,12 @@ class _AddReportScreenState extends ConsumerState<AddReportScreen> {
               const SizedBox(height: 16),
 
               // Market Dropdown
-              Text(isAmharic ? 'የገዙበት ገበያ' : 'Market Location', style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFFF8FAFC))),
+              Text(isAmharic ? 'የገዙበት ገበያ / ከተማ' : 'Market Location / City', style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFFF8FAFC))),
               const SizedBox(height: 8),
               DropdownButtonFormField<MarketModel>(
                 value: _selectedMarket,
                 dropdownColor: const Color(0xFF16191E),
+                isExpanded: true,
                 style: const TextStyle(color: Color(0xFFF8FAFC)),
                 decoration: InputDecoration(
                   filled: true,
@@ -170,7 +171,11 @@ class _AddReportScreenState extends ConsumerState<AddReportScreen> {
                 items: markets.map((m) {
                   return DropdownMenuItem(
                     value: m,
-                    child: Text(m.localizedName(isAmharic), style: const TextStyle(color: Color(0xFFF8FAFC))),
+                    child: Text(
+                      '${m.localizedName(isAmharic)} (${m.city})',
+                      style: const TextStyle(color: Color(0xFFF8FAFC)),
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   );
                 }).toList(),
                 onChanged: (val) => setState(() => _selectedMarket = val),
