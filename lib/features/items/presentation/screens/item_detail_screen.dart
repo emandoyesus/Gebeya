@@ -3,10 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gebeya/core/utils/relative_time.dart';
 import 'package:gebeya/core/utils/unit_converter.dart';
+import 'package:gebeya/features/basket/presentation/basket_provider.dart';
+import 'package:gebeya/features/basket/presentation/widgets/basket_stepper.dart';
 import 'package:gebeya/features/items/data/item_model.dart';
 import 'package:gebeya/features/items/presentation/items_provider.dart';
 import 'package:gebeya/features/items/presentation/widgets/market_image.dart';
 import 'package:gebeya/features/settings/presentation/settings_provider.dart';
+import 'package:go_router/go_router.dart';
 
 class ItemDetailScreen extends ConsumerStatefulWidget {
   final String itemId;
@@ -142,6 +145,39 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
               item.sourceLocation ?? item.sourceLabel ?? 'Location not provided',
               isAmharic,
             ),
+          ),
+          // Shopping Basket action
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              IconButton(
+                tooltip: isAmharic ? 'የገበያ ቅርጫት' : 'Market Basket',
+                icon: const Icon(Icons.shopping_basket_outlined, color: Color(0xFFF8FAFC)),
+                onPressed: () => context.push('/basket'),
+              ),
+              if (ref.watch(basketTotalCountProvider) > 0)
+                Positioned(
+                  right: 6,
+                  top: 6,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1.5),
+                    constraints: const BoxConstraints(minWidth: 15, minHeight: 15),
+                    decoration: const BoxDecoration(
+                      color: Color(0xFFB2D15A),
+                      shape: BoxShape.circle,
+                    ),
+                    alignment: Alignment.center,
+                    child: Text(
+                      '${ref.watch(basketTotalCountProvider)}',
+                      style: const TextStyle(
+                        color: Color(0xFF0C0E12),
+                        fontSize: 9,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                  ),
+                ),
+            ],
           ),
         ],
       ),
@@ -445,6 +481,54 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                                 ),
                               ],
                             ),
+                            const SizedBox(height: 12),
+                            SizedBox(
+                              width: double.infinity,
+                              height: 38,
+                              child: FilledButton.icon(
+                                style: FilledButton.styleFrom(
+                                  backgroundColor: const Color(0xFFD79C3A),
+                                  foregroundColor: const Color(0xFF0C0E12),
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                ),
+                                icon: const Icon(Icons.add_shopping_cart_rounded, size: 16),
+                                label: Text(
+                                  isAmharic
+                                      ? '${_unitQty.toStringAsFixed(0)} ${_selectedUnit!.nameAm} ወደ ቅርጫት ጨምር'
+                                      : 'Add ${_unitQty.toStringAsFixed(0)} ${_selectedUnit!.nameEn} to Basket',
+                                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12.5),
+                                ),
+                                onPressed: () {
+                                  final calcPrice = _selectedUnit!.multiplier * effectivePrice;
+                                  ref.read(basketProvider.notifier).addItem(
+                                    item,
+                                    quantity: _unitQty.toInt(),
+                                    unit: _selectedUnit!.nameAm,
+                                    unitPrice: calcPrice,
+                                  );
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      duration: const Duration(seconds: 2),
+                                      backgroundColor: const Color(0xFF16191E),
+                                      behavior: SnackBarBehavior.floating,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                        side: const BorderSide(color: Color(0xFFB2D15A)),
+                                      ),
+                                      content: Text(
+                                        isAmharic ? 'ወደ ቅርጫት ተጨምሯል!' : 'Added to market basket!',
+                                        style: const TextStyle(color: Color(0xFFF8FAFC), fontWeight: FontWeight.bold),
+                                      ),
+                                      action: SnackBarAction(
+                                        label: isAmharic ? 'ተመልከት' : 'View',
+                                        textColor: const Color(0xFFB2D15A),
+                                        onPressed: () => context.push('/basket'),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -556,6 +640,59 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
 
             const SizedBox(height: 24),
           ],
+        ),
+      ),
+      bottomNavigationBar: Container(
+        decoration: const BoxDecoration(
+          color: Color(0xFF16191E),
+          border: Border(top: BorderSide(color: Color(0xFF262C36), width: 1)),
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        child: SafeArea(
+          top: false,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    isAmharic ? 'የገበያ ዋጋ' : 'Market Price',
+                    style: const TextStyle(fontSize: 11, color: Color(0xFF8E9BAE)),
+                  ),
+                  const SizedBox(height: 2),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: [
+                      Text(
+                        effectivePrice != null
+                            ? '${effectivePrice.toStringAsFixed(effectivePrice.truncateToDouble() == effectivePrice ? 0 : 1)} ETB'
+                            : (isAmharic ? 'ዋጋ አልተወሰነም' : 'Pending'),
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w900,
+                          color: Color(0xFFB2D15A),
+                        ),
+                      ),
+                      const SizedBox(width: 3),
+                      Text(
+                        '/$unit',
+                        style: const TextStyle(fontSize: 11, color: Color(0xFF8E9BAE), fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              BasketStepper(
+                item: item,
+                unitPrice: effectivePrice,
+                unit: unit,
+                style: BasketStepperStyle.standard,
+              ),
+            ],
+          ),
         ),
       ),
     );

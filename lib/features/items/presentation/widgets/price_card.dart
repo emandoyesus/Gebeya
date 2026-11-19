@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gebeya/features/basket/presentation/widgets/basket_stepper.dart';
 import 'package:gebeya/features/items/data/item_model.dart';
 import 'package:gebeya/features/items/data/price_aggregate_model.dart';
 import 'package:gebeya/features/settings/presentation/settings_provider.dart';
@@ -28,56 +29,7 @@ class PriceCard extends ConsumerWidget {
   }
 }
 
-/// Animated Heart Icon button with scale bounce feedback
-class _AnimatedFavoriteButton extends StatelessWidget {
-  final bool isFavorite;
-  final String tooltip;
-  final VoidCallback onTap;
-  final double size;
-  final Color? backgroundColor;
-
-  const _AnimatedFavoriteButton({
-    required this.isFavorite,
-    required this.tooltip,
-    required this.onTap,
-    this.size = 20,
-    this.backgroundColor,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Tooltip(
-      message: tooltip,
-      child: Material(
-        color: backgroundColor ?? Colors.transparent,
-        shape: const CircleBorder(),
-        clipBehavior: Clip.antiAlias,
-        child: InkWell(
-          onTap: onTap,
-          child: Padding(
-            padding: const EdgeInsets.all(8),
-            child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 240),
-              switchInCurve: Curves.easeOutBack,
-              switchOutCurve: Curves.easeIn,
-              transitionBuilder: (child, animation) {
-                return ScaleTransition(scale: animation, child: child);
-              },
-              child: Icon(
-                isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
-                key: ValueKey<bool>(isFavorite),
-                size: size,
-                color: isFavorite ? const Color(0xFFF43F5E) : const Color(0xFF9AA7B8),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// Kalo Ultra-Sleek Dark 2-column Card
+/// Kalo Ultra-Sleek Dark Modern Product Card
 class _KaloGridCard extends ConsumerWidget {
   final ItemModel item;
   final PriceAggregateModel? aggregate;
@@ -148,7 +100,6 @@ class _KaloGridCard extends ConsumerWidget {
                   top: 8,
                   left: 8,
                   child: Row(
-                    mainAxisSize: MainAxisSize.min,
                     children: [
                       if (isTelegram)
                         Container(
@@ -163,10 +114,10 @@ class _KaloGridCard extends ConsumerWidget {
                               Icon(Icons.send_rounded, size: 9, color: Color(0xFF0C0E12)),
                               SizedBox(width: 3),
                               Text(
-                                'Telegram',
+                                'TELEGRAM',
                                 style: TextStyle(
                                   color: Color(0xFF0C0E12),
-                                  fontSize: 9,
+                                  fontSize: 8.5,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -230,29 +181,30 @@ class _KaloGridCard extends ConsumerWidget {
             // Card Body (Expanded to prevent any overflow)
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(10, 8, 10, 10),
+                padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    // Item Title & Price Block
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
+                    // Item Title
+                    Text(
+                      item.localizedName(isAmharic),
+                      style: const TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xFFF8FAFC),
+                        height: 1.2,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+
+                    // Price & E-Commerce Quick Stepper Row
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
-                          item.localizedName(isAmharic),
-                          style: const TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w700,
-                            color: Color(0xFFF8FAFC),
-                            height: 1.2,
-                          ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        const SizedBox(height: 4),
-                        if (median != null) ...[
+                        if (median != null)
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.baseline,
                             textBaseline: TextBaseline.alphabetic,
@@ -264,36 +216,41 @@ class _KaloGridCard extends ConsumerWidget {
                                     ? '${(median / 1000).toStringAsFixed(0)}k'
                                     : median.toStringAsFixed(median.truncateToDouble() == median ? 0 : 1),
                                 style: const TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 15,
                                   fontWeight: FontWeight.w900,
                                   color: Color(0xFFB2D15A), // Neon lime
                                 ),
                               ),
-                              const SizedBox(width: 3),
+                              const SizedBox(width: 2),
                               Text(
                                 'ETB/$unit',
                                 style: const TextStyle(
-                                  fontSize: 9,
+                                  fontSize: 8.5,
                                   fontWeight: FontWeight.w600,
                                   color: Color(0xFF8E9BAE),
                                 ),
                               ),
                             ],
-                          ),
-                        ] else ...[
+                          )
+                        else
                           Text(
                             isAmharic ? 'ዋጋ ገና የለም' : 'Price pending',
                             style: const TextStyle(
-                              fontSize: 11,
+                              fontSize: 10,
                               color: Color(0xFF9AA7B8),
                               fontStyle: FontStyle.italic,
                             ),
                           ),
-                        ],
+                        BasketStepper(
+                          item: item,
+                          unitPrice: median,
+                          unit: unit,
+                          style: BasketStepperStyle.compact,
+                        ),
                       ],
                     ),
 
-                    // Location & Trend Indicator
+                    // Location Indicator
                     Row(
                       children: [
                         const Icon(
@@ -413,9 +370,13 @@ class _KaloListCard extends ConsumerWidget {
                     children: [
                       const Icon(Icons.location_on_rounded, size: 12, color: Color(0xFF9AA7B8)),
                       const SizedBox(width: 3),
-                      Text(
-                        item.sourceLocation ?? item.sourceLabel ?? (isAmharic ? 'አካባቢ አልተገለጸም' : 'Location not provided'),
-                        style: const TextStyle(fontSize: 11, color: Color(0xFF8E9BAE)),
+                      Expanded(
+                        child: Text(
+                          item.sourceLocation ?? item.sourceLabel ?? (isAmharic ? 'አካባቢ አልተገለጸም' : 'Location not provided'),
+                          style: const TextStyle(fontSize: 11, color: Color(0xFF8E9BAE)),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                     ],
                   ),
@@ -445,10 +406,12 @@ class _KaloListCard extends ConsumerWidget {
                 ],
               ),
             ),
+            const SizedBox(width: 8),
 
-            // Right Action
+            // Right Action: Favorite & Quick Basket Stepper
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 _AnimatedFavoriteButton(
                   isFavorite: isFavorite,
@@ -456,9 +419,70 @@ class _KaloListCard extends ConsumerWidget {
                   onTap: () => ref.read(favoritesProvider.notifier).toggle(item.id),
                   size: 18,
                 ),
+                const SizedBox(height: 10),
+                BasketStepper(
+                  item: item,
+                  unitPrice: median,
+                  unit: unit,
+                  style: BasketStepperStyle.standard,
+                ),
               ],
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _AnimatedFavoriteButton extends StatelessWidget {
+  final bool isFavorite;
+  final String tooltip;
+  final VoidCallback onTap;
+  final double size;
+  final Color? backgroundColor;
+
+  const _AnimatedFavoriteButton({
+    required this.isFavorite,
+    required this.tooltip,
+    required this.onTap,
+    this.size = 18,
+    this.backgroundColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Tooltip(
+      message: tooltip,
+      child: Semantics(
+        button: true,
+        label: tooltip,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(size + 4),
+          child: Container(
+            padding: const EdgeInsets.all(5),
+            decoration: BoxDecoration(
+              color: backgroundColor ?? Colors.transparent,
+              shape: BoxShape.circle,
+            ),
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 240),
+              transitionBuilder: (child, animation) => ScaleTransition(
+                scale: CurvedAnimation(
+                  parent: animation,
+                  curve: Curves.easeOutBack,
+                ),
+                child: child,
+              ),
+              child: Icon(
+                isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
+                key: ValueKey<bool>(isFavorite),
+                size: size,
+                color: isFavorite ? const Color(0xFFE57373) : const Color(0xFF8E9BAE),
+              ),
+            ),
+          ),
         ),
       ),
     );

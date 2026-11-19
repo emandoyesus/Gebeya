@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gebeya/core/constants/categories.dart';
+import 'package:gebeya/features/basket/presentation/basket_provider.dart';
 import 'package:gebeya/features/items/data/price_aggregate_model.dart';
 import 'package:gebeya/features/items/presentation/items_provider.dart';
 import 'package:gebeya/features/items/presentation/widgets/category_filter_chips.dart';
 import 'package:gebeya/features/items/presentation/widgets/price_card.dart';
 import 'package:gebeya/features/settings/presentation/settings_provider.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -80,6 +82,58 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           ],
         ),
         actions: [
+          // Shopping Basket Quick Action with badge
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              Tooltip(
+                message: isAmharic ? 'የገበያ ቅርጫት' : 'Market Basket',
+                child: InkWell(
+                  onTap: () => context.push('/basket'),
+                  borderRadius: BorderRadius.circular(24),
+                  child: Container(
+                    width: 44,
+                    height: 44,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF1E232B),
+                      shape: BoxShape.circle,
+                      border: Border.all(color: const Color(0xFF262C36)),
+                    ),
+                    child: const Center(
+                      child: Icon(
+                        Icons.shopping_basket_outlined,
+                        size: 20,
+                        color: Color(0xFFF8FAFC),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              if (ref.watch(basketTotalCountProvider) > 0)
+                Positioned(
+                  right: 2,
+                  top: 2,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1.5),
+                    constraints: const BoxConstraints(minWidth: 16, minHeight: 16),
+                    decoration: const BoxDecoration(
+                      color: Color(0xFFB2D15A),
+                      shape: BoxShape.circle,
+                    ),
+                    alignment: Alignment.center,
+                    child: Text(
+                      '${ref.watch(basketTotalCountProvider)}',
+                      style: const TextStyle(
+                        color: Color(0xFF0C0E12),
+                        fontSize: 9,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                  ),
+                ),
+            ],
+          ),
+          const SizedBox(width: 8),
           // Language Toggle
           Tooltip(
             message: isAmharic ? 'ወደ English ቀይር' : 'ወደ አማርኛ ቀይር',
@@ -90,8 +144,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 onTap: () => ref.read(localeProvider.notifier).toggle(),
                 borderRadius: BorderRadius.circular(24),
                 child: Container(
-                  width: 48,
-                  height: 48,
+                  width: 44,
+                  height: 44,
                   decoration: BoxDecoration(
                     color: const Color(0xFF1E232B),
                     shape: BoxShape.circle,
@@ -277,13 +331,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
                 if (viewMode == ViewMode.grid && !isDataSaver && MediaQuery.textScalerOf(context).scale(14) <= 18) {
                   return SliverPadding(
-                    padding: const EdgeInsets.fromLTRB(16, 4, 16, 80),
+                    padding: const EdgeInsets.fromLTRB(16, 4, 16, 100),
                     sliver: SliverGrid(
                       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                         maxCrossAxisExtent: 220,
                         mainAxisSpacing: 12,
                         crossAxisSpacing: 12,
-                        mainAxisExtent: 235,
+                        mainAxisExtent: 245,
                       ),
                       delegate: SliverChildBuilderDelegate(
                         (context, index) {
