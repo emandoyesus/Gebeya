@@ -184,15 +184,23 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      isAmharic ? '${filteredItems.length} እቃዎች' : '${filteredItems.length} Items',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: Color(0xFFF8FAFC),
+                    AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 200),
+                      transitionBuilder: (child, animation) => FadeTransition(
+                        opacity: animation,
+                        child: child,
+                      ),
+                      child: Text(
+                        key: ValueKey<int>(filteredItems.length),
+                        isAmharic ? '${filteredItems.length} እቃዎች' : '${filteredItems.length} Items',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Color(0xFFF8FAFC),
+                        ),
                       ),
                     ),
-                    // Grid / List View Toggle
+                    // Grid / List View Toggle with Micro-Interaction
                     InkWell(
                       onTap: () => ref.read(viewModeProvider.notifier).toggle(),
                       borderRadius: BorderRadius.circular(12),
@@ -203,22 +211,30 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(color: const Color(0xFF262C36)),
                         ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              viewMode == ViewMode.grid ? Icons.view_list_rounded : Icons.grid_view_rounded,
-                              size: 16,
-                              color: const Color(0xFFB2D15A),
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              viewMode == ViewMode.grid
-                                  ? (isAmharic ? 'ዝርዝር' : 'List')
-                                  : (isAmharic ? 'ፍርግርግ' : 'Grid'),
-                              style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFFB2D15A)),
-                            ),
-                          ],
+                        child: AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 220),
+                          transitionBuilder: (child, animation) => FadeTransition(
+                            opacity: animation,
+                            child: ScaleTransition(scale: animation, child: child),
+                          ),
+                          child: Row(
+                            key: ValueKey<ViewMode>(viewMode),
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                viewMode == ViewMode.grid ? Icons.view_list_rounded : Icons.grid_view_rounded,
+                                size: 16,
+                                color: const Color(0xFFB2D15A),
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                viewMode == ViewMode.grid
+                                    ? (isAmharic ? 'ዝርዝር' : 'List')
+                                    : (isAmharic ? 'ፍርግርግ' : 'Grid'),
+                                style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFFB2D15A)),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

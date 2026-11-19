@@ -28,6 +28,55 @@ class PriceCard extends ConsumerWidget {
   }
 }
 
+/// Animated Heart Icon button with scale bounce feedback
+class _AnimatedFavoriteButton extends StatelessWidget {
+  final bool isFavorite;
+  final String tooltip;
+  final VoidCallback onTap;
+  final double size;
+  final Color? backgroundColor;
+
+  const _AnimatedFavoriteButton({
+    required this.isFavorite,
+    required this.tooltip,
+    required this.onTap,
+    this.size = 20,
+    this.backgroundColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Tooltip(
+      message: tooltip,
+      child: Material(
+        color: backgroundColor ?? Colors.transparent,
+        shape: const CircleBorder(),
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 240),
+              switchInCurve: Curves.easeOutBack,
+              switchOutCurve: Curves.easeIn,
+              transitionBuilder: (child, animation) {
+                return ScaleTransition(scale: animation, child: child);
+              },
+              child: Icon(
+                isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
+                key: ValueKey<bool>(isFavorite),
+                size: size,
+                color: isFavorite ? const Color(0xFFF43F5E) : const Color(0xFF9AA7B8),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 /// Kalo Ultra-Sleek Dark 2-column Card
 class _KaloGridCard extends ConsumerWidget {
   final ItemModel item;
@@ -48,7 +97,6 @@ class _KaloGridCard extends ConsumerWidget {
     final isTelegram = item.listingSource != null &&
         (item.listingSource!.contains('t.me') || item.listingSource!.contains('telegram'));
 
-
     return InkWell(
       onTap: () => context.push('/item/${item.id}'),
       borderRadius: BorderRadius.circular(20),
@@ -65,15 +113,18 @@ class _KaloGridCard extends ConsumerWidget {
             // Top Image Container with Badges
             Stack(
               children: [
-                SizedBox(
-                  width: double.infinity,
-                  height: 120,
-                  child: MarketImage(
-                    category: item.category,
-                    imageUrl: item.displayImageUrl,
+                Hero(
+                  tag: 'item-image-${item.id}',
+                  child: SizedBox(
                     width: double.infinity,
                     height: 120,
-                    fit: item.correctedImageUrl != null ? BoxFit.contain : BoxFit.cover,
+                    child: MarketImage(
+                      category: item.category,
+                      imageUrl: item.displayImageUrl,
+                      width: double.infinity,
+                      height: 120,
+                      fit: item.correctedImageUrl != null ? BoxFit.contain : BoxFit.cover,
+                    ),
                   ),
                 ),
                 // Subtle gradient overlay for contrast
@@ -159,18 +210,18 @@ class _KaloGridCard extends ConsumerWidget {
                     ],
                   ),
                 ),
-                // Favorite Button
+                // Favorite Button with subtle animated scale
                 Positioned(
                   top: 8,
                   right: 8,
-                  child: IconButton(
+                  child: _AnimatedFavoriteButton(
+                    isFavorite: isFavorite,
                     tooltip: isAmharic
                         ? (isFavorite ? 'ከተቀመጡ አስወግድ' : 'እቃውን አስቀምጥ')
                         : (isFavorite ? 'Remove from saved' : 'Save item'),
-                    onPressed: () => ref.read(favoritesProvider.notifier).toggle(item.id),
-                    icon: Icon(isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded),
-                    color: isFavorite ? const Color(0xFFF43F5E) : const Color(0xFFF8FAFC),
-                    style: IconButton.styleFrom(backgroundColor: const Color(0xFF0C0E12)),
+                    onTap: () => ref.read(favoritesProvider.notifier).toggle(item.id),
+                    size: 16,
+                    backgroundColor: const Color(0xFF0C0E12).withValues(alpha: 0.8),
                   ),
                 ),
               ],
@@ -262,7 +313,6 @@ class _KaloGridCard extends ConsumerWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
-
                       ],
                     ),
                   ],
@@ -296,7 +346,6 @@ class _KaloListCard extends ConsumerWidget {
     final isTelegram = item.listingSource != null &&
         (item.listingSource!.contains('t.me') || item.listingSource!.contains('telegram'));
 
-
     return InkWell(
       onTap: () => context.push('/item/${item.id}'),
       borderRadius: BorderRadius.circular(20),
@@ -310,17 +359,20 @@ class _KaloListCard extends ConsumerWidget {
         child: Row(
           children: [
             // Thumbnail
-            ClipRRect(
-              borderRadius: BorderRadius.circular(14),
-              child: SizedBox(
-                width: 76,
-                height: 76,
-                child: MarketImage(
-                  category: item.category,
-                  imageUrl: item.displayImageUrl,
+            Hero(
+              tag: 'item-image-${item.id}',
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(14),
+                child: SizedBox(
                   width: 76,
                   height: 76,
-                  fit: item.correctedImageUrl != null ? BoxFit.contain : BoxFit.cover,
+                  child: MarketImage(
+                    category: item.category,
+                    imageUrl: item.displayImageUrl,
+                    width: 76,
+                    height: 76,
+                    fit: item.correctedImageUrl != null ? BoxFit.contain : BoxFit.cover,
+                  ),
                 ),
               ),
             ),
@@ -394,20 +446,16 @@ class _KaloListCard extends ConsumerWidget {
               ),
             ),
 
-            // Right Action & Trend
+            // Right Action
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                IconButton(
+                _AnimatedFavoriteButton(
+                  isFavorite: isFavorite,
                   tooltip: isAmharic ? (isFavorite ? 'ከተቀመጡ አስወግድ' : 'እቃውን አስቀምጥ') : (isFavorite ? 'Remove from saved' : 'Save item'),
-                  icon: Icon(
-                    isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
-                    size: 18,
-                    color: isFavorite ? const Color(0xFFF43F5E) : const Color(0xFF9AA7B8),
-                  ),
-                  onPressed: () => ref.read(favoritesProvider.notifier).toggle(item.id),
+                  onTap: () => ref.read(favoritesProvider.notifier).toggle(item.id),
+                  size: 18,
                 ),
-
               ],
             ),
           ],

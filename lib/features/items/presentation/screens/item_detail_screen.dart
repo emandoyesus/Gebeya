@@ -111,14 +111,25 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
           style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Color(0xFFF8FAFC)),
         ),
         actions: [
-          // Favorite button
-          IconButton(
-            tooltip: isFavorite ? 'Remove from saved' : 'Save item',
-            icon: Icon(
-              isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
-              color: isFavorite ? const Color(0xFFF43F5E) : const Color(0xFF8E9BAE),
+          // Favorite button with animated scale feedback
+          Tooltip(
+            message: isAmharic
+                ? (isFavorite ? 'ከተቀመጡ አስወግድ' : 'እቃውን አስቀምጥ')
+                : (isFavorite ? 'Remove from saved' : 'Save item'),
+            child: IconButton(
+              icon: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 240),
+                switchInCurve: Curves.easeOutBack,
+                switchOutCurve: Curves.easeIn,
+                transitionBuilder: (child, animation) => ScaleTransition(scale: animation, child: child),
+                child: Icon(
+                  isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
+                  key: ValueKey<bool>(isFavorite),
+                  color: isFavorite ? const Color(0xFFF43F5E) : const Color(0xFF8E9BAE),
+                ),
+              ),
+              onPressed: () => ref.read(favoritesProvider.notifier).toggle(item.id),
             ),
-            onPressed: () => ref.read(favoritesProvider.notifier).toggle(item.id),
           ),
           // Share to Telegram button (Idea 5)
           IconButton(
@@ -152,15 +163,18 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                 children: [
                   Stack(
                     children: [
-                      SizedBox(
-                        width: double.infinity,
-                        height: 250,
-                        child: MarketImage(
-                          category: item.category,
-                          imageUrl: item.displayImageUrl,
+                      Hero(
+                        tag: 'item-image-${item.id}',
+                        child: SizedBox(
                           width: double.infinity,
                           height: 250,
-                          fit: item.correctedImageUrl != null ? BoxFit.contain : BoxFit.cover,
+                          child: MarketImage(
+                            category: item.category,
+                            imageUrl: item.displayImageUrl,
+                            width: double.infinity,
+                            height: 250,
+                            fit: item.correctedImageUrl != null ? BoxFit.contain : BoxFit.cover,
+                          ),
                         ),
                       ),
                       Positioned(
@@ -391,9 +405,14 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                                           ? () => setState(() => _unitQty -= 1)
                                           : null,
                                     ),
-                                    Text(
-                                      _unitQty.toStringAsFixed(0),
-                                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color(0xFFF8FAFC)),
+                                    AnimatedSwitcher(
+                                      duration: const Duration(milliseconds: 180),
+                                      transitionBuilder: (child, anim) => ScaleTransition(scale: anim, child: child),
+                                      child: Text(
+                                        _unitQty.toStringAsFixed(0),
+                                        key: ValueKey<double>(_unitQty),
+                                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color(0xFFF8FAFC)),
+                                      ),
                                     ),
                                     IconButton(
                                       icon: const Icon(Icons.add_circle_outline_rounded, color: Color(0xFFD79C3A)),
@@ -411,12 +430,17 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                                   '${_unitQty.toStringAsFixed(0)} ${_selectedUnit!.nameAm} ≈ ${(_unitQty * _selectedUnit!.multiplier).toStringAsFixed(2)} $unit',
                                   style: const TextStyle(fontSize: 12, color: Color(0xFF8E9BAE)),
                                 ),
-                                Text(
-                                  '${(_unitQty * _selectedUnit!.multiplier * effectivePrice).toStringAsFixed(0)} ETB',
-                                  style: const TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w900,
-                                    color: Color(0xFFB2D15A),
+                                AnimatedSwitcher(
+                                  duration: const Duration(milliseconds: 200),
+                                  transitionBuilder: (child, anim) => FadeTransition(opacity: anim, child: child),
+                                  child: Text(
+                                    '${(_unitQty * _selectedUnit!.multiplier * effectivePrice).toStringAsFixed(0)} ETB',
+                                    key: ValueKey<double>(_unitQty * _selectedUnit!.multiplier * effectivePrice),
+                                    style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w900,
+                                      color: Color(0xFFB2D15A),
+                                    ),
                                   ),
                                 ),
                               ],

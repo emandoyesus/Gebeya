@@ -188,19 +188,30 @@ class _NavBarItem extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    isSelected ? activeIcon : icon,
-                    size: 24,
-                    color: color,
+                  AnimatedScale(
+                    duration: const Duration(milliseconds: 200),
+                    curve: Curves.easeOutBack,
+                    scale: isSelected ? 1.12 : 1.0,
+                    child: AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 180),
+                      transitionBuilder: (child, animation) => FadeTransition(opacity: animation, child: child),
+                      child: Icon(
+                        isSelected ? activeIcon : icon,
+                        key: ValueKey<bool>(isSelected),
+                        size: 24,
+                        color: color,
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 3),
-                  Text(
-                    label,
+                  AnimatedDefaultTextStyle(
+                    duration: const Duration(milliseconds: 180),
                     style: TextStyle(
                       fontSize: 11,
                       fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
                       color: color,
                     ),
+                    child: Text(label),
                   ),
                 ],
               ),
