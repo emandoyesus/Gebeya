@@ -33,14 +33,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ref.listen<String>(searchQueryProvider, (_, next) {
-      if (_searchController.text != next) _searchController.text = next;
-    });
     final itemsAsync = ref.watch(itemsProvider);
-    final query = ref.watch(searchQueryProvider);
-    final selectedMarket = ref.watch(selectedMarketProvider);
-    final filteredItems = ref.watch(filteredItemsProvider);
     final aggregatesAsync = ref.watch(marketAggregatesProvider);
+    final filteredItems = ref.watch(filteredItemsProvider);
     final isAmharic = ref.watch(isAmharicProvider);
     final viewMode = ref.watch(viewModeProvider);
     final isDataSaver = ref.watch(dataSaverProvider);
@@ -48,7 +43,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFF0C0E12),
       appBar: AppBar(
-        elevation: 0,
         backgroundColor: const Color(0xFF0C0E12),
         titleSpacing: 16,
         title: Row(
@@ -134,6 +128,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ],
           ),
           const SizedBox(width: 8),
+
           // Language Toggle
           Tooltip(
             message: isAmharic ? 'ወደ English ቀይር' : 'ወደ አማርኛ ቀይር',
@@ -174,34 +169,29 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         onRefresh: () async {
           ref.invalidate(itemsProvider);
           ref.invalidate(marketAggregatesProvider);
-          await ref.read(itemsProvider.future);
         },
         child: CustomScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
           slivers: [
-            // Search Bar
+            // Search Bar Input
             SliverToBoxAdapter(
-              child: Container(
-                padding: const EdgeInsets.fromLTRB(16, 12, 16, 10),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
                 child: TextField(
                   controller: _searchController,
-                  style: const TextStyle(color: Color(0xFFF8FAFC)),
+                  style: const TextStyle(color: Color(0xFFF8FAFC), fontSize: 14),
                   decoration: InputDecoration(
-                    hintText: isAmharic
-                        ? (selectedMarket != null
-                            ? '${selectedMarket.localizedName(isAmharic)} ወይም በመላው ኢትዮጵያ ይፈልጉ...'
-                            : 'እቃ ወይም ዋጋ በመላው ኢትዮጵያ ይፈልጉ...')
-                        : (selectedMarket != null
-                            ? 'Search in ${selectedMarket.localizedName(isAmharic)} or across Ethiopia...'
-                            : 'Search items across Ethiopia...'),
-                    hintStyle: const TextStyle(color: Color(0xFF9AA7B8), fontSize: 14),
-                    prefixIcon: const Icon(Icons.search_rounded, color: Color(0xFFB2D15A), size: 22),
-                    suffixIcon: query.isEmpty
+                    hintText: isAmharic ? 'የእቃ ስም ፈልግ (ለምሳሌ፡ ጤፍ፣ ሽንኩርት)...' : 'Search commodities (e.g., Teff, Onion)...',
+                    hintStyle: const TextStyle(color: Color(0xFF9AA7B8), fontSize: 13),
+                    prefixIcon: const Icon(Icons.search_rounded, color: Color(0xFFB2D15A)),
+                    suffixIcon: _searchController.text.isEmpty
                         ? null
                         : IconButton(
-                            tooltip: isAmharic ? 'ፍለጋ አጽዳ' : 'Clear search',
-                            icon: const Icon(Icons.close_rounded, size: 20, color: Color(0xFF8E9BAE)),
-                            onPressed: () => ref.read(searchQueryProvider.notifier).state = '',
+                            icon: const Icon(Icons.clear_rounded, color: Color(0xFF8E9BAE), size: 18),
+                            onPressed: () {
+                              _searchController.clear();
+                              ref.read(searchQueryProvider.notifier).state = '';
+                            },
                           ),
                     filled: true,
                     fillColor: const Color(0xFF16191E),
@@ -318,6 +308,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           FilledButton(
                             style: FilledButton.styleFrom(backgroundColor: const Color(0xFFB2D15A), foregroundColor: const Color(0xFF0C0E12)),
                             onPressed: () {
+                              _searchController.clear();
                               ref.read(searchQueryProvider.notifier).state = '';
                               ref.read(selectedCategoryProvider.notifier).state = ItemCategory.all;
                             },
@@ -355,14 +346,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 }
 
                 return SliverPadding(
-                  padding: const EdgeInsets.fromLTRB(16, 4, 16, 80),
+                  padding: const EdgeInsets.fromLTRB(16, 4, 16, 100),
                   sliver: SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
                         final item = filteredItems[index];
                         final aggregate = aggregates[item.id];
                         return Padding(
-                          padding: const EdgeInsets.only(bottom: 10),
+                          padding: const EdgeInsets.only(bottom: 12),
                           child: PriceCard(
                             item: item,
                             aggregate: aggregate,
@@ -375,16 +366,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 );
               },
               loading: () => const SliverFillRemaining(
-                child: Center(child: CircularProgressIndicator(color: Color(0xFFB2D15A))),
+                child: Center(
+                  child: CircularProgressIndicator(color: Color(0xFFB2D15A)),
+                ),
               ),
               error: (err, _) => SliverFillRemaining(
                 child: Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(isAmharic ? 'እቃዎችን መጫን አልተቻለም' : 'Could not load items. Please try again.'),
-                      TextButton(onPressed: () => ref.invalidate(itemsProvider), child: Text(isAmharic ? 'እንደገና ሞክር' : 'Retry')),
-                    ],
+                  child: Text(
+                    isAmharic ? 'መረጃ መጫን አልተቻለም፡ $err' : 'Error loading catalog: $err',
+                    style: const TextStyle(color: Colors.white70),
                   ),
                 ),
               ),
@@ -394,5 +384,4 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       ),
     );
   }
-
 }
